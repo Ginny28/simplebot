@@ -63,7 +63,8 @@ function process_event(event){
     }
 
     // Enviamos el mensaje mediante SendAPI
-    enviar_texto(senderID, response);
+  //  enviar_texto(senderID, response);
+  buttonOpt(senderID);
 }
 
 // Funcion donde el chat respondera usando SendAPI
@@ -89,4 +90,49 @@ function enviar_texto(senderID, response){
           console.error("No se puedo enviar el mensaje:" + err);
         }
     });
+}
+
+function buttonOpt(senderID){
+  let request_body = {
+      "recipient": {
+        "id": senderID
+      },
+      "message":{
+  "attachment":{
+    "type":"template",
+    "payload":{
+      "template_type":"button",
+      "text":"What do you want to do next?",
+      "buttons":[
+        {
+          "type":"web_url",
+          "url":"https://www.messenger.com",
+          "title":"Visit Messenger"
+        },
+        {
+          "type":"web_url",
+          "url":"https://www.universales.com/",
+          "title":"Visit universales"
+        },
+
+      ]
+    }
+  }
+}
+  }
+
+  // Enviar el requisito HTTP a la plataforma de messenger
+  request({
+      "uri": "https://graph.facebook.com/v2.6/me/messages",
+      "qs": { "access_token": process.env.PAGE_ACCESS_TOKEN },
+      "method": "POST",
+      "json": request_body
+  }, (err, res, body) => {
+      if (!err) {
+        console.log('Mensaje enviado!')
+      } else {
+        console.error("No se puedo enviar el mensaje:" + err);
+      }
+  });
+
 }
