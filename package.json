@@ -1,0 +1,24 @@
+{
+  "name": "simplebot",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Ginny28/simplebot.git"
+  },
+  "author": "Virginia Chavarria",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.18.2",
+    "express": "^4.16.2",
+    "request": "^2.83.0"
+  }
+  "bugs": {
+    "url": "https://github.com/Ginny28/simplebot/issues"
+  },
+  "homepage": "https://github.com/Ginny28/simplebot#readme"
+}
