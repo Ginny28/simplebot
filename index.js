@@ -12,6 +12,7 @@ app.listen((process.env.PORT || 5001), () => console.log('El servidor webhook es
 // Ruta de la pagina index
 app.get("/", function (req, res) {
     res.send("Se ha desplegado nosso ChatBot :D!!!");
+    setupPersistentMenu(res);
 });
 
 // Facebook Webhook
@@ -41,11 +42,45 @@ app.post("/webhook", function (req, res) {
                 if (event.message) {
                     process_event(event);
                 }
+
+                if (event.message =='hi')
+                {
+                  buttonOpt( event.sender.id;)
+
+
+
+                }
+
             });
         });
         res.sendStatus(200);
     }
 });
+
+//
+
+
+function receivedPostback(event) {
+   var senderID = event.sender.id;
+   var recipientID = event.recipient.id;
+   var timeOfMessage = event.timestamp;
+   var payload = event.postback.payload;
+   switch(payload)
+   {
+       case 'getstarted':
+           var msg =" Hi,I'm a bot created as a demo for a \n"+
+                    " tutorial to build messenger bots by techiediaries.com\n" ;
+
+           enviar_texto(senderID,msg);
+           break;
+           default:
+
+           break;
+
+       break;
+   }
+
+}
 
 
 // Funcion donde se procesara el evento
@@ -63,8 +98,8 @@ function process_event(event){
     }
 
     // Enviamos el mensaje mediante SendAPI
-  //  enviar_texto(senderID, response);
-  buttonOpt(senderID);
+    enviar_texto(senderID, response);
+
 }
 
 // Funcion donde el chat respondera usando SendAPI
@@ -93,24 +128,26 @@ function enviar_texto(senderID, response){
 }
 
 function buttonOpt(senderID){
+
+
+
   let request_body = {
       "recipient": {
         "id": senderID
       },
-      "message":{
-        "quick_replies":[
+      "type": "quick_reply",
+      "content":
       {
-        "content_type":"text",
-        "title":"Search",
-        "payload":"color",
-        "image_url":"https://pngimage.net/wp-content/uploads/2018/06/png-red-circle-6.png"
+      "type": "text",
+      "text": "What's your favourite color?"
       },
-      {
-        "content_type":"location"
-      }
-    ]
-
-    }
+      "msgid": "qr_212",
+        "options": [
+          "Red",
+          "Green",
+          "Yellow",
+          "Blue"
+        ]
   }
 
 
