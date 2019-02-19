@@ -98,27 +98,20 @@ function buttonOpt(senderID){
         "id": senderID
       },
       "message":{
-  "attachment":{
-    "type":"template",
-    "payload":{
-      "template_type":"button",
-      "text":"What do you want to do next?",
-      "buttons":[
-        {
-          "type":"web_url",
-          "url":"https://www.messenger.com",
-          "title":"Visit Messenger"
-        },
-        {
-          "type":"web_url",
-          "url":"https://www.universales.com/",
-          "title":"Visit universales"
-        },
+        "quick_replies":[
+      {
+        "content_type":"text",
+        "title":"Search",
+        "payload":"color",
+        "image_url":"http://example.com/img/red.png"
+      },
+      {
+        "content_type":"location"
+      }
+    ]
 
-      ]
     }
   }
-}
   }
 
   // Enviar el requisito HTTP a la plataforma de messenger
