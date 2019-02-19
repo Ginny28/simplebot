@@ -112,7 +112,7 @@ function buttonOpt(senderID){
 
     }
   }
-  }
+  
 
   // Enviar el requisito HTTP a la plataforma de messenger
   request({
