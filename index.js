@@ -103,7 +103,7 @@ function buttonOpt(senderID){
         "content_type":"text",
         "title":"Search",
         "payload":"color",
-        "image_url":"http://example.com/img/red.png"
+        "image_url":"https://pngimage.net/wp-content/uploads/2018/06/png-red-circle-6.png"
       },
       {
         "content_type":"location"
@@ -112,7 +112,7 @@ function buttonOpt(senderID){
 
     }
   }
-  
+
 
   // Enviar el requisito HTTP a la plataforma de messenger
   request({
