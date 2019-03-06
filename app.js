@@ -75,7 +75,6 @@ app.post("/webhook/", function (req, res) {
 //**** functions ******* //
 
 
-ceivedMessage(messagingEvent) let’s make this function now,
 function receivedMessage(event) {
   var senderID = event.sender.id;
   var recipientID = event.recipient.id;
