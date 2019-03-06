@@ -151,7 +151,16 @@ const sendTypingOn = (recipientId) => {
   };
   callSendAPI(messageData);
 }
-
+//verifica validez
+const isDefined = (obj) => {
+  if (typeof obj == "undefined") {
+    return false;
+  }
+  if (!obj) {
+    return false;
+  }
+  return obj != null;
+}
 
 
 // envia respuesta a facebook!!
