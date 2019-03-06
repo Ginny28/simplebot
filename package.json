@@ -16,5 +16,8 @@
   "bugs": {
     "url": "https://github.com/Ginny28/simplebot/issues"
   },
-  "homepage": "https://github.com/Ginny28/simplebot#readme"
+  "homepage": "https://github.com/Ginny28/simplebot#readme",
+  "dependencies": {
+    "apiai": "^4.0.3"
+  }
 }
