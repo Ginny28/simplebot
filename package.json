@@ -19,8 +19,10 @@
   "homepage": "https://github.com/Ginny28/simplebot#readme",
   "dependencies": {
     "apiai": "^4.0.3",
+    "axios": "^0.18.0",
     "body-parser": "^1.18.3",
     "express": "^4.16.4",
+    "request-promise": "^4.2.4",
     "uuid": "^3.3.2"
   }
 }
