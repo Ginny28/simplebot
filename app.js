@@ -7,7 +7,7 @@ const axios = require("axios");
 
 // import apiai
 const apiAiService = diaFw(process.env.API_AI_CLIENT_ACCESS_TOKEN, {
-  language: "en",
+  language: "es",
   requestSource: "fb"
 });
 const sessionIds = new Map();
