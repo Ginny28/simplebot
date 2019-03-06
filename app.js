@@ -98,7 +98,10 @@ function receivedMessage(event) {
 
   if (messageText) {
     //send message to api.ai
+    if (messageText == 'hola')
+    {
     sendToApiAi(senderID, messageText);
+	}
   } else if (messageAttachments) {
    // handleMessageAttachments(messageAttachments, senderID);
   }
@@ -231,7 +234,7 @@ const sendTextMessage = async (recipientId, text) => {
 
 function handleApiAiAction(sender, action, responseText, contexts, parameters) {
    switch (action) {
-    case "send-text":
+    case "envia-texto":
       var responseText = "Prueba mensaje"
       sendTextMessage(sender, responseText);
       break;
