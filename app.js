@@ -6,7 +6,7 @@ const uuid = require("uuid");
 
 // import apiai
 const apiAiService = diaFw(process.env.API_AI_CLIENT_ACCESS_TOKEN, {
-  language: "es",
+  language: "en",
   requestSource: "fb"
 });
 const sessionIds = new Map();
