@@ -183,7 +183,7 @@ function handleApiAiResponse(sender, response) {
  
   sendTypingOff(sender);
  
- console.log("accion:" + action);
+ console.log("accion:" + response.queryResult);
 
 
  if (responseText == "" && !isDefined(action)) {
