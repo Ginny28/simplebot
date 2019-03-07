@@ -180,12 +180,12 @@ function handleApiAiResponse(sender, response) {
   let action = response.result.action;
   let contexts = response.result.contexts;
   let parameters = response.result.parameters;
- //sendTypingOff(sender);
+  sendTypingOff(sender);
  
  console.log("accion:" + response+"--"+action);
 
 
- /*if (responseText == "" && !isDefined(action)) {
+ if (responseText == "" && !isDefined(action)) {
     //api ai could not evaluate input.
     console.log("Unknown query" + response.result.resolvedQuery);
     sendTextMessage(
@@ -203,7 +203,7 @@ function handleApiAiResponse(sender, response) {
     }
   } else if (isDefined(responseText)) {
     sendTextMessage(sender, responseText);
-  }*/
+  }
 }
 
 const sendTypingOff = (recipientId) => {
