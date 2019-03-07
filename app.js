@@ -98,10 +98,7 @@ function receivedMessage(event) {
 
   if (messageText) {
     //send message to api.ai
-    if (messageText == 'hola')
-    {
     sendToApiAi(senderID, messageText);
-	}
   } else if (messageAttachments) {
    // handleMessageAttachments(messageAttachments, senderID);
   }
@@ -177,12 +174,12 @@ const url = "https://graph.facebook.com/v3.0/me/messages?access_token=" + proces
 
 
 function handleApiAiResponse(sender, response) {
-  let responseText = response.result.fulfillment.speech;
-  let responseData = response.result.fulfillment.data;
-  let messages = response.result.fulfillment.messages;
-  let action = response.result.action;
-  let contexts = response.result.contexts;
-  let parameters = response.result.parameters;
+  let responseText = response.fulfillmentText;
+  let responseData = response.queryResult.fulfillment.data;
+  let messages = response.fulfillmentMessages;
+  let action = response.queryResult.action;
+  let contexts = response.queryResult.contexts;
+  let parameters = response.parameters;
  
   sendTypingOff(sender);
  
@@ -234,7 +231,7 @@ const sendTextMessage = async (recipientId, text) => {
 
 function handleApiAiAction(sender, action, responseText, contexts, parameters) {
    switch (action) {
-    case "envia-texto":
+    case "textos":
       var responseText = "Prueba mensaje"
       sendTextMessage(sender, responseText);
       break;
