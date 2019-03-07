@@ -175,7 +175,7 @@ const url = "https://graph.facebook.com/v3.0/me/messages?access_token=" + proces
 
 function handleApiAiResponse(sender, response) {
   let responseText = response.fulfillmentText;
-  let responseData = response.queryResult.fulfillment.data;
+  let responseData ;
   let messages = response.fulfillmentMessages;
   let action = response.queryResult.action;
   let contexts = response.queryResult.contexts;
