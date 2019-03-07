@@ -174,16 +174,15 @@ const url = "https://graph.facebook.com/v3.0/me/messages?access_token=" + proces
 
 
 function handleApiAiResponse(sender, response) {
- /* let responseText = response.fulfillmentText;
-  let responseData ;
-  let messages = response.fulfillmentMessages;
-  let action = response.queryResult.action;
-  let contexts = response.queryResult.contexts;
-  let parameters = response.parameters;
- */
+ let responseText = response.result.fulfillment.speech;
+  let responseData = response.result.fulfillment.data;
+  let messages = response.result.fulfillment.messages;
+  let action = response.result.action;
+  let contexts = response.result.contexts;
+  let parameters = response.result.parameters;
  //sendTypingOff(sender);
  
- console.log("accion:" + response.queryResult.queryText);
+ console.log("accion:" + response+"--"+action);
 
 
  /*if (responseText == "" && !isDefined(action)) {
