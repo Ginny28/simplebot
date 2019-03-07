@@ -183,6 +183,9 @@ function handleApiAiResponse(sender, response) {
  
   sendTypingOff(sender);
  
+ console.log("accion:" + action);
+
+
  if (responseText == "" && !isDefined(action)) {
     //api ai could not evaluate input.
     console.log("Unknown query" + response.result.resolvedQuery);
