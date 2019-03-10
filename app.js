@@ -74,10 +74,6 @@ app.post("/webhook/", function (req, res) {
 
 
 //**** functions ******* //
-
-
-
-
 function receivedMessage(event) {
   var senderID = event.sender.id;
   var recipientID = event.recipient.id;
@@ -92,17 +88,34 @@ function receivedMessage(event) {
   var appId = message.app_id;
   var metadata = message.metadata;
 
-  // You may get a text or attachment but not both
+  // Tipos de mensajes
   var messageText = message.text;
   var messageAttachments = message.attachments;
+  var quickReply = message.quick_reply;
 
   if (messageText) {
-    //send message to api.ai
+    //se envia a DialogFlow
     sendToApiAi(senderID, messageText);
   } else if (messageAttachments) {
    // handleMessageAttachments(messageAttachments, senderID);
+  }else if (quickReply)
+  {
+  	handleQuickReply(senderID, quickReply, messageId);
+    return;
   }
 }
+
+function handleQuickReply(senderID, quickReply, messageId) {
+  var quickReplyPayload = quickReply.payload;
+  console.log(
+    "Quick reply for message %s with payload %s",
+    messageId,
+    quickReplyPayload
+  );
+  //send payload to api.ai
+  sendToApiAi(senderID, quickReplyPayload);
+}
+
 
 
 // maneja el envio a DialogFlow!!
