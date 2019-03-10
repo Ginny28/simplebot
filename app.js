@@ -272,18 +272,18 @@ function handleApiAiAction(sender, action, responseText, contexts, parameters) {
       const textRp = "Choose the options"
       const replies = [{
         "content_type": "text",
-        "title": "1",
-        "payload": "Example 1",
+        "title": "Vehiculo",
+        "payload": "Vehiculo",
       },
       {
         "content_type": "text",
-        "title": "2",
-        "payload": "Example 2",
+        "title": "Gastos Medicos",
+        "payload": "Gastos Medicos",
       },
       {
         "content_type": "text",
-        "title": "3",
-        "payload": "Example 3",
+        "title": "Personal",
+        "payload": "Seguros de Vida",
       }];
       sendQuickReply(sender, textRp, replies);
       break;
