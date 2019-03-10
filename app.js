@@ -244,11 +244,48 @@ const sendTextMessage = async (recipientId, text) => {
 }
 
 
+const sendQuickReply = async (recipientId, text, replies, metadata) => {
+  var messageData = {
+    recipient: {
+      id: recipientId
+    },
+    message: {
+      text: text,
+      metadata: isDefined(metadata) ? metadata : "",
+      quick_replies: replies
+    }
+  };
+
+  await callSendAPI(messageData);
+}
+
+
+
+
 function handleApiAiAction(sender, action, responseText, contexts, parameters) {
    switch (action) {
     case "textos":
       var responseText = "Prueba mensaje"
       sendTextMessage(sender, responseText);
+      break;
+    case "tipo-seguro":
+      const textRp = "Choose the options"
+      const replies = [{
+        "content_type": "text",
+        "title": "1",
+        "payload": "Example 1",
+      },
+      {
+        "content_type": "text",
+        "title": "2",
+        "payload": "Example 2",
+      },
+      {
+        "content_type": "text",
+        "title": "3",
+        "payload": "Example 3",
+      }];
+      sendQuickReply(sender, textRp, replies);
       break;
     default:
       //unhandled action, just send back the text
