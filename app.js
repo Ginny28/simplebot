@@ -195,7 +195,7 @@ function handleApiAiResponse(sender, response) {
   let parameters = response.result.parameters;
   sendTypingOff(sender);
  
- console.log("accion:" + response+"--"+action +"--"+parameters);
+ console.log("accion:" + response+"--"+action +"--"+parameters.modelo);
 
 
  if (responseText == "" && !isDefined(action)) {
