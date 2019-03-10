@@ -195,7 +195,7 @@ function handleApiAiResponse(sender, response) {
   let parameters = response.result.parameters;
   sendTypingOff(sender);
  
- console.log("accion:" + response+"--"+action);
+ console.log("accion:" + response+"--"+action +"--"+parameters);
 
 
  if (responseText == "" && !isDefined(action)) {
@@ -269,7 +269,7 @@ function handleApiAiAction(sender, action, responseText, contexts, parameters) {
       sendTextMessage(sender, responseText);
       break;
     case "tipo-seguro":
-      const textRp = "Choose the options"
+      const textRp = "Le ofrecemos seguros de vehículo, personal, hogar y gastos médicos, favor indicar cual le interesa. Para conocer más de nuestros productos visite:  \n https://www.universales.com/productos/"
       const replies = [{
         "content_type": "text",
         "title": "Vehiculo",
