@@ -198,7 +198,7 @@ function handleApiAiResponse(sender, response) {
  console.log("accion:" + response+"--"+action);
  console.log("Modelo:"+parameters.modelo);
  console.log("Valor:"+ parameters.sumaAseg);
-
+ console.log("Marca:"+ parameters.marcas);
 
  if (responseText == "" && !isDefined(action)) {
     //api ai could not evaluate input.
@@ -289,6 +289,10 @@ function handleApiAiAction(sender, action, responseText, contexts, parameters) {
       }];
       sendQuickReply(sender, textRp, replies);
       break;
+    case "marcas":
+      var responseText = "Le adjunto el link de su cotización \n http://test.universales.com/reportes/reporte?190E65B7DDDCE129C2072F623D6319FCAC7FB261999FC53122C9442327028F60BE8DFB3980D83F74E9173438301C6CAF04&cp"
+      sendTextMessage(sender,responseText);
+    break;
     default:
       //unhandled action, just send back the text
     sendTextMessage(sender, responseText);
