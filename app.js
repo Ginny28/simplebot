@@ -3,7 +3,7 @@ const xpress = require("express");
 const bdprser = require("body-parser");
 const uuid = require("uuid");
 const axios = require("axios");
-
+var myCarData = [];
 
 // import apiai
 const apiAiService = diaFw(process.env.API_AI_CLIENT_ACCESS_TOKEN, {
@@ -194,10 +194,15 @@ function handleApiAiResponse(sender, response) {
   let contexts = response.result.contexts;
   let parameters = response.result.parameters;
   sendTypingOff(sender);
- 
+
+
+   if (isDefined(parameters.modelo))
+   {
+     console.log("tengo modelo asignado"++parameters.modelo);
+   }
  console.log("accion:" + response+"--"+action);
- console.log("Modelo:"+parameters.modelo);
- console.log("Valor:"+ parameters.sumaAseg);
+ //console.log("Modelo:"+parameters.modelo);
+ console.log("Valor:"+ parameters.sumaAseg.amount +"moneda"+parameters.sumaAseg.currency);
  console.log("Marca:"+ parameters.marcas);
 
  if (responseText == "" && !isDefined(action)) {
@@ -228,7 +233,7 @@ const sendTypingOff = (recipientId) => {
     },
     sender_action: "typing_off"
   };
- 
+
   callSendAPI(messageData);
 }
 
@@ -297,4 +302,10 @@ function handleApiAiAction(sender, action, responseText, contexts, parameters) {
       //unhandled action, just send back the text
     sendTextMessage(sender, responseText);
   }
+}
+
+function saveCarData(parameters)
+{
+ if (parameters.valor)
+
 }
