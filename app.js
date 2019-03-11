@@ -213,7 +213,7 @@ function handleApiAiResponse(sender, response) {
     var arr = marcaStilo.split(" ");
     console.log("tengo marca y estilo asignado -> "+parameters.marca);
 
-    myCarData.push(parameters.parameters.marca);
+    myCarData.push(parameters.marca);
    }
 
 
