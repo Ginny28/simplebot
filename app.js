@@ -211,11 +211,11 @@ function handleApiAiResponse(sender, response) {
    {
     var marcaStilo = parameters.marca;
     var arr = marcaStilo.split(" ");
-    console.log("tengo valor asignado -> "+parameters.marca);
+    console.log("tengo marca y estilo asignado -> "+parameters.marca);
 
-    myCarData.push(parameters.sumaAseg.amount);
+    myCarData.push(parameters.parameters.marca);
    }
-   
+
 
 
 
