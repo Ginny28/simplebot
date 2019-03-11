@@ -216,12 +216,6 @@ function handleApiAiResponse(sender, response) {
     myCarData.push(parameters.marca);
    }
 
-
-
-
-
-
- //console.log("Modelo:"+parameters.modelo);
  //console.log("Valor:"+ parameters.sumaAseg);
  //console.log("Marca:"+ parameters.marcas);
 
@@ -319,7 +313,8 @@ function handleApiAiAction(sender, action, responseText, contexts, parameters) {
       sendTextMessage(sender,responseText);
     break;
     case "saldoPol-poliza":
-      var responseText = "El saldo pendiente de su póliza nro" + parameters.poliza.original
+       console.log("Poliza:"+parameters.poliza.number[0]);
+      var responseText = "El saldo pendiente de su póliza nro" + parameters.poliza
       sendTextMessage(sender,responseText);
     break;
 
