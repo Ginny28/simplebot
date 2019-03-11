@@ -195,14 +195,25 @@ function handleApiAiResponse(sender, response) {
   let parameters = response.result.parameters;
   sendTypingOff(sender);
 
+   console.log("accion:" + response+"--"+action);
 
    if (isDefined(parameters.modelo))
    {
      console.log("tengo modelo asignado"+parameters.modelo);
+     myCarData.push(parameters.modelo);
    }
- console.log("accion:" + response+"--"+action);
+   if (isDefined(parameters.sumaAseg))
+   {
+     var valorCarro= parameters.sumaAseg;
+     for (var i = 0; i < valorCarro.length; i++) {
+       console.log("suma"+ valorCarro[i]);
+     }
+     console.log("tengo modelo asignado"+parameters.sumaAseg);
+    // myCarData.push(parameters.modelo);
+   }
+
  //console.log("Modelo:"+parameters.modelo);
- console.log("Valor:"+ parameters.sumaAseg);
+ //console.log("Valor:"+ parameters.sumaAseg);
  console.log("Marca:"+ parameters.marcas);
 
  if (responseText == "" && !isDefined(action)) {
