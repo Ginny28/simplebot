@@ -215,7 +215,7 @@ function handleApiAiResponse(sender, response) {
 
     myCarData.push(parameters.sumaAseg.amount);
    }
-   if
+   
 
 
 
