@@ -303,9 +303,3 @@ function handleApiAiAction(sender, action, responseText, contexts, parameters) {
     sendTextMessage(sender, responseText);
   }
 }
-
-function saveCarData(parameters)
-{
- if (parameters.valor)
-
-}
