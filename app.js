@@ -202,7 +202,7 @@ function handleApiAiResponse(sender, response) {
    }
  console.log("accion:" + response+"--"+action);
  //console.log("Modelo:"+parameters.modelo);
- console.log("Valor:"+ parameters.sumaAseg.amount +"moneda"+parameters.sumaAseg.currency);
+ console.log("Valor:"+ parameters.sumaAseg[0] +"moneda"+parameters.sumaAseg[1]);
  console.log("Marca:"+ parameters.marcas);
 
  if (responseText == "" && !isDefined(action)) {
