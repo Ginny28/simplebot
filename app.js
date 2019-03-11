@@ -205,7 +205,7 @@ function handleApiAiResponse(sender, response) {
    if (isDefined(parameters.sumaAseg))
    {
 
-     console.log("tengo valor asignado -> "+parameters.sumaAseg[0].amount);
+     console.log("tengo valor asignado -> "+parameters.sumaAseg.amount);
     // myCarData.push(parameters.modelo);
    }
 
