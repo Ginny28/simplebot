@@ -198,7 +198,7 @@ function handleApiAiResponse(sender, response) {
 
    if (isDefined(parameters.modelo))
    {
-     console.log("tengo modelo asignado"++parameters.modelo);
+     console.log("tengo modelo asignado"+parameters.modelo);
    }
  console.log("accion:" + response+"--"+action);
  //console.log("Modelo:"+parameters.modelo);
