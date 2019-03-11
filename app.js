@@ -319,7 +319,7 @@ function handleApiAiAction(sender, action, responseText, contexts, parameters) {
       sendTextMessage(sender,responseText);
     break;
     case "saldoPol-poliza":
-      var responseText = "El saldo pendiente de su póliza nro" + parameters.poliza
+      var responseText = "El saldo pendiente de su póliza nro" + parameters.poliza.original
       sendTextMessage(sender,responseText);
     break;
 
