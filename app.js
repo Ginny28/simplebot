@@ -318,8 +318,8 @@ function handleApiAiAction(sender, action, responseText, contexts, parameters) {
       var responseText = "Le adjunto el link de su cotización \n http://test.universales.com/reportes/reporte?190E65B7DDDCE129C2072F623D6319FCAC7FB261999FC53122C9442327028F60BE8DFB3980D83F74E9173438301C6CAF04&cp"
       sendTextMessage(sender,responseText);
     break;
-    case "saldoPol-poliza"
-      var responseText = "El saldo pendiente de su póliza nro" + parameters.poliza;
+    case "saldoPol-poliza":
+      var responseText = "El saldo pendiente de su póliza nro" + parameters.poliza
       sendTextMessage(sender,responseText);
     break;
 
