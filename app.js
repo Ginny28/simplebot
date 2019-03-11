@@ -199,16 +199,13 @@ function handleApiAiResponse(sender, response) {
 
    if (isDefined(parameters.modelo))
    {
-     console.log("tengo modelo asignado"+parameters.modelo);
+     console.log("tengo modelo asignado ->"+parameters.modelo);
      myCarData.push(parameters.modelo);
    }
    if (isDefined(parameters.sumaAseg))
    {
-     var valorCarro= parameters.sumaAseg;
-     for (var i = 0; i < valorCarro.length; i++) {
-       console.log("suma"+ valorCarro[i]);
-     }
-     console.log("tengo modelo asignado"+parameters.sumaAseg);
+
+     console.log("tengo valor asignado -> "+parameters.sumaAseg[0].amount);
     // myCarData.push(parameters.modelo);
    }
 
