@@ -314,6 +314,7 @@ function handleApiAiAction(sender, action, responseText, contexts, parameters) {
     break;
     case "saldoPol-poliza":
        console.log("Poliza:"+parameters.poliza.number[0]);
+       console.log("npoliza:"+nPoliza(parameters.poliza.number));
       var responseText = "El saldo pendiente de su póliza nro" + parameters.poliza
       sendTextMessage(sender,responseText);
     break;
@@ -323,4 +324,18 @@ function handleApiAiAction(sender, action, responseText, contexts, parameters) {
       //unhandled action, just send back the text
     sendTextMessage(sender, responseText);
   }
+}
+
+const nPoliza = (obj) => {
+  var returnval;
+  for (var i = 0; i < obj.length; i++) {
+    if (obj[i]>= 1 || obj[i] <= 9)
+    {
+      returnval +='0'+obj[i]+'-';
+    }
+    else {
+      returnval += obj[i]+'-';
+    }
+  }
+  return returnval;
 }
