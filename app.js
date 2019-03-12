@@ -409,14 +409,14 @@ await axios.get(urlSaldo,
                    if (rs.state =='PENDIENTE')
                        {
                        var datePart = rs.paymentDate;
-                       console.log("paymentDate - "+ datePart);
-                       console.log("mes  - "+datePart.substring(3,5)+" - "+mesanio.substring(0,2));
-                       console.log("anio  - "+datePart.substring(7,10) +" - "+mesanio.substring(3,7));
-                       //if ((datePart.substring(3,5) <= mesanio.substring(0,2)) && (datePart.substring(7,10) <= mesanio.substring(3,7)))
-                       //{
+                    //   console.log("paymentDate - "+ datePart);
+                    //   console.log("mes  - "+datePart.substring(3,5)+" - "+mesanio.substring(0,2));
+                    //   console.log("anio  - "+datePart.substring(6,10) +" - "+mesanio.substring(3,7));
+                       if ((datePart.substring(3,5) <= mesanio.substring(0,2)) && (datePart.substring(6,10) <= mesanio.substring(3,7)))
+                       {
                          if (rs.currency =='USD') resultado += "\tfecha cobro : "+rs.paymentDate+" por $."+rs.amount+"\n";
                          else resultado += "\tfecha cobro : "+rs.paymentDate+" por Q."+rs.amountQ+"\n";
-                       //}
+                       }
                        contPend ++;
                        }
                   }
