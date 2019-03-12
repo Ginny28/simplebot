@@ -385,8 +385,8 @@ await axios.get(urlSaldo,
   headers: {'Authorization': 'Bearer '+ bearerAuth }
   }).then(function (response) {
         console.log("resultadoPoliza:" + response.data.recordset[0].url);
-        responseText += "\n"+ response.data.recordset[0].url
-        sendTextMessage(sender,responseText);
+        textRes += "\n"+ response.data.recordset[0].url
+        sendTextMessage(sender,textRes);
 
     })
     .catch(function (error) {
