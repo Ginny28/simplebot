@@ -393,7 +393,7 @@ await axios.get(urlSaldo,
         if(dataPol.code =='200')
                 {
                   console.log('res: Existo!!');
-
+                  sendTextMessage(sender, 'Existe póliza');
                 }
                 
 
@@ -401,5 +401,6 @@ await axios.get(urlSaldo,
     .catch(function (error) {
       console.log('ErRo:'+ error.response.headers);
       console.log('res: No Existo!!');
+      sendTextMessage(sender, 'Poliza no existente');
     });
 }
