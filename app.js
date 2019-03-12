@@ -395,13 +395,11 @@ await axios.get(urlSaldo,
                   console.log('res: Existo!!');
 
                 }
-                else if (dataPol.code =='404')
-                {
-                   console.log('res: No Existo!!');
-                }
+                
 
     })
     .catch(function (error) {
       console.log('ErRo:'+ error.response.headers);
+      console.log('res: No Existo!!');
     });
 }
