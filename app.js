@@ -209,8 +209,10 @@ function handleApiAiResponse(sender, response) {
 
    if (isDefined(parameters.modelo))
    {
-     var modeloYear = parameters.modelo.startDate;
-     console.log("tengo modelo asignado ->"+modeloYear.substring(0,4));
+
+     var d = new Date(parameters.modelo.startDate);
+     var modeloYear = d.getFullYear();
+     console.log("tengo modelo asignado ->"+modeloYear);
      myCarData.push(parameters.modelo.startDate);
    }
    if (isDefined(parameters.sumaAseg))
