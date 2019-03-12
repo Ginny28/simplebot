@@ -315,7 +315,7 @@ function handleApiAiAction(sender, action, responseText, contexts, parameters) {
     case "saldoPol-poliza":
        console.log("Poliza:"+parameters.poliza.number[0]);
        console.log("npoliza:"+nPoliza(parameters.poliza.number));
-      var responseText = "El saldo pendiente de su póliza nro" + parameters.poliza
+      var responseText = "El saldo pendiente de su póliza nro" + nPoliza(parameters.poliza.number)
       sendTextMessage(sender,responseText);
     break;
 
