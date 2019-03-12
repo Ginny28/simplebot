@@ -322,11 +322,9 @@ function handleApiAiAction(sender, action, responseText, contexts, parameters) {
     case "saldoPol-poliza":
        console.log("Poliza:"+parameters.poliza.number[0]);
        console.log("npoliza:"+nPoliza(parameters.poliza.number));
-
-      callToken(authService,nPoliza(parameters.poliza.number));
-  
-      var responseText = "El saldo pendiente de su póliza nro" + nPoliza(parameters.poliza.number)
-      sendTextMessage(sender,responseText);
+       var responseText = "El saldo pendiente de su póliza nro" + nPoliza(parameters.poliza.number)
+       callToken(authService,nPoliza(parameters.poliza.number),responseText,sender);
+       sendTextMessage(sender,responseText);
     break;
 
 
@@ -359,7 +357,7 @@ const nPoliza = (obj) => {
 }
 
 
-const callToken = async (authData,polNum) => {
+const callToken = async (authData,polNum,textRes,sender) => {
 
   await axios.post("https://login.universales.com/users/v2/api/login/wis",authData,
     {
@@ -370,7 +368,7 @@ const callToken = async (authData,polNum) => {
         if (response.data.code == '200')
         {
 
-          getSaldo(polNum,response.data.recordset.token);
+          getSaldo(polNum,response.data.recordset.token,textRes,sender);
         }
 
 
@@ -387,7 +385,9 @@ await axios.get(urlSaldo,
   {
   headers: {'Authorization': 'Bearer '+ bearerAuth }
   }).then(function (response) {
-        console.log("resultadoPoliza:" + response.data.code);
+        console.log("resultadoPoliza:" + response.data.recordset[0].url);
+       // sendTextMessage(sender,responseText);
+
     })
     .catch(function (error) {
       console.log('ErRo:'+ error.response.headers);
