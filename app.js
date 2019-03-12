@@ -209,8 +209,8 @@ function handleApiAiResponse(sender, response) {
 
    if (isDefined(parameters.modelo))
    {
-     console.log("tengo modelo asignado ->"+parameters.modelo);
-     myCarData.push(parameters.modelo);
+     console.log("tengo modelo asignado ->"+parameters.modelo.startDate);
+     myCarData.push(parameters.modelo.startDate);
    }
    if (isDefined(parameters.sumaAseg))
    {
@@ -397,7 +397,6 @@ await axios.get(urlSaldo,
         date.addDays(30);
         var mesanio = date.toString('MM/yyyy');
         var dataPol = response.data;
-        console.log("mesanio " +mesanio );
         var contPend = 0;
         if(dataPol.code =='200')
                 {
@@ -409,9 +408,6 @@ await axios.get(urlSaldo,
                    if (rs.state =='PENDIENTE')
                        {
                        var datePart = rs.paymentDate;
-                    //   console.log("paymentDate - "+ datePart);
-                    //   console.log("mes  - "+datePart.substring(3,5)+" - "+mesanio.substring(0,2));
-                    //   console.log("anio  - "+datePart.substring(6,10) +" - "+mesanio.substring(3,7));
                        if ((datePart.substring(3,5) <= mesanio.substring(0,2)) && (datePart.substring(6,10) <= mesanio.substring(3,7)))
                        {
                          if (rs.currency =='USD') resultado += "\tfecha cobro : "+rs.paymentDate+" por $."+rs.amount+"\n";
@@ -423,7 +419,7 @@ await axios.get(urlSaldo,
 
                   if (contPend == 0)
                   {
-                       resultado = 'Su póliza con nro. '+ dataPol.recordset[0].policy+'\n no tiene pagos pendientes 👏';
+                       resultado = 'Su póliza con nro. '+ dataPol.recordset[0].policy+'\n no tiene pagos pendientes 👏 👍';
                        sendTextMessage(sender,resultado);
 
                   }
@@ -439,6 +435,6 @@ await axios.get(urlSaldo,
     .catch(function (error) {
       console.log('ErRo:'+ error.response.headers);
       console.log('res: No Existo!!');
-      sendTextMessage(sender, 'Poliza no existente');
+      sendTextMessage(sender, 'Esa póliza no se encuentra en nuestro sistema, verifique el número ');
     });
 }
