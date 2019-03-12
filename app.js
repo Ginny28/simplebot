@@ -365,7 +365,7 @@ const callToken = async (authData) => {
     {
   headers: {'Content-Type' : 'application/json' }
   }).then(function (response) {
-        console.log("resultado:" + response.data);
+        console.log("resultado:" + response.data.code);
     })
     .catch(function (error) {
       console.log('ErRo:'+ error.response.headers);
