@@ -392,35 +392,12 @@ await axios.get(urlSaldo,
 
         if(dataPol.code =='200')
                 {
-                  var resultado =' El pago para su póliza nro. '+ dataPol.recordset[0].policy+'\n';
-                    for (var i = 0; i < dataPol.recordset.length; i++)
-                    {
-                          var rs = dataPol.recordset[i];
-
-                          if (rs.state == 'PENDIENTE')
-                            {
-                                var datePart = rs.paymentDate;
-                                if ((datePart.substring(3,5) <= mesanio.substring(0,2)) && (datePart.substring(7,10) <= mesanio.substring(3,7)))
-                                {
-                                  if (rs.currency =='USD')
-                                  {
-                                  resultado += "\tfecha cobro : "+rs.paymentDate+" por $."+rs.amount+"\n";
-                                }
-                                  else {
-                                  resultado += "\tfecha cobro : "+rs.paymentDate+" por Q."+rs.amountQ+"\n";
-                                  }
-                                }
-                                contPend ++;
-                            }
-                    }
-
-                       sendTextMessage(sender,resultado);
+                  console.log('res: Existo!!');
 
                 }
                 else if (dataPol.code =='404')
                 {
-                  var resultado = "Esa póliza no se encuentra en nuestro sistema, verifique el número de póliza."
-                  sendTextMessage(sender,resultado);
+                   console.log('res: No Existo!!');
                 }
 
     })
