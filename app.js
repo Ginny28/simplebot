@@ -359,7 +359,11 @@ const nPoliza = (obj) => {
 const getToken = async (authJson) => {
 
 const url = "https://login.universales.com/users/v2/api/login/wis";
-  await axios.post(url, authJson)
+  await axios.post(url,{
+                headers: {
+                    'Content-Type': 'application/json'
+                }, authJson
+            })
     .then(function (response) {
       if (response.status == 200) {
         
