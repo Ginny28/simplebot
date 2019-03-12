@@ -402,12 +402,13 @@ await axios.get(urlSaldo,
                 {
                   var resultado =' El pago 💰 para su póliza nro. '+ dataPol.recordset[0].policy+'\n';
 
-                  for (var i = 0; i < datapol.recordset.length; i++)
+
+                for (var i = 0; i < dataPol.recordset.length; i++)
                   {
-                    var rs = datapol.recordset[i];
+                    var rs = dataPol.recordset[i];
 
                     console.log("ss: "+ rs.state);
-                  /*  if (rs.state =='PENDIENTE')
+                /*   if (rs.state =='PENDIENTE')
                        {
                        var datePart = rs.paymentDate;
                        if ((datePart.substring(3,5) <= mesanio.substring(0,2)) && (datePart.substring(7,10) <= mesanio.substring(3,7)))
