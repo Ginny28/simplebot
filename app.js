@@ -361,10 +361,10 @@ const nPoliza = (obj) => {
 
 const callToken = async (authData) => {
 
-  await axios.post("https://login.universales.com/users/v2/api/login/wis", {
-                headers: {'Content-Type': 'application/json'}, authData
-            })
-    .then(function (response) {
+  await axios.post("https://login.universales.com/users/v2/api/login/wis",authData,
+    {
+  headers: {'Content-Type' : 'application/json' }
+  }).then(function (response) {
         console.log("resultado:" + response);
     })
     .catch(function (error) {
