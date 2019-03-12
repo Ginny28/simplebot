@@ -83,6 +83,9 @@ app.post("/webhook/", function (req, res) {
 });
 
 
+
+
+
 //**** functions ******* //
 function receivedMessage(event) {
   var senderID = event.sender.id;
@@ -205,20 +208,21 @@ function handleApiAiResponse(sender, response) {
   let parameters = response.result.parameters;
   sendTypingOff(sender);
 
-   console.log("accion:" + response+"--"+action);
+   //console.log("accion:" + response+"--"+action);
+   log
 
    if (isDefined(parameters.modelo))
    {
 
      var d = new Date(parameters.modelo.startDate);
      var modeloYear = d.getFullYear();
-     console.log("tengo modelo asignado ->"+modeloYear);
-     myCarData.push(parameters.modelo.startDate);
+     console.log("tengo modelo asignado ->"+parameters.modelo);
+     myCarData.push(parameters.modelo);
    }
    if (isDefined(parameters.sumaAseg))
    {
-    console.log("tengo valor asignado -> "+parameters.sumaAseg.amount);
-    myCarData.push(parameters.sumaAseg.amount);
+    console.log("tengo valor asignado -> "+parameters.sumaAseg);
+    myCarData.push(parameters.sumaAseg);
    }
    if (isDefined(parameters.marca))
    {
