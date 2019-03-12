@@ -5,6 +5,15 @@ const uuid = require("uuid");
 const axios = require("axios");
 var myCarData = [];
 
+var authService = {
+    "email":"ccarrillo@universales.com",
+    "password":"12345",
+    "loginType":"N",
+    "registrationId": 1,
+    "idPlatform": 1
+  }
+
+
 // import apiai
 const apiAiService = diaFw(process.env.API_AI_CLIENT_ACCESS_TOKEN, {
   language: "es",
@@ -281,8 +290,6 @@ const sendQuickReply = async (recipientId, text, replies, metadata) => {
 }
 
 
-
-
 function handleApiAiAction(sender, action, responseText, contexts, parameters) {
    switch (action) {
     case "textos":
@@ -315,6 +322,7 @@ function handleApiAiAction(sender, action, responseText, contexts, parameters) {
     case "saldoPol-poliza":
        console.log("Poliza:"+parameters.poliza.number[0]);
        console.log("npoliza:"+nPoliza(parameters.poliza.number));
+       console.log("tkn:" +getToken(authService));
       var responseText = "El saldo pendiente de su póliza nro" + nPoliza(parameters.poliza.number)
       sendTextMessage(sender,responseText);
     break;
@@ -345,4 +353,23 @@ const nPoliza = (obj) => {
        }
 }
   return returnval;
+}
+
+
+const getToken = async (authJson) => {
+
+const url = "https://login.universales.com/users/v2/api/login/wis";
+  await axios.post(url, authJson)
+    .then(function (response) {
+      if (response.status == 200) {
+        
+          console.log(
+            "Exito token: ",response.recordset.token
+          );
+        } 
+      
+    })
+    .catch(function (error) {
+      console.log(error.response.headers);
+    });
 }
