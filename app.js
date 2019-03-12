@@ -329,11 +329,7 @@ function handleApiAiAction(sender, action, responseText, contexts, parameters) {
 const nPoliza = (obj) => {
   var returnval="";
   for (var i = 0; i < obj.length; i++) {
-    if (i= obj.length -1)
-    {
-        returnval += obj[i];
-    }
-    else
+    if (i< obj.length)
      {
        if (obj[i]>= 1 || obj[i] <= 9)
        {
@@ -343,6 +339,10 @@ const nPoliza = (obj) => {
          returnval += obj[i]+'-';
        }
      }
+     else if (i= obj.length -1)
+       {
+           returnval += obj[i];
+       }
 }
   return returnval;
 }
