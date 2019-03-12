@@ -416,13 +416,15 @@ await axios.get(urlSaldo,
                          if (rs.currency =='USD') resultado += "\tfecha cobro : "+rs.paymentDate+" por $."+rs.amount+"\n";
                          else resultado += "\tfecha cobro : "+rs.paymentDate+" por Q."+rs.amountQ+"\n";
                        }
+                       sendTextMessage(sender,resultado);
                        }
-                    else
+                    else 
                        {
                        resultado = 'Su póliza con nro. '+ dataPol.recordset[0].policy+'\n no tiene pagos pendientes 👏';
-                       } 
+                       sendTextMessage(sender,resultado);
+                       }
                   }
-                   sendTextMessage(sender,resultado);
+
                 }
 
 
