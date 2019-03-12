@@ -216,13 +216,13 @@ function handleApiAiResponse(sender, response) {
 
     // var d = new Date(parameters.modelo.startDate);
      //var modeloYear = d.getFullYear();
-     console.log("tengo modelo asignado ->"+parameters.modelo);
+  //   console.log("tengo modelo asignado ->"+parameters.modelo);
      myCarData.push(parameters.modelo);
    }
    if (isDefined(parameters.sumaAseg))
    {
-    console.log("tengo valor asignado -> ");
-  //  myCarData.push(parameters.sumaAseg);
+    //console.log("tengo valor asignado -> ");
+    myCarData.push(parameters.sumaAseg);
    }
    if (isDefined(parameters.marca))
    {
