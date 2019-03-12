@@ -365,6 +365,7 @@ const url = "https://login.universales.com/users/v2/api/login/wis";
                 }, authJson
             })
     .then(function (response) {
+         console.log("valoresss: "+ response);
       if (response.status == 200) {
         
           console.log(
