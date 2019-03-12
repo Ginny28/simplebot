@@ -341,7 +341,7 @@ const nPoliza = (obj) => {
   {
     if (i< obj.length-1)
      {
-       if (obj[i]>= 1 || obj[i] <= 9)
+       if (obj[i]>= 1 && obj[i] <= 9)
        {
          returnval +='0'+obj[i]+'-';
        }
