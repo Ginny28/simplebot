@@ -324,7 +324,7 @@ function handleApiAiAction(sender, action, responseText, contexts, parameters) {
        console.log("Poliza:"+parameters.poliza.number[0]);
        console.log("npoliza:"+nPoliza(parameters.poliza.number));
        var responseText = "El saldo pendiente de su póliza nro: " + nPoliza(parameters.poliza.number)
-       callToken(authService,nPoliza(parameters.poliza.number),responseText,sender);
+       callToken(authService,nPoliza(parameters.poliza.number),1,sender);
       // sendTextMessage(sender,responseText);
     break;
 
@@ -337,7 +337,7 @@ function handleApiAiAction(sender, action, responseText, contexts, parameters) {
 
 const nPoliza = (obj) => {
   var returnval="";
-  for (var i = 0; i < obj.length; i++) 
+  for (var i = 0; i < obj.length; i++)
   {
     if (i< obj.length-1)
      {
@@ -358,7 +358,7 @@ const nPoliza = (obj) => {
 }
 
 
-const callToken = async (authData,polNum,textRes,sender) => {
+const callToken = async (authData,polNum,wService,sender) => {
 
   await axios.post("https://login.universales.com/users/v2/api/login/wis",authData,
     {
@@ -368,7 +368,19 @@ const callToken = async (authData,polNum,textRes,sender) => {
         console.log("resultadoset:" + response.data.recordset.token);
         if (response.data.code == '200')
         {
-          getSaldo(polNum,response.data.recordset.token,textRes,sender);
+          switch (wService)
+          {
+            case 1:
+              getSaldo(polNum,response.data.recordset.token,sender);
+              break;
+            case 2:
+              console.log("haré una cotización");
+              break;
+            default:
+            break;
+
+          }
+
         }
 
 
@@ -379,7 +391,7 @@ const callToken = async (authData,polNum,textRes,sender) => {
 }
 
 
-const getSaldo = async (polNum,bearerAuth,textRes,sender) => {
+const getSaldo = async (polNum,bearerAuth,sender) => {
 const urlSaldo ='https://login.universales.com/wis//v2/app/api/policy/'+polNum+'/statement';
 await axios.get(urlSaldo,
   {
@@ -389,13 +401,14 @@ await axios.get(urlSaldo,
         date.addDays(30);
         var mesanio = date.toString('MM/yyyy');
         var dataPol = response.data;
-
+        console.log("mesanio " +mesanio );
         if(dataPol.code =='200')
                 {
+                  var resultado =' El pago para su póliza nro. '+ dataPol.recordset[0].policy+'\n';
                   console.log('res: Existo!!');
-                  sendTextMessage(sender, 'Existe póliza');
+                  sendTextMessage(sender, resultado);
                 }
-                
+
 
     })
     .catch(function (error) {
