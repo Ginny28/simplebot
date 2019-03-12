@@ -329,7 +329,7 @@ function handleApiAiAction(sender, action, responseText, contexts, parameters) {
 const nPoliza = (obj) => {
   var returnval="";
   for (var i = 0; i < obj.length; i++) {
-    if (i< obj.length)
+    if (i< obj.length-1)
      {
        if (obj[i]>= 1 || obj[i] <= 9)
        {
