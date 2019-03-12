@@ -359,13 +359,31 @@ const nPoliza = (obj) => {
 }
 
 
-const callToken = async (authData) => {
+const callToken = async (authData,polNum) => {
 
   await axios.post("https://login.universales.com/users/v2/api/login/wis",authData,
     {
   headers: {'Content-Type' : 'application/json' }
   }).then(function (response) {
         console.log("resultado:" + response.data.code);
+        console.log("resultadoset:" + response.data.recordset.token);
+    
+
+
+    })
+    .catch(function (error) {
+      console.log('ErRo:'+ error.response.headers);
+    });
+}
+
+
+const getSaldo = async (polNum,bearerAuth) => {
+const urlSaldo ='https://login.universales.com/wis//v2/app/api/policy/'+polNum+'/statement';
+await axios.get(urlSaldo,
+  {
+  headers: {'Authorization': 'Bearer '+ bearerAuth }
+  }).then(function (response) {
+        console.log("resultadoPoliza:" + response.data.code);
     })
     .catch(function (error) {
       console.log('ErRo:'+ error.response.headers);
