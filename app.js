@@ -364,8 +364,6 @@ const callToken = async (authData,polNum,wService,sender) => {
     {
   headers: {'Content-Type' : 'application/json' }
   }).then(function (response) {
-        console.log("resultado:" + response.data.code);
-        console.log("resultadoset:" + response.data.recordset.token);
         if (response.data.code == '200')
         {
           switch (wService)
@@ -378,11 +376,9 @@ const callToken = async (authData,polNum,wService,sender) => {
               break;
             default:
             break;
-
           }
 
         }
-
 
     })
     .catch(function (error) {
@@ -404,9 +400,26 @@ await axios.get(urlSaldo,
         console.log("mesanio " +mesanio );
         if(dataPol.code =='200')
                 {
-                  var resultado =' El pago para su póliza nro. '+ dataPol.recordset[0].policy+'\n';
-                  console.log('res: Existo!!');
-                  sendTextMessage(sender, resultado);
+                  var resultado =' El pago 💰 para su póliza nro. '+ dataPol.recordset[0].policy+'\n';
+
+                  for (var i = 0; i < datapol.recordset.length; i++)
+                  {
+                    var rs = datapol.recordset[i];
+                    if (rs.state =='PENDIENTE')
+                       {
+                       var datePart = rs.paymentDate;
+                       if ((datePart.substring(3,5) <= mesanio.substring(0,2)) && (datePart.substring(7,10) <= mesanio.substring(3,7)))
+                       {
+                         if (rs.currency =='USD') resultado += "\tfecha cobro : "+rs.paymentDate+" por $."+rs.amount+"\n";
+                         else resultado += "\tfecha cobro : "+rs.paymentDate+" por Q."+rs.amountQ+"\n";
+                       }
+                       }
+                    else
+                       {
+                       resultado = 'Su póliza con nro. '+ dataPol.recordset[0].policy+'\n no tiene pagos pendientes 👏';
+                       }
+                  }
+                   sendTextMessage(sender,resultado);
                 }
 
 
