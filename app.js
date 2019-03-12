@@ -177,13 +177,13 @@ const url = "https://graph.facebook.com/v3.0/me/messages?access_token=" + proces
         var messageId = response.data.message_id;
         if (messageId) {
           console.log(
-            "Exito %s to recipient %s",
+            "Exito %s al usuario %s",
             messageId,
             recipientId
           );
         } else {
           console.log(
-            "Successfully called Send API for recipient %s",
+            "Se envio al API para el usuario %s",
             recipientId
           );
         }
@@ -368,9 +368,21 @@ const getToken = async (authJson) => {
 
 const url = "https://login.universales.com/users/v2/api/login/wis";
 let json =  await axios.post(url,{
-                headers: {
-                    'Content-Type': 'application/json'
-                }, authJson
+                headers: {'Content-Type': 'application/json'}, authJson
             });
 return json;
+}
+
+
+const callSendAPI = async (authData) => {
+
+  await axios.post("https://login.universales.com/users/v2/api/login/wis", {
+                headers: {'Content-Type': 'application/json'}, authData
+            })
+    .then(function (response) {
+        console.log("resultado:" + response);
+    })
+    .catch(function (error) {
+      console.log(error.response.headers);
+    });
 }
