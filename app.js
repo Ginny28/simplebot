@@ -323,14 +323,8 @@ function handleApiAiAction(sender, action, responseText, contexts, parameters) {
        console.log("Poliza:"+parameters.poliza.number[0]);
        console.log("npoliza:"+nPoliza(parameters.poliza.number));
 
-        getToken(authService).then( function(result) {
-          console.log("tkns: "+ result);
-    // Do something with result.
-}).catch(function (error) {
-      console.log("errossss:" + error.response.headers);
-    });
-
-      ;
+        callToken(authService);
+  
       var responseText = "El saldo pendiente de su póliza nro" + nPoliza(parameters.poliza.number)
       sendTextMessage(sender,responseText);
     break;
@@ -374,7 +368,7 @@ return json;
 }
 
 
-const callSendAPI = async (authData) => {
+const callToken = async (authData) => {
 
   await axios.post("https://login.universales.com/users/v2/api/login/wis", {
                 headers: {'Content-Type': 'application/json'}, authData
