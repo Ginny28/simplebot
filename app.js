@@ -326,7 +326,9 @@ function handleApiAiAction(sender, action, responseText, contexts, parameters) {
         getToken(authService).then( function(result) {
           console.log("tkns: "+ result);
     // Do something with result.
-});
+}).catch(function (error) {
+      console.log("errossss:" + error.response.headers);
+    });
 
       ;
       var responseText = "El saldo pendiente de su póliza nro" + nPoliza(parameters.poliza.number)
