@@ -398,16 +398,13 @@ await axios.get(urlSaldo,
         var mesanio = date.toString('MM/yyyy');
         var dataPol = response.data;
         console.log("mesanio " +mesanio );
+        var contPend = 0;
         if(dataPol.code =='200')
                 {
-                  var resultado =' El pago 💰 para su póliza nro. '+ dataPol.recordset[0].policy+'\n';
-
-
+                var resultado =' El pago 💰 para su póliza nro. '+ dataPol.recordset[0].policy+'\n
                 for (var i = 0; i < dataPol.recordset.length; i++)
                   {
                     var rs = dataPol.recordset[i];
-
-
                    if (rs.state =='PENDIENTE')
                        {
                        var datePart = rs.paymentDate;
@@ -416,13 +413,19 @@ await axios.get(urlSaldo,
                          if (rs.currency =='USD') resultado += "\tfecha cobro : "+rs.paymentDate+" por $."+rs.amount+"\n";
                          else resultado += "\tfecha cobro : "+rs.paymentDate+" por Q."+rs.amountQ+"\n";
                        }
-                       sendTextMessage(sender,resultado);
+                       contPend ++;
                        }
-                    else 
-                       {
+                  }
+
+                  if (contPend == 0)
+                  {
                        resultado = 'Su póliza con nro. '+ dataPol.recordset[0].policy+'\n no tiene pagos pendientes 👏';
                        sendTextMessage(sender,resultado);
-                       }
+
+                  }
+                  else
+                  {
+                    sendTextMessage(sender,resultado);
                   }
 
                 }
