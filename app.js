@@ -407,8 +407,8 @@ await axios.get(urlSaldo,
                   {
                     var rs = dataPol.recordset[i];
 
-                    console.log("ss: "+ rs.state);
-                /*   if (rs.state =='PENDIENTE')
+
+                   if (rs.state =='PENDIENTE')
                        {
                        var datePart = rs.paymentDate;
                        if ((datePart.substring(3,5) <= mesanio.substring(0,2)) && (datePart.substring(7,10) <= mesanio.substring(3,7)))
@@ -420,7 +420,7 @@ await axios.get(urlSaldo,
                     else
                        {
                        resultado = 'Su póliza con nro. '+ dataPol.recordset[0].policy+'\n no tiene pagos pendientes 👏';
-                     } */
+                       } 
                   }
                    sendTextMessage(sender,resultado);
                 }
