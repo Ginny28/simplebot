@@ -338,7 +338,8 @@ function handleApiAiAction(sender, action, responseText, contexts, parameters) {
 
 const nPoliza = (obj) => {
   var returnval="";
-  for (var i = 0; i < obj.length; i++) {
+  for (var i = 0; i < obj.length; i++) 
+  {
     if (i< obj.length-1)
      {
        if (obj[i]>= 1 || obj[i] <= 9)
@@ -353,18 +354,8 @@ const nPoliza = (obj) => {
        {
            returnval += obj[i];
        }
-}
+  }
   return returnval;
-}
-
-
-const getToken = async (authJson) => {
-
-const url = "https://login.universales.com/users/v2/api/login/wis";
-let json =  await axios.post(url,{
-                headers: {'Content-Type': 'application/json'}, authJson
-            });
-return json;
 }
 
 
@@ -377,6 +368,6 @@ const callToken = async (authData) => {
         console.log("resultado:" + response);
     })
     .catch(function (error) {
-      console.log(error.response.headers);
+      console.log('ErRo:'+ error.response.headers);
     });
 }
