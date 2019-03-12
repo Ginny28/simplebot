@@ -401,7 +401,8 @@ await axios.get(urlSaldo,
         var contPend = 0;
         if(dataPol.code =='200')
                 {
-                var resultado =' El pago 💰 para su póliza nro. '+ dataPol.recordset[0].policy+'\n
+                var resultado =' El pago 💰 para su póliza nro. '+ dataPol.recordset[0].policy+'\n';
+                
                 for (var i = 0; i < dataPol.recordset.length; i++)
                   {
                     var rs = dataPol.recordset[i];
