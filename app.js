@@ -454,7 +454,7 @@ const getUserData = async (sender) => {
           var messageId = response.data.name;
 
             console.log(
-              "Exito %s al usuario %s",
+              "nombre %s del usuario %s",
               messageId,
               recipientId
             );
