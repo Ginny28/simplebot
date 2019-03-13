@@ -226,9 +226,6 @@ function handleApiAiResponse(sender, response) {
    }
 
 
- //console.log("Valor:"+ parameters.sumaAseg);
- //console.log("Marca:"+ parameters.marcas);
-
  if (responseText == "" && !isDefined(action)) {
     //api ai could not evaluate input.
     console.log("Unknown query" + response.result.resolvedQuery);
@@ -317,8 +314,9 @@ function handleApiAiAction(sender, action, responseText, contexts, parameters) {
       sendQuickReply(sender, textRp, replies);
       break;
     case "Auto-marca":
-      var responseText = "Le adjunto el link de su cotización \n http://test.universales.com/reportes/reporte?190E65B7DDDCE129C2072F623D6319FCAC7FB261999FC53122C9442327028F60BE8DFB3980D83F74E9173438301C6CAF04&cp"
-      sendTextMessage(sender,responseText);
+     // var responseText = "Le adjunto el link de su cotización \n http://test.universales.com/reportes/reporte?190E65B7DDDCE129C2072F623D6319FCAC7FB261999FC53122C9442327028F60BE8DFB3980D83F74E9173438301C6CAF04&cp"
+      //sendTextMessage(sender,responseText);
+      callToken(config.AUTHSERVICE,"null",2,sender);
     break;
     case "saldoPol-poliza":
        console.log("Poliza:"+parameters.poliza.number[0]);
@@ -372,6 +370,10 @@ const callToken = async (authData,polNum,wService,sender) => {
               getSaldo(polNum,response.data.recordset.token,sender);
               break;
             case 2:
+            var temp ="";
+              
+                temp += "Su auto es un " + myCarData[2] +" "+myCarData[3]+" modelo "+ myCarData[0] +" valorado en :"+myCarData[1];
+                sendTextMessage(sender,temp);
               console.log("haré una cotización");
               break;
             default:
@@ -388,6 +390,7 @@ const callToken = async (authData,polNum,wService,sender) => {
 
 
 const getSaldo = async (polNum,bearerAuth,sender) => {
+
 const urlSaldo ='https://login.universales.com/wis//v2/app/api/policy/'+polNum+'/statement';
 await axios.get(urlSaldo,
   {
