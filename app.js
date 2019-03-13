@@ -314,16 +314,10 @@ function handleApiAiAction(sender, action, responseText, contexts, parameters) {
       sendQuickReply(sender, textRp, replies);
       break;
     case "Auto-marca":
-     // var responseText = "Le adjunto el link de su cotización \n http://test.universales.com/reportes/reporte?190E65B7DDDCE129C2072F623D6319FCAC7FB261999FC53122C9442327028F60BE8DFB3980D83F74E9173438301C6CAF04&cp"
-      //sendTextMessage(sender,responseText);
       callToken(config.AUTHSERVICE,"null",2,sender);
     break;
     case "saldoPol-poliza":
-       console.log("Poliza:"+parameters.poliza.number[0]);
-       console.log("npoliza:"+nPoliza(parameters.poliza.number));
-       var responseText = "El saldo pendiente de su póliza nro: " + nPoliza(parameters.poliza.number)
        callToken(config.AUTHSERVICE,nPoliza(parameters.poliza.number),1,sender);
-      // sendTextMessage(sender,responseText);
     break;
 
 
@@ -371,8 +365,9 @@ const callToken = async (authData,polNum,wService,sender) => {
               break;
             case 2:
             var temp ="";
-              
+
                 temp += "Su auto es un " + myCarData[2] +" "+myCarData[3]+" modelo "+ myCarData[0] +" valorado en :"+myCarData[1];
+                getUserData(sender);
                 sendTextMessage(sender,temp);
               console.log("haré una cotización");
               break;
@@ -441,3 +436,32 @@ await axios.get(urlSaldo,
       sendTextMessage(sender, 'Esa póliza no se encuentra en nuestro sistema, verifique el número ');
     });
 }
+
+
+
+
+
+
+
+
+const getUserData = async (sender) => {
+
+  const url = "https://graph.facebook.com/v3.0/me?fields=name&access_token=" + config.PAGE_ACCESS_TOKEN;
+    await axios.get(url)
+      .then(function (response) {
+        if (response.status == 200) {
+          var recipientId = response.data.id;
+          var messageId = response.data.name;
+
+            console.log(
+              "Exito %s al usuario %s",
+              messageId,
+              recipientId
+            );
+
+        }
+      })
+      .catch(function (error) {
+        console.log(error.response.headers);
+      });
+  }
