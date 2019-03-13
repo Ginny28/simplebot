@@ -4,7 +4,7 @@ const bdprser = require("body-parser");
 const uuid = require("uuid");
 const axios = require("axios");
 var SimpleDate = require('simple-datejs');
-var config = require('./Global.json');
+var config = require('./Global.js');
 var myCarData = [];
 
 var authService = {
