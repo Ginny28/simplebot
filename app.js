@@ -446,17 +446,17 @@ await axios.get(urlSaldo,
 
 const getUserData = async (sender) => {
 
-  const url = "https://graph.facebook.com/v3.0/me?fields=name&access_token=" + config.PAGE_ACCESS_TOKEN;
+  const url = "https://graph.facebook.com/v3.0/"+sender+"?fields=name&access_token=" + config.PAGE_ACCESS_TOKEN;
     await axios.get(url)
       .then(function (response) {
         if (response.status == 200) {
           var recipientId = response.data.id;
-          var messageId = response.data.name;
+          var nombre = response.data.name;
 
             console.log(
               "nombre %s del usuario %s",
               messageId,
-              recipientId
+              nombre
             );
 
         }
