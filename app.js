@@ -7,13 +7,7 @@ var SimpleDate = require('simple-datejs');
 var config = require('./Global.js');
 var myCarData = [];
 
-var authService = {
-    "email":"ccarrillo@universales.com",
-    "password":"12345",
-    "loginType":"N",
-    "registrationId": 1,
-    "idPlatform": 1
-  }
+
 
 
 // import apiai
@@ -222,12 +216,15 @@ function handleApiAiResponse(sender, response) {
    }
    if (isDefined(parameters.marca))
    {
-    var marcaStilo = parameters.marca;
-    var arr = marcaStilo.split(" ");
     console.log("tengo marca y estilo asignado -> "+parameters.marca);
-
     myCarData.push(parameters.marca);
    }
+   if (isDefined(parameters.marca))
+   {
+    console.log("tengo marca y estilo asignado -> "+parameters.estilo);
+    myCarData.push(parameters.estilo);
+   }
+
 
  //console.log("Valor:"+ parameters.sumaAseg);
  //console.log("Marca:"+ parameters.marcas);
@@ -327,7 +324,7 @@ function handleApiAiAction(sender, action, responseText, contexts, parameters) {
        console.log("Poliza:"+parameters.poliza.number[0]);
        console.log("npoliza:"+nPoliza(parameters.poliza.number));
        var responseText = "El saldo pendiente de su póliza nro: " + nPoliza(parameters.poliza.number)
-       callToken(authService,nPoliza(parameters.poliza.number),1,sender);
+       callToken(config.AUTHSERVICE,nPoliza(parameters.poliza.number),1,sender);
       // sendTextMessage(sender,responseText);
     break;
 
