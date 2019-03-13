@@ -219,7 +219,7 @@ function handleApiAiResponse(sender, response) {
     console.log("tengo marca y estilo asignado -> "+parameters.marca);
     myCarData.push(parameters.marca);
    }
-   if (isDefined(parameters.marca))
+   if (isDefined(parameters.estilo))
    {
     console.log("tengo marca y estilo asignado -> "+parameters.estilo);
     myCarData.push(parameters.estilo);
