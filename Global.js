@@ -3,7 +3,7 @@ module.exports = {
   VERIFICATION_TOKEN: "mytokenfb",
   DIAFLOW_TOKEN: "690e92dda208408297449188a728b168",
   PORT: "5000",
-  AUTHSERVICE = {
+  var AUTHSERVICE = {
       "email":"ccarrillo@universales.com",
       "password":"12345",
       "loginType":"N",
