@@ -216,8 +216,8 @@ function handleApiAiResponse(sender, response) {
    }
    if (isDefined(parameters.sumaAseg))
    {
-    console.log("tengo valor asignado -> "+parameters.sumaAseg.amount);
-    myCarData.push(parameters.sumaAseg.amount);
+    console.log("tengo valor asignado -> "+parameters.sumaAseg);
+    myCarData.push(parameters.sumaAseg);
    }
    if (isDefined(parameters.marca))
    {
