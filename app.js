@@ -4,6 +4,7 @@ const bdprser = require("body-parser");
 const uuid = require("uuid");
 const axios = require("axios");
 var SimpleDate = require('simple-datejs');
+var config = require('./Global.json');
 var myCarData = [];
 
 var authService = {
@@ -16,7 +17,7 @@ var authService = {
 
 
 // import apiai
-const apiAiService = diaFw(process.env.API_AI_CLIENT_ACCESS_TOKEN, {
+const apiAiService = diaFw(config.DIAFLOW_TOKEN, {
   language: "es",
   requestSource: "fb"
 });
@@ -48,7 +49,7 @@ app.get("/", function (req, res) {
 // Usados para la verificacion
 app.get("/webhook", function (req, res) {
     // Verificar la coincidendia del token
-    if (req.query["hub.verify_token"] === process.env.VERIFICATION_TOKEN) {
+    if (req.query["hub.verify_token"] === config.VERIFICATION_TOKEN) {
         // Mensaje de exito y envio del token requerido
         console.log("webhook verificado!");
         res.status(200).send(req.query["hub.challenge"]);
@@ -170,7 +171,7 @@ const isDefined = (obj) => {
 // envia respuesta a facebook!!
 const callSendAPI = async (messageData) => {
 
-const url = "https://graph.facebook.com/v3.0/me/messages?access_token=" + process.env.PAGE_ACCESS_TOKEN;
+const url = "https://graph.facebook.com/v3.0/me/messages?access_token=" + config.PAGE_ACCESS_TOKEN;
   await axios.post(url, messageData)
     .then(function (response) {
       if (response.status == 200) {
