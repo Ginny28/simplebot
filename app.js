@@ -317,19 +317,11 @@ function handleApiAiAction(sender, action, responseText, contexts, parameters) {
       sendTextMessage(sender,"Me puede brindar  el estilo de su vehículo [ex. Yaris]");
     break;
     case "Auto-estilo":
-    callToken(config.AUTHSERVICE,myBrand,3,null);
-    action = "finCoti";
+       callToken(config.AUTHSERVICE,myBrand,3,null);
     break;
     case "saldoPol-poliza":
        callToken(config.AUTHSERVICE,nPoliza(parameters.poliza.number),1,sender);
     break;
-    case "finCoti":
-    for (var i = 0; i < config.CARARRAY.length; i++) {
-      console.log("valores:" + config.CARARRAY[i]);
-    }
-    sendTextMessage(sender,"su cotizacion es:");
-    break;
-
     default:
       //unhandled action, just send back the text
     sendTextMessage(sender, responseText);
@@ -380,7 +372,7 @@ const callToken = async (authData,senderValue,wService,sender) => {
                 sendTextMessage(sender,temp);
               break;
             case 3:
-              getBrandStyle(senderValue,response.data.recordset.token);
+              getBrandStyle(senderValue,response.data.recordset.token,sender);
             break;
             default:
             break;
@@ -467,7 +459,7 @@ const getCoti = async (sender,parameters) => {
   }
 
 
-const getBrandStyle = async (senderValue,bearerAuth) => {
+const getBrandStyle = async (senderValue,bearerAuth,sender) => {
 const urlAuto ='https://login.universales.com/inspeccion/v2/api/brand';
 await axios.get(urlAuto,
   {
@@ -478,50 +470,17 @@ await axios.get(urlAuto,
       rs = response.data.recordset[i]
           if(rs.brandName ==senderValue[0] && rs.styleName == senderValue[1] )
           {
-            config.CARARRAY.push(rs.brandCode);
-            config.CARARRAY.push(rs.styleCode);
+            var parametros = "&marca="+rs.brandCode+"&modelo="+config.CARARRAY[0]+"&estilo="+rs.styleCode+"&ttipovehi="+rs.type+"&valor="+config.CARARRAY[1]+"&nombreCliente= prueba";
+            var datos = 'paquete=1019&oficina=01&observacion=CotizacionFB&formaPago=BC'+parametros;
+            getCoti(sender,datos);
             break;
           }
     }
+
+
+
   })
    .catch(function (error) {
       console.log('ErRo:'+ error.response.headers);
     });
 }
-
-
-
-
-
-
-
-/*const getBrandStyle = async (brandStyle,bearerAuth,flag) => {
-
-const urlAuto ='https://login.universales.com/inspeccion/v2/api/brand';
-await axios.get(urlAuto,
-  {headers: {'Authorization': 'Bearer '+ bearerAuth }}).then(function (response) {
-        if(dataPol.code =='200')
-          {
-            for (var i = 0; i < response.data.recordset.length; i++)
-              {
-                rs = response.data.recordset[i];
-                if(flag)
-                {
-
-                  if (rs.brandName == brandStyle.toUpperCase())
-                    {
-                    console.log('brnd',rs.brandCode);
-                    //myCarData.push(rs.brandCode);
-                    //break;
-                    }
-                }
-
-              }
-
-          }
-    })
-    .catch(function (error) {
-      console.log('ErRo:'+ error.response.headers);
-    });
-}
-*/
