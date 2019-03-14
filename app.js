@@ -478,6 +478,7 @@ await axios.get(urlAuto,
       //  arreglo.push(rs.brandCode);
         break;
       }
+      break;
     }
   })
    .catch(function (error) {
