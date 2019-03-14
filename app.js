@@ -319,7 +319,9 @@ function handleApiAiAction(sender, action, responseText, contexts, parameters) {
       sendTextMessage(sender,"Me puede brindar  el estilo de su vehículo [ex. Yaris]");
     break;
     case "Auto-estilo":
-      //    callToken(config.AUTHSERVICE,parameters.marca,3,sender);
+    for (var i = 0; i < config.CARARRAY.length; i++) {
+      console.log("valores:" + config.CARARRAY[i]);
+    }
     break;
     case "saldoPol-poliza":
        callToken(config.AUTHSERVICE,nPoliza(parameters.poliza.number),1,sender);
@@ -377,9 +379,6 @@ const callToken = async (authData,senderValue,wService,sender) => {
               break;
             case 3:
               getBrandStyle(senderValue,response.data.recordset.token);
-              for (var i = 0; i < config.CARARRAY.length; i++) {
-                console.log("valores:" + config.CARARRAY[i]);
-              }
             break;
             default:
             break;
@@ -479,7 +478,7 @@ await axios.get(urlAuto,
       {
         console.log("Marca:" + rs.brandName);
         console.log("codeMarca:" + rs.brandCode);
-      //  arreglo.push(rs.brandCode);
+        config.CARARRAY.push(rs.brandCode);
         break;
       }
       break;
