@@ -462,7 +462,7 @@ const getCoti = async (sender,parameters) => {
   }
 
 
-const getBrandStyle = async (senderValue,bearerAuth,carArray) => {
+const getBrandStyle = async (senderValue,bearerAuth) => {
 const urlAuto ='https://login.universales.com/inspeccion/v2/api/brand';
 await axios.get(urlAuto,
   {
@@ -475,7 +475,7 @@ await axios.get(urlAuto,
       {
         console.log("Marca:" + rs.brandName);
         console.log("codeMarca:" + rs.brandCode);
-        carArray.push(rs.brandCode);
+        config.CARARRAY.push(rs.brandCode);
         break;
       }
     }
