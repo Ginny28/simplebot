@@ -375,7 +375,7 @@ const callToken = async (authData,polNum,wService,sender) => {
             case 3:
             	console.log("here i am once again!!"+response.data.recordset.token);
             	console.log(".. "+ polNum);
-                   //getBrandStyle(polNum,response.data.recordset.token,true);
+                getBrandStyle(polNum,response.data.recordset.token);
             break;
             default:
             break;
@@ -461,13 +461,33 @@ const getCoti = async (sender,parameters) => {
       });
   }
 
-const getBrandStyle = async (brandStyle,bearerAuth,flag) => {
 
+const getBrandStyle = async (polNum,bearerAuth) => {
+console.log("qq: "+ polNum)
 const urlAuto ='https://login.universales.com/inspeccion/v2/api/brand';
 await axios.get(urlAuto,
   {
   headers: {'Authorization': 'Bearer '+ bearerAuth }
   }).then(function (response) {
+  	console.log('kkk:'+ response.data);
+  })
+   .catch(function (error) {
+      console.log('ErRo:'+ error.response.headers);
+      console.log('res: No Existo!!');
+    });
+}
+
+
+
+
+
+
+
+const getBrandStyle = async (brandStyle,bearerAuth,flag) => {
+
+const urlAuto ='https://login.universales.com/inspeccion/v2/api/brand';
+await axios.get(urlAuto,
+  {headers: {'Authorization': 'Bearer '+ bearerAuth }}).then(function (response) {
         if(dataPol.code =='200')
           {
             for (var i = 0; i < response.data.recordset.length; i++)
