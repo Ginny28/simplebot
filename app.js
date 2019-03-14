@@ -5,7 +5,7 @@ const uuid = require("uuid");
 const axios = require("axios");
 var SimpleDate = require('simple-datejs');
 var config = require('./Global.js');
-var myCarData = [];
+var myBrand = [];
 
 
 
@@ -217,12 +217,12 @@ function handleApiAiResponse(sender, response) {
    if (isDefined(parameters.marca))
    {
     console.log("tengo marca y estilo asignado -> "+parameters.marca);
-    myCarData.push(parameters.marca);
+    myBrand.push(parameters.marca.toUpperCase());
    }
    if (isDefined(parameters.estilo))
    {
     console.log("tengo marca y estilo asignado -> "+parameters.estilo);
-    myCarData.push(parameters.estilo);
+    myBrand.push(parameters.estilo.toUpperCase());
    }
 
 
@@ -314,11 +314,10 @@ function handleApiAiAction(sender, action, responseText, contexts, parameters) {
       sendQuickReply(sender, textRp, replies);
       break;
     case "Auto-marca":
-      console.log("para: "+ parameters.marca);
-      callToken(config.AUTHSERVICE,parameters.marca,3,sender);
       sendTextMessage(sender,"Me puede brindar  el estilo de su vehículo [ex. Yaris]");
     break;
     case "Auto-estilo":
+    callToken(config.AUTHSERVICE,myBrand,3,null);
     for (var i = 0; i < config.CARARRAY.length; i++) {
       console.log("valores:" + config.CARARRAY[i]);
     }
@@ -378,8 +377,7 @@ const callToken = async (authData,senderValue,wService,sender) => {
                 sendTextMessage(sender,temp);
               break;
             case 3:
-              getBrandStyle(senderValue,response.data.recordset.token,config.CARARRAY);
-
+              getBrandStyle(senderValue,response.data.recordset.token);
             break;
             default:
             break;
@@ -466,24 +464,23 @@ const getCoti = async (sender,parameters) => {
   }
 
 
-const getBrandStyle = async (senderValue,bearerAuth,arreglo) => {
+const getBrandStyle = async (senderValue,bearerAuth) => {
 const urlAuto ='https://login.universales.com/inspeccion/v2/api/brand';
 await axios.get(urlAuto,
   {
   headers: {'Authorization': 'Bearer '+ bearerAuth }
   }).then(function (response) {
-    var BrandU = senderValue.toUpperCase();
-    for (var i = 0; i < response.data.recordset.length; i++) {
+    console.log("1. "+ senderValue[0] +" 2." + senderValue[1]);
+  /*  for (var i = 0; i < response.data.recordset.length; i++) {
       rs = response.data.recordset[i]
-      if(rs.brandName == BrandU)
-      {
-        console.log("Marca:" + rs.brandName);
-        console.log("codeMarca:" + rs.brandCode);
-        arreglo.push(rs.brandCode);
-        break;
-      }
-
-    }
+          if(rs.brandName == brandStyleU)
+          {
+            console.log("Marca:" + rs.brandName);
+            console.log("codeMarca:" + rs.brandCode);
+            config.CARARRAY.push(rs.brandCode);
+            break;
+          }
+    }*/
   })
    .catch(function (error) {
       console.log('ErRo:'+ error.response.headers);
