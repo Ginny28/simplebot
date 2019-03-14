@@ -458,7 +458,7 @@ const getCoti = async (sender,parameters) => {
       });
   }
 
-const getBrandStyle = async (brandStyle,bearerAuth,flag) => {
+/*const getBrandStyle = async (brandStyle,bearerAuth,flag) => {
 
 const urlAuto ='https://login.universales.com/inspeccion/v2/api/brand';
 await axios.get(urlAuto,
@@ -489,3 +489,4 @@ await axios.get(urlAuto,
       console.log('ErRo:'+ error.response.headers);
     });
 }
+*/
