@@ -443,7 +443,7 @@ await axios.get(urlSaldo,
 
 const getCoti = async (sender,parameters) => {
 console.log("paras:" + parameters);
-  const url = "http://test.universales.com/universales-fe/camel/cotizadorAutos?"+parameters;
+  /*const url = "http://test.universales.com/universales-fe/camel/cotizadorAutos?"+parameters;
     await axios.post(url)
       .then(function (response) {
 
@@ -453,7 +453,7 @@ console.log("paras:" + parameters);
       })
       .catch(function (error) {
         console.log(error.response);
-      });
+      }); */
   }
 
 
