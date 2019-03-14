@@ -375,7 +375,7 @@ const callToken = async (authData,polNum,wService,sender) => {
             case 3:
             	console.log("here i am once again!!"+response.data.recordset.token);
             	console.log(".. "+ polNum);
-                getBrandStyle(polNum,response.data.recordset.token);
+              getBrandStyle(polNum,response.data.recordset.token);
             break;
             default:
             break;
@@ -454,7 +454,7 @@ const getCoti = async (sender,parameters) => {
           var response ="Le adjunto el link de su cotización \n http://test.universales.com/reportes/reporte?"+urlCoti
           sendTextMessage(senderID, response);
         }
-        
+
       })
       .catch(function (error) {
         console.log(error.response.headers);
@@ -469,6 +469,7 @@ await axios.get(urlAuto,
   {
   headers: {'Authorization': 'Bearer '+ bearerAuth }
   }).then(function (response) {
+    console.log("marca:" + response.data.recordset[0].brandName);
   	console.log('kkk:'+ response.data);
   })
    .catch(function (error) {
