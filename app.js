@@ -5,7 +5,7 @@ const uuid = require("uuid");
 const axios = require("axios");
 var SimpleDate = require('simple-datejs');
 var config = require('./Global.js');
-var myCarData = [];
+var myBrandStyle = [];
 
 
 
@@ -217,12 +217,12 @@ function handleApiAiResponse(sender, response) {
    if (isDefined(parameters.marca))
    {
     console.log("tengo marca y estilo asignado -> "+parameters.marca);
-    myCarData.push(parameters.marca);
+    myBrandStyle.push(parameters.marca);
    }
    if (isDefined(parameters.estilo))
    {
     console.log("tengo marca y estilo asignado -> "+parameters.estilo);
-    myCarData.push(parameters.estilo);
+    myBrandStyle.push(parameters.estilo);
    }
 
 
@@ -315,7 +315,10 @@ function handleApiAiAction(sender, action, responseText, contexts, parameters) {
       break;
     case "Auto-marca":
       console.log("para: "+ parameters.marca);
-      callToken(config.AUTHSERVICE,parameters.marca,3,sender);
+    //  callToken(config.AUTHSERVICE,parameters.marca,3,sender);
+    break;
+    case "Auto-estilo":
+          callToken(config.AUTHSERVICE,myBrandStyle,3,sender);
     break;
     case "saldoPol-poliza":
        callToken(config.AUTHSERVICE,nPoliza(parameters.poliza.number),1,sender);
@@ -372,7 +375,7 @@ const callToken = async (authData,senderValue,wService,sender) => {
                 sendTextMessage(sender,temp);
               break;
             case 3:
-              getBrandStyle(senderValue,response.data.recordset.token,config.CARARRAY);
+              getBrandStyle(myBrandStyle,response.data.recordset.token,config.CARARRAY);
               for (var i = 0; i < config.CARARRAY.length; i++) {
                 console.log("valores:" + config.CARARRAY[i]);
               }
@@ -468,8 +471,11 @@ await axios.get(urlAuto,
   {
   headers: {'Authorization': 'Bearer '+ bearerAuth }
   }).then(function (response) {
-    var BrandU = senderValue.toUpperCase();
-    for (var i = 0; i < response.data.recordset.length; i++) {
+    var BrandU = myBrandStyle[0].toUpperCase();
+    var StyleU = myBrandStyle[1].toUpperCase();
+
+    console.log("td: "+ BrandU +" "+StyleU);
+  /*  for (var i = 0; i < response.data.recordset.length; i++) {
       rs = response.data.recordset[i]
       if(rs.brandName == BrandU)
       {
@@ -478,8 +484,8 @@ await axios.get(urlAuto,
       //  arreglo.push(rs.brandCode);
         break;
       }
-      break;
     }
+    */
   })
    .catch(function (error) {
       console.log('ErRo:'+ error.response.headers);
