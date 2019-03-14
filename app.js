@@ -207,12 +207,12 @@ function handleApiAiResponse(sender, response) {
 
 
      console.log("tengo modelo asignado ->"+parameters.modelo);
-     myCarData.push(parameters.modelo);
+     config.CARARRAY.push(parameters.modelo);
    }
    if (isDefined(parameters.sumaAseg))
    {
     console.log("tengo valor asignado -> "+parameters.sumaAseg);
-    myCarData.push(parameters.sumaAseg);
+    config.CARARRAY.push(parameters.sumaAseg);
    }
    if (isDefined(parameters.marca))
    {
@@ -365,16 +365,16 @@ const callToken = async (authData,senderValue,wService,sender) => {
               getSaldo(senderValue,response.data.recordset.token,sender);
               break;
             case 2:
-            var temp ="";
+            var temp ="holis";
 
-                temp += "Su auto es un " + myCarData[2] +" "+myCarData[3]+" modelo "+ myCarData[0] +" valorado en :"+myCarData[1];
+            //    temp += "Su auto es un " + myCarData[2] +" "+myCarData[3]+" modelo "+ myCarData[0] +" valorado en :"+myCarData[1];
                 getUserData(sender);
                 sendTextMessage(sender,temp);
               break;
             case 3:
               getBrandStyle(senderValue,response.data.recordset.token);
-              for (var i = 0; i < myCarData.length; i++) {
-                console.log("valores:" + myCarData[i]);
+              for (var i = 0; i < config.CARARRAY.length; i++) {
+                console.log("valores:" + config.CARARRAY[i]);
               }
             break;
             default:
@@ -462,8 +462,7 @@ const getCoti = async (sender,parameters) => {
   }
 
 
-const getBrandStyle = async (senderValue,bearerAuth) => {
-console.log("qq: "+ senderValue)
+const getBrandStyle = async (senderValue,bearerAuth,carArray) => {
 const urlAuto ='https://login.universales.com/inspeccion/v2/api/brand';
 await axios.get(urlAuto,
   {
@@ -475,7 +474,8 @@ await axios.get(urlAuto,
       if(rs.brandName == BrandU)
       {
         console.log("Marca:" + rs.brandName);
-        myCarData.push(rs.brandCode);
+        console.log("codeMarca:" + rs.brandCode);
+        carArray.push(rs.brandCode);
         break;
       }
     }
