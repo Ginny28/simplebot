@@ -444,8 +444,11 @@ await axios.get(urlSaldo,
 
 const getCoti = async (sender,parameters) => {
 
+console.log("Estoy aquí!");
   const url = "http://test.universales.com/universales-fe/camel/cotizadorAutos?";
-    await axios.post(url,parameters)
+    await axios.post(url,parameters,{
+  headers: {'Content-Type' : 'application/x-www-form-urlencoded' }
+  })
       .then(function (response) {
         if (response.status == 200)
         {
