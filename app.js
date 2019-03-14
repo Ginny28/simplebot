@@ -314,7 +314,8 @@ function handleApiAiAction(sender, action, responseText, contexts, parameters) {
       sendQuickReply(sender, textRp, replies);
       break;
     case "Auto-marca":
-      callToken(config.AUTHSERVICE,parameters.marca,2,sender);
+      console.log("para: "+ parameters.marca);
+      //callToken(config.AUTHSERVICE,parameters.marca,2,sender);
     break;
     case "saldoPol-poliza":
        callToken(config.AUTHSERVICE,nPoliza(parameters.poliza.number),1,sender);
