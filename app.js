@@ -317,9 +317,8 @@ function handleApiAiAction(sender, action, responseText, contexts, parameters) {
       sendTextMessage(sender,"Me puede brindar  el estilo de su vehículo [ex. Yaris]");
     break;
     case "Auto-estilo":
-       //callToken(config.AUTHSERVICE,myBrand,3,null);
-       var nome = "mi nombre es ";
-       getUserData(sender,nome);
+       callToken(config.AUTHSERVICE,myBrand,3,sender);
+
     break;
     case "saldoPol-poliza":
        callToken(config.AUTHSERVICE,nPoliza(parameters.poliza.number),1,sender);
@@ -471,7 +470,7 @@ await axios.get(urlAuto,
           {
             var parametros = "&marca="+rs.brandCode+"&modelo="+config.CARARRAY[0]+"&estilo="+rs.styleCode+"&ttipovehi="+rs.type+"&valor="+config.CARARRAY[1]+"&nombreCliente=";
             var datos = 'paquete=1019&oficina=01&observacion=CotizacionFB&formaPago=BC'+parametros;
-            getUserData(sender,datos);
+             getUserData(sender,datos);
             break;
           }
     }
