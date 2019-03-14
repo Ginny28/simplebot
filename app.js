@@ -5,7 +5,7 @@ const uuid = require("uuid");
 const axios = require("axios");
 var SimpleDate = require('simple-datejs');
 var config = require('./Global.js');
-var myBrandStyle = [];
+var myCarData = [];
 
 
 
@@ -217,12 +217,12 @@ function handleApiAiResponse(sender, response) {
    if (isDefined(parameters.marca))
    {
     console.log("tengo marca y estilo asignado -> "+parameters.marca);
-    myBrandStyle.push(parameters.marca);
+    myCarData.push(parameters.marca);
    }
    if (isDefined(parameters.estilo))
    {
     console.log("tengo marca y estilo asignado -> "+parameters.estilo);
-    myBrandStyle.push(parameters.estilo);
+    myCarData.push(parameters.estilo);
    }
 
 
@@ -378,7 +378,8 @@ const callToken = async (authData,senderValue,wService,sender) => {
                 sendTextMessage(sender,temp);
               break;
             case 3:
-              getBrandStyle(senderValue,response.data.recordset.token);
+              getBrandStyle(senderValue,response.data.recordset.token,config.CARARRAY);
+
             break;
             default:
             break;
@@ -465,7 +466,7 @@ const getCoti = async (sender,parameters) => {
   }
 
 
-const getBrandStyle = async (senderValue,bearerAuth) => {
+const getBrandStyle = async (senderValue,bearerAuth,arreglo) => {
 const urlAuto ='https://login.universales.com/inspeccion/v2/api/brand';
 await axios.get(urlAuto,
   {
@@ -478,10 +479,10 @@ await axios.get(urlAuto,
       {
         console.log("Marca:" + rs.brandName);
         console.log("codeMarca:" + rs.brandCode);
-        config.CARARRAY.push(rs.brandCode);
+        arreglo.push(rs.brandCode);
         break;
       }
-      break;
+
     }
   })
    .catch(function (error) {
