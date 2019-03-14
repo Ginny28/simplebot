@@ -315,7 +315,7 @@ function handleApiAiAction(sender, action, responseText, contexts, parameters) {
       break;
     case "Auto-marca":
       console.log("para: "+ parameters.marca);
-      //callToken(config.AUTHSERVICE,parameters.marca,2,sender);
+      callToken(config.AUTHSERVICE,parameters.marca,3,sender);
     break;
     case "saldoPol-poliza":
        callToken(config.AUTHSERVICE,nPoliza(parameters.poliza.number),1,sender);
@@ -459,7 +459,7 @@ const getCoti = async (sender,parameters) => {
       });
   }
 
-/*const getBrandStyle = async (brandStyle,bearerAuth,flag) => {
+const getBrandStyle = async (brandStyle,bearerAuth,flag) => {
 
 const urlAuto ='https://login.universales.com/inspeccion/v2/api/brand';
 await axios.get(urlAuto,
@@ -490,4 +490,3 @@ await axios.get(urlAuto,
       console.log('ErRo:'+ error.response.headers);
     });
 }
-*/
