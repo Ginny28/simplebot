@@ -449,9 +449,10 @@ const getCoti = async (sender,parameters) => {
         if (response.status == 200)
         {
           var urlCoti = response.data.url;
-          var response ="Le adjunto el link de su cotización \n http://test.universales.com/reportes/reporte?"+urlCoti}
+          var response ="Le adjunto el link de su cotización \n http://test.universales.com/reportes/reporte?"+urlCoti
           sendTextMessage(senderID, response);
         }
+        
       })
       .catch(function (error) {
         console.log(error.response.headers);
