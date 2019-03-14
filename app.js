@@ -373,7 +373,9 @@ const callToken = async (authData,polNum,wService,sender) => {
               console.log("haré una cotización");
               break;
             case 3:
-                   getBrandStyle(polNum,response.data.recordset.token,true);
+            	console.log("here i am once again!!"+response.data.recordset.token);
+            	console.log(".. "+ polNum);
+                   //getBrandStyle(polNum,response.data.recordset.token,true);
             break;
             default:
             break;
@@ -477,8 +479,8 @@ await axios.get(urlAuto,
                   if (rs.brandName == brandStyle.toUpperCase())
                     {
                     console.log('brnd',rs.brandCode);
-                    myCarData.push(rs.brandCode);
-                    break;
+                    //myCarData.push(rs.brandCode);
+                    //break;
                     }
                 }
 
