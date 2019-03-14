@@ -485,6 +485,8 @@ const getUserData = async (sender,valor) => {
 const urlUser ='https://graph.facebook.com/v3.0/'+sender+'?fields=name&access_token='+config.PAGE_ACCESS_TOKEN;
 await axios.get(urlUser).then(function (response) {
     valor += response.data.name;
+    getCoti(sender,valor);
+
     console.log("sss:"+valor);
   })
    .catch(function (error) {
