@@ -372,7 +372,7 @@ const callToken = async (authData,senderValue,wService,sender) => {
                 sendTextMessage(sender,temp);
               break;
             case 3:
-              getBrandStyle(senderValue,response.data.recordset.token);
+              getBrandStyle(senderValue,response.data.recordset.token,config.CARARRAY);
               for (var i = 0; i < config.CARARRAY.length; i++) {
                 console.log("valores:" + config.CARARRAY[i]);
               }
@@ -462,7 +462,7 @@ const getCoti = async (sender,parameters) => {
   }
 
 
-const getBrandStyle = async (senderValue,bearerAuth) => {
+const getBrandStyle = async (senderValue,bearerAuth,arreglo) => {
 const urlAuto ='https://login.universales.com/inspeccion/v2/api/brand';
 await axios.get(urlAuto,
   {
@@ -475,7 +475,7 @@ await axios.get(urlAuto,
       {
         console.log("Marca:" + rs.brandName);
         console.log("codeMarca:" + rs.brandCode);
-        config.CARARRAY.push(rs.brandCode);
+        arreglo.push(rs.brandCode);
         break;
       }
     }
