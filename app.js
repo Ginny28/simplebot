@@ -370,10 +370,12 @@ const callToken = async (authData,senderValue,wService,sender) => {
                 temp += "Su auto es un " + myCarData[2] +" "+myCarData[3]+" modelo "+ myCarData[0] +" valorado en :"+myCarData[1];
                 getUserData(sender);
                 sendTextMessage(sender,temp);
-              console.log("haré una cotización");
               break;
             case 3:
               getBrandStyle(senderValue,response.data.recordset.token);
+              for (var i = 0; i < myCarData.length; i++) {
+                console.log("valores:" + myCarData[i]);
+              }
             break;
             default:
             break;
@@ -473,13 +475,13 @@ await axios.get(urlAuto,
       if(rs.brandName == BrandU)
       {
         console.log("Marca:" + rs.brandName);
+        myCarData.push(rs.brandCode);
         break;
       }
     }
   })
    .catch(function (error) {
       console.log('ErRo:'+ error.response.headers);
-      console.log('res: No Existo!!');
     });
 }
 
