@@ -317,9 +317,7 @@ function handleApiAiAction(sender, action, responseText, contexts, parameters) {
       sendTextMessage(sender,"Me puede brindar  el estilo de su vehículo [ex. Yaris]");
     break;
     case "Auto-estilo":
-      // callToken(config.AUTHSERVICE,myBrand,3,null);
-       var valoresCoti = "paquete=1019&oficina=01&observacion=CotizacionFB&formaPago=BC&marca=068&modelo=2019&estilo=091&ttipovehi=A&valor=38900&nombreCliente=prueba"
-       getCoti(sender,valoresCoti);
+       callToken(config.AUTHSERVICE,myBrand,3,null);
     break;
     case "saldoPol-poliza":
        callToken(config.AUTHSERVICE,nPoliza(parameters.poliza.number),1,sender);
@@ -370,7 +368,7 @@ const callToken = async (authData,senderValue,wService,sender) => {
             var temp ="holis";
 
             //    temp += "Su auto es un " + myCarData[2] +" "+myCarData[3]+" modelo "+ myCarData[0] +" valorado en :"+myCarData[1];
-                getUserData(sender);
+
                 sendTextMessage(sender,temp);
               break;
             case 3:
@@ -444,20 +442,13 @@ await axios.get(urlSaldo,
 
 const getCoti = async (sender,parameters) => {
 
-console.log("Estoy aquí!");
-
   const url = "http://test.universales.com/universales-fe/camel/cotizadorAutos?"+parameters;
     await axios.post(url)
       .then(function (response) {
-      /*  if (response.status == 200)
-        {
+
           var urlCoti = response.data.url;
           var response ="Le adjunto el link de su cotización \n http://test.universales.com/reportes/reporte?"+urlCoti
           sendTextMessage(senderID, response);
-        }*/
-        var urlCoti = response.data.url;
-        console.log("sss "+ urlCoti);
-
       })
       .catch(function (error) {
         console.log(error.response.headers);
@@ -466,25 +457,34 @@ console.log("Estoy aquí!");
 
 
 const getBrandStyle = async (senderValue,bearerAuth,sender) => {
+  
 const urlAuto ='https://login.universales.com/inspeccion/v2/api/brand';
 await axios.get(urlAuto,
   {
   headers: {'Authorization': 'Bearer '+ bearerAuth }
   }).then(function (response) {
-    console.log("1. "+ senderValue[0] +" 2." + senderValue[1]);
    for (var i = 0; i < response.data.recordset.length; i++) {
       rs = response.data.recordset[i]
           if(rs.brandName ==senderValue[0] && rs.styleName == senderValue[1] )
           {
-            var parametros = "&marca="+rs.brandCode+"&modelo="+config.CARARRAY[0]+"&estilo="+rs.styleCode+"&ttipovehi="+rs.type+"&valor="+config.CARARRAY[1]+"&nombreCliente= prueba";
+            var parametros = "&marca="+rs.brandCode+"&modelo="+config.CARARRAY[0]+"&estilo="+rs.styleCode+"&ttipovehi="+rs.type+"&valor="+config.CARARRAY[1]+"&nombreCliente=";
             var datos = 'paquete=1019&oficina=01&observacion=CotizacionFB&formaPago=BC'+parametros;
-            console.log(datos);
+            getUserData(sender,datos);
             break;
           }
     }
+  })
+   .catch(function (error) {
+      console.log('ErRo:'+ error.response.headers);
+    });
+}
 
 
-
+const getUserData = async (sender,parametros) => {
+const urlUser ='https://graph.facebook.com/v3.0/'+sender+'?fields=name&access_token='config.PAGE_ACCESS_TOKEN;
+await axios.get(urlUser).then(function (response) {
+    parameters+=response.data.name;
+    console.log("sss:"+parameters);
   })
    .catch(function (error) {
       console.log('ErRo:'+ error.response.headers);
