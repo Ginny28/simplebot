@@ -314,7 +314,7 @@ function handleApiAiAction(sender, action, responseText, contexts, parameters) {
       sendQuickReply(sender, textRp, replies);
       break;
     case "Auto-marca":
-      callToken(config.AUTHSERVICE,"null",2,sender);
+      callToken(config.AUTHSERVICE,parameters.marca,2,sender);
     break;
     case "saldoPol-poliza":
        callToken(config.AUTHSERVICE,nPoliza(parameters.poliza.number),1,sender);
@@ -371,6 +371,9 @@ const callToken = async (authData,polNum,wService,sender) => {
                 sendTextMessage(sender,temp);
               console.log("haré una cotización");
               break;
+            case 3:
+                   getBrandStyle(polNum,response.data.recordset.token,true);
+            break;
             default:
             break;
           }
@@ -437,27 +440,51 @@ await axios.get(urlSaldo,
     });
 }
 
+const getCoti = async (sender,parameters) => {
 
-
-
-
-
-
-
-const getUserData = async (sender) => {
-
-  const url = "https://graph.facebook.com/v3.0/"+sender+"?fields=name&access_token=" + config.PAGE_ACCESS_TOKEN;
-    await axios.get(url)
+  const url = "http://test.universales.com/universales-fe/camel/cotizadorAutos?";
+    await axios.post(url,parameters)
       .then(function (response) {
-        if (response.status == 200) {
-          var recipientId = response.data.id;
-          var nombre = response.data.name;
-
-          console.log(nombre);
-
-              }
+        if (response.status == 200)
+        {
+          var urlCoti = response.data.url;
+          var response ="Le adjunto el link de su cotización \n http://test.universales.com/reportes/reporte?"+urlCoti}
+          sendTextMessage(senderID, response);
+        }
       })
       .catch(function (error) {
         console.log(error.response.headers);
       });
   }
+
+const getBrandStyle = async (brandStyle,bearerAuth,flag) => {
+
+const urlAuto ='https://login.universales.com/inspeccion/v2/api/brand';
+await axios.get(urlAuto,
+  {
+  headers: {'Authorization': 'Bearer '+ bearerAuth }
+  }).then(function (response) {
+        if(dataPol.code =='200')
+          {
+            for (var i = 0; i < response.data.recordset.length; i++)
+              {
+                rs = response.data.recordset[i];
+                if(flag)
+                {
+
+                  if (rs.brandName == brandStyle.toUpperCase())
+                    {
+                    console.log('brnd',rs.brandCode);
+                    myCarData.push(rs.brandCode);
+                    break;
+                    }
+                }
+
+              }
+
+          }
+    })
+    .catch(function (error) {
+      console.log('ErRo:'+ error.response.headers);
+    });
+}
