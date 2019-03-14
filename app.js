@@ -317,7 +317,8 @@ function handleApiAiAction(sender, action, responseText, contexts, parameters) {
       sendTextMessage(sender,"Me puede brindar  el estilo de su vehículo [ex. Yaris]");
     break;
     case "Auto-estilo":
-       callToken(config.AUTHSERVICE,myBrand,3,null);
+       //callToken(config.AUTHSERVICE,myBrand,3,null);
+       getUserData(sender);
     break;
     case "saldoPol-poliza":
        callToken(config.AUTHSERVICE,nPoliza(parameters.poliza.number),1,sender);
@@ -480,11 +481,11 @@ await axios.get(urlAuto,
 }
 
 
-const getUserData = async (sender,parametros) => {
+const getUserData = async (sender) => {
 const urlUser ='https://graph.facebook.com/v3.0/'+sender+'?fields=name&access_token='+config.PAGE_ACCESS_TOKEN;
 await axios.get(urlUser).then(function (response) {
-    parameters+=response.data.name;
-    console.log("sss:"+parameters);
+
+    console.log("sss:"+response.data.name;);
   })
    .catch(function (error) {
       console.log('ErRo:'+ error.response.headers);
