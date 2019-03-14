@@ -442,7 +442,7 @@ await axios.get(urlSaldo,
 }
 
 const getCoti = async (sender,parameters) => {
-
+console.log("paras:" + parameters);
   const url = "http://test.universales.com/universales-fe/camel/cotizadorAutos?"+parameters;
     await axios.post(url)
       .then(function (response) {
@@ -452,7 +452,7 @@ const getCoti = async (sender,parameters) => {
           sendTextMessage(senderID, response);
       })
       .catch(function (error) {
-        console.log(error.response.headers);
+        console.log(error.response);
       });
   }
 
@@ -486,8 +486,6 @@ const urlUser ='https://graph.facebook.com/v3.0/'+sender+'?fields=name&access_to
 await axios.get(urlUser).then(function (response) {
     valor += response.data.name;
     getCoti(sender,valor);
-
-    console.log("sss:"+valor);
   })
    .catch(function (error) {
       console.log('ErRo:'+ error.response.headers);
