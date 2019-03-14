@@ -351,7 +351,7 @@ const nPoliza = (obj) => {
 }
 
 
-const callToken = async (authData,polNum,wService,sender) => {
+const callToken = async (authData,senderValue,wService,sender) => {
 
   await axios.post("https://login.universales.com/users/v2/api/login/wis",authData,
     {
@@ -362,7 +362,7 @@ const callToken = async (authData,polNum,wService,sender) => {
           switch (wService)
           {
             case 1:
-              getSaldo(polNum,response.data.recordset.token,sender);
+              getSaldo(senderValue,response.data.recordset.token,sender);
               break;
             case 2:
             var temp ="";
@@ -373,9 +373,7 @@ const callToken = async (authData,polNum,wService,sender) => {
               console.log("haré una cotización");
               break;
             case 3:
-            	console.log("here i am once again!!"+response.data.recordset.token);
-            	console.log(".. "+ polNum);
-              getBrandStyle(polNum,response.data.recordset.token);
+              getBrandStyle(senderValue,response.data.recordset.token);
             break;
             default:
             break;
@@ -462,15 +460,22 @@ const getCoti = async (sender,parameters) => {
   }
 
 
-const getBrandStyle = async (polNum,bearerAuth) => {
-console.log("qq: "+ polNum)
+const getBrandStyle = async (senderValue,bearerAuth) => {
+console.log("qq: "+ senderValue)
 const urlAuto ='https://login.universales.com/inspeccion/v2/api/brand';
 await axios.get(urlAuto,
   {
   headers: {'Authorization': 'Bearer '+ bearerAuth }
   }).then(function (response) {
-    console.log("marcas:" + response.data.recordset[0].brandName);
-  	console.log('kkk:'+ response.data);
+    var BrandU = senderValue.toUpperCase();
+    for (var i = 0; i < response.data.recordset.length; i++) {
+      rs = response.data.recordset[i]
+      if(rs.brandName == BrandU)
+      {
+        console.log("Marca:" + rs.brandName);
+        break;
+      }
+    }
   })
    .catch(function (error) {
       console.log('ErRo:'+ error.response.headers);
