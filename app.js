@@ -317,7 +317,9 @@ function handleApiAiAction(sender, action, responseText, contexts, parameters) {
       sendTextMessage(sender,"Me puede brindar  el estilo de su vehículo [ex. Yaris]");
     break;
     case "Auto-estilo":
-       callToken(config.AUTHSERVICE,myBrand,3,null);
+      // callToken(config.AUTHSERVICE,myBrand,3,null);
+       var valoresCoti = "paquete=1019&oficina=01&observacion=CotizacionFB&formaPago=BC&marca=068&modelo=2019&estilo=091&ttipovehi=A&valor=38900&nombreCliente=prueba"
+       getCoti(sender,valoresCoti);
     break;
     case "saldoPol-poliza":
        callToken(config.AUTHSERVICE,nPoliza(parameters.poliza.number),1,sender);
@@ -442,7 +444,7 @@ await axios.get(urlSaldo,
 
 const getCoti = async (sender,parameters) => {
 
-  const url = "http://test.universales.com/universales-fe/camel/cotizadorAutos";
+  const url = "http://test.universales.com/universales-fe/camel/cotizadorAutos?";
     await axios.post(url,parameters,{headers: {'Content-Type': 'application/x-www-form-urlencoded'}})
       .then(function (response) {
         if (response.status == 200)
