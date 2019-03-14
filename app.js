@@ -442,7 +442,7 @@ await axios.get(urlSaldo,
 
 const getCoti = async (sender,parameters) => {
 
-  const url = "http://test.universales.com/universales-fe/camel/cotizadorAutos?";
+  const url = "http://test.universales.com/universales-fe/camel/cotizadorAutos";
     await axios.post(url,parameters)
       .then(function (response) {
         if (response.status == 200)
@@ -473,7 +473,7 @@ await axios.get(urlAuto,
             var parametros = "&marca="+rs.brandCode+"&modelo="+config.CARARRAY[0]+"&estilo="+rs.styleCode+"&ttipovehi="+rs.type+"&valor="+config.CARARRAY[1]+"&nombreCliente= prueba";
             var datos = 'paquete=1019&oficina=01&observacion=CotizacionFB&formaPago=BC'+parametros;
             console.log(datos);
-          //  getCoti(sender,datos);
+            getCoti(sender,datos);
             break;
           }
     }
