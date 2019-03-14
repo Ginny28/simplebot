@@ -471,16 +471,15 @@ await axios.get(urlAuto,
   headers: {'Authorization': 'Bearer '+ bearerAuth }
   }).then(function (response) {
     console.log("1. "+ senderValue[0] +" 2." + senderValue[1]);
-  /*  for (var i = 0; i < response.data.recordset.length; i++) {
+   for (var i = 0; i < response.data.recordset.length; i++) {
       rs = response.data.recordset[i]
-          if(rs.brandName == brandStyleU)
+          if(rs.brandName ==senderValue[0] && rs.styleName == senderValue[1] )
           {
-            console.log("Marca:" + rs.brandName);
-            console.log("codeMarca:" + rs.brandCode);
             config.CARARRAY.push(rs.brandCode);
+            config.CARARRAY.push(rs.styleCode);
             break;
           }
-    }*/
+    }
   })
    .catch(function (error) {
       console.log('ErRo:'+ error.response.headers);
