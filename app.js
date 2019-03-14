@@ -469,7 +469,7 @@ await axios.get(urlAuto,
   {
   headers: {'Authorization': 'Bearer '+ bearerAuth }
   }).then(function (response) {
-    console.log("marca:" + response.data.recordset[0].brandName);
+    console.log("marcas:" + response.data.recordset[0].brandName);
   	console.log('kkk:'+ response.data);
   })
    .catch(function (error) {
