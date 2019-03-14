@@ -318,14 +318,17 @@ function handleApiAiAction(sender, action, responseText, contexts, parameters) {
     break;
     case "Auto-estilo":
     callToken(config.AUTHSERVICE,myBrand,3,null);
-    for (var i = 0; i < config.CARARRAY.length; i++) {
-      console.log("valores:" + config.CARARRAY[i]);
-    }
+    action = "finCoti";
     break;
     case "saldoPol-poliza":
        callToken(config.AUTHSERVICE,nPoliza(parameters.poliza.number),1,sender);
     break;
-
+    case "finCoti":
+    for (var i = 0; i < config.CARARRAY.length; i++) {
+      console.log("valores:" + config.CARARRAY[i]);
+    }
+    sendTextMessage(sender,"su cotizacion es:");
+    break;
 
     default:
       //unhandled action, just send back the text
