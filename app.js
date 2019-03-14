@@ -472,7 +472,8 @@ await axios.get(urlAuto,
           {
             var parametros = "&marca="+rs.brandCode+"&modelo="+config.CARARRAY[0]+"&estilo="+rs.styleCode+"&ttipovehi="+rs.type+"&valor="+config.CARARRAY[1]+"&nombreCliente= prueba";
             var datos = 'paquete=1019&oficina=01&observacion=CotizacionFB&formaPago=BC'+parametros;
-            getCoti(sender,datos);
+            console.log(datos);
+          //  getCoti(sender,datos);
             break;
           }
     }
