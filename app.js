@@ -367,7 +367,8 @@ const callToken = async (authData,polNum,wService,sender) => {
             var temp ="";
 
                 temp += "Su auto es un " + myCarData[2] +" "+myCarData[3]+" modelo "+ myCarData[0] +" valorado en :"+myCarData[1];
-                getUserData(sender);
+                var dataval = getUserData(sender);
+                console.log("nombres:"+ dataval);
                 sendTextMessage(sender,temp);
               console.log("haré una cotización");
               break;
@@ -453,12 +454,7 @@ const getUserData = async (sender) => {
           var recipientId = response.data.id;
           var nombre = response.data.name;
 
-            console.log(
-              "nombre %s del usuario %s",
-              messageId,
-              nombre
-            );
-
+          return nombre;
         }
       })
       .catch(function (error) {
