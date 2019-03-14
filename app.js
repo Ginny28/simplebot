@@ -457,7 +457,7 @@ const getCoti = async (sender,parameters) => {
 
 
 const getBrandStyle = async (senderValue,bearerAuth,sender) => {
-  
+
 const urlAuto ='https://login.universales.com/inspeccion/v2/api/brand';
 await axios.get(urlAuto,
   {
@@ -481,7 +481,7 @@ await axios.get(urlAuto,
 
 
 const getUserData = async (sender,parametros) => {
-const urlUser ='https://graph.facebook.com/v3.0/'+sender+'?fields=name&access_token='config.PAGE_ACCESS_TOKEN;
+const urlUser ='https://graph.facebook.com/v3.0/'+sender+'?fields=name&access_token='+config.PAGE_ACCESS_TOKEN;
 await axios.get(urlUser).then(function (response) {
     parameters+=response.data.name;
     console.log("sss:"+parameters);
