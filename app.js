@@ -475,7 +475,7 @@ await axios.get(urlAuto,
       {
         console.log("Marca:" + rs.brandName);
         console.log("codeMarca:" + rs.brandCode);
-        arreglo.push(rs.brandCode);
+      //  arreglo.push(rs.brandCode);
         break;
       }
     }
