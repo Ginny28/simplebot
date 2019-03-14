@@ -455,7 +455,8 @@ console.log("Estoy aquí!");
           var response ="Le adjunto el link de su cotización \n http://test.universales.com/reportes/reporte?"+urlCoti
           sendTextMessage(senderID, response);
         }*/
-        console.log("sss "+ response.data);
+        var urlCoti = response.data.url;
+        console.log("sss "+ urlCoti);
 
       })
       .catch(function (error) {
