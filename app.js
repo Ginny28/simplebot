@@ -85,8 +85,10 @@ function receivedMessage(event) {
   var timeOfMessage = event.timestamp;
   var message = event.message;
 
-  if (!sessionIds.has(senderID)) {
-    sessionIds.set(senderID, uuid.v1());
+  if (!sessionIds.has(senderID))
+  {
+     sessionIds.set(senderID, uuid.v1());
+     config.CARARRAY[senderID] = {status:'OK'};
   }
 
   var messageId = message.mid;
@@ -117,7 +119,7 @@ function handleQuickReply(senderID, quickReply, messageId) {
     messageId,
     quickReplyPayload
   );
-  //send payload to api.ai
+  //manda a DialogFlow
   sendToApiAi(senderID, quickReplyPayload);
 }
 
@@ -204,7 +206,10 @@ function handleApiAiResponse(sender, response) {
 
    if (isDefined(parameters.modelo))
    {
-
+     if (sender in config.CARARRAY)
+        {
+          console.log("my status: " + config.CARARRAY[sender].status);
+        }
 
      console.log("tengo modelo asignado ->"+parameters.modelo);
      config.CARARRAY.push(parameters.modelo);
