@@ -447,7 +447,7 @@ console.log("paras:" + parameters);
           sendTextMessage(senderID, response);
       })
       .catch(function (error) {
-        console.log(error.response.data.mensaje);
+        console.log(error.mensaje);
       }); 
   }
 
