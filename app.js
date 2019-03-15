@@ -202,13 +202,8 @@ function handleApiAiResponse(sender, response) {
 
    console.log("accion:" + response+"--"+action);
 
-   if (isDefined(parameters.modelo))
-   {
-
-
-     console.log("tengo modelo asignado ->"+parameters.modelo);
-     config.CARARRAY.push(parameters.modelo);
-   }
+   if (isDefined(parameters.modelo))  config.CARARRAY.push(parameters.modelo);
+   
    if (isDefined(parameters.sumaAseg))
    {
     console.log("tengo valor asignado -> "+parameters.sumaAseg);
@@ -247,14 +242,14 @@ function handleApiAiResponse(sender, response) {
   }
 }
 
-const sendTypingOff = (recipientId) => {
+const sendTypingOff = (recipientId) => 
+{
   var messageData = {
     recipient: {
       id: recipientId
     },
     sender_action: "typing_off"
   };
-
   callSendAPI(messageData);
 }
 
@@ -443,8 +438,8 @@ await axios.get(urlSaldo,
 
 const getCoti = async (sender,parameters) => {
 console.log("paras:" + parameters);
-  /*const url = "http://test.universales.com/universales-fe/camel/cotizadorAutos?"+parameters;
-    await axios.post(url)
+   const url = "http://test.universales.com/universales-fe/camel/cotizadorAutos?";
+    await axios.post(url,parameters)
       .then(function (response) {
 
           var urlCoti = response.data.url;
@@ -452,7 +447,7 @@ console.log("paras:" + parameters);
           sendTextMessage(senderID, response);
       })
       .catch(function (error) {
-        console.log(error.response);
+        console.log(error.response.mensaje);
       }); */
   }
 
