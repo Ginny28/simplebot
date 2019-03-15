@@ -13,6 +13,6 @@ module.exports = {
   VERIFICATION_TOKEN: "mytokenfb",
   DIAFLOW_TOKEN: "690e92dda208408297449188a728b168",
   PORT: "5000",
-  AUTHSERVICE : authData
+  AUTHSERVICE : authData,
   CARARRAY: myCarData
 };
