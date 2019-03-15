@@ -2,6 +2,7 @@ const diaFw = require("apiai");
 const xpress = require("express");
 const bdprser = require("body-parser");
 const uuid = require("uuid");
+var rest = require('restler');
 const axios = require("axios");
 var SimpleDate = require('simple-datejs');
 var config = require('./Global.js');
@@ -436,20 +437,23 @@ await axios.get(urlSaldo,
     });
 }
 
-const getCoti = async (sender,parameters) => {
-console.log("paras:" + parameters);
-   const url = "http://test.universales.com/universales-fe/camel/cotizadorAutos?";
-    await axios.post(url,parameters)
-      .then(function (response) {
 
-          var urlCoti = response.data.url;
-          var response ="Le adjunto el link de su cotización \n http://test.universales.com/reportes/reporte?"+urlCoti
-          sendTextMessage(senderID, response);
-      })
-      .catch(function (error) {
-        console.log(error.data.mensaje);
-      }); 
-  }
+function getCoti(sender,parametros)
+{
+  
+    rest.post('http://test.universales.com/universales-fe/camel/cotizadorAutos?'+parametros)
+    .on('complete', function(dataCoti, response)
+    {
+    var response ="Le adjunto el link de su cotización \n http://test.universales.com/reportes/reporte?"+dataCoti.url
+    sendTextMessage(sender,response)
+    console.log("coti",dataCoti);
+    });
+
+ 
+
+}
+
+
 
 
 const getBrandStyle = async (senderValue,bearerAuth,sender) => {
@@ -465,7 +469,7 @@ await axios.get(urlAuto,
           {
             var parametros = "&marca="+rs.brandCode+"&modelo="+config.CARARRAY[0]+"&estilo="+rs.styleCode+"&ttipovehi="+rs.type+"&valor="+config.CARARRAY[1]+"&nombreCliente=";
             var datos = 'paquete=1019&oficina=01&observacion=CotizacionFB&formaPago=BC'+parametros;
-             getUserData(sender,datos);
+            getUserData(sender,datos);
             break;
           }
     }
