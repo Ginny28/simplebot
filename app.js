@@ -2,6 +2,7 @@ const diaFw = require("apiai");
 const xpress = require("express");
 const bdprser = require("body-parser");
 const uuid = require("uuid");
+var rest = require('restler');
 const axios = require("axios");
 var SimpleDate = require('simple-datejs');
 var config = require('./Global.js');
@@ -85,10 +86,11 @@ function receivedMessage(event) {
   var timeOfMessage = event.timestamp;
   var message = event.message;
 
-  if (!sessionIds.has(senderID))
-  {
-     sessionIds.set(senderID, uuid.v1());
-     config.CARARRAY[senderID] = {status:'OK'};
+  if (!sessionIds.has(senderID)) {
+    sessionIds.set(senderID, uuid.v1());
+    for (var i = 0; i < sessionIds.length; i++) {
+       console.log("map:" + sessionIds[i]);
+    }
   }
 
   var messageId = message.mid;
@@ -119,7 +121,7 @@ function handleQuickReply(senderID, quickReply, messageId) {
     messageId,
     quickReplyPayload
   );
-  //manda a DialogFlow
+  //send payload to api.ai
   sendToApiAi(senderID, quickReplyPayload);
 }
 
@@ -204,16 +206,8 @@ function handleApiAiResponse(sender, response) {
 
    console.log("accion:" + response+"--"+action);
 
-   if (isDefined(parameters.modelo))
-   {
-     if (sender in config.CARARRAY)
-        {
-          console.log("my status: " + config.CARARRAY[sender].status);
-        }
+   if (isDefined(parameters.modelo))  config.CARARRAY.push(parameters.modelo);
 
-     console.log("tengo modelo asignado ->"+parameters.modelo);
-     config.CARARRAY.push(parameters.modelo);
-   }
    if (isDefined(parameters.sumaAseg))
    {
     console.log("tengo valor asignado -> "+parameters.sumaAseg);
@@ -252,14 +246,14 @@ function handleApiAiResponse(sender, response) {
   }
 }
 
-const sendTypingOff = (recipientId) => {
+const sendTypingOff = (recipientId) =>
+{
   var messageData = {
     recipient: {
       id: recipientId
     },
     sender_action: "typing_off"
   };
-
   callSendAPI(messageData);
 }
 
@@ -446,20 +440,23 @@ await axios.get(urlSaldo,
     });
 }
 
-const getCoti = async (sender,parameters) => {
-console.log("paras:" + parameters);
-  /*const url = "http://test.universales.com/universales-fe/camel/cotizadorAutos?"+parameters;
-    await axios.post(url)
-      .then(function (response) {
 
-          var urlCoti = response.data.url;
-          var response ="Le adjunto el link de su cotización \n http://test.universales.com/reportes/reporte?"+urlCoti
-          sendTextMessage(senderID, response);
-      })
-      .catch(function (error) {
-        console.log(error.response);
-      }); */
-  }
+function getCoti(sender,parametros)
+{
+
+    rest.post('http://test.universales.com/universales-fe/camel/cotizadorAutos?'+parametros)
+    .on('complete', function(dataCoti, response)
+    {
+    var response ="Le adjunto el link de su cotización \n http://test.universales.com/reportes/reporte?"+dataCoti.url
+    sendTextMessage(sender,response)
+    console.log("coti",dataCoti);
+    });
+
+
+
+}
+
+
 
 
 const getBrandStyle = async (senderValue,bearerAuth,sender) => {
@@ -475,7 +472,7 @@ await axios.get(urlAuto,
           {
             var parametros = "&marca="+rs.brandCode+"&modelo="+config.CARARRAY[0]+"&estilo="+rs.styleCode+"&ttipovehi="+rs.type+"&valor="+config.CARARRAY[1]+"&nombreCliente=";
             var datos = 'paquete=1019&oficina=01&observacion=CotizacionFB&formaPago=BC'+parametros;
-             getUserData(sender,datos);
+            getUserData(sender,datos);
             break;
           }
     }
