@@ -88,7 +88,7 @@ function receivedMessage(event) {
 
   if (!sessionIds.has(senderID)) {
     sessionIds.set(senderID, uuid.v1());
-    config.SEGUNI[sender] ={status:'OK'};
+    config.SEGUNI[senderID] ={status:'OK'};
 
     for (var i = 0; i < sessionIds.length; i++) {
        console.log("map:" + sessionIds[i]);
