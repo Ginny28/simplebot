@@ -88,6 +88,8 @@ function receivedMessage(event) {
 
   if (!sessionIds.has(senderID)) {
     sessionIds.set(senderID, uuid.v1());
+    config.SEGUNI[sender] ={status:'OK'};
+
     for (var i = 0; i < sessionIds.length; i++) {
        console.log("map:" + sessionIds[i]);
     }
@@ -206,8 +208,14 @@ function handleApiAiResponse(sender, response) {
 
    console.log("accion:" + response+"--"+action);
 
-   if (isDefined(parameters.modelo))  config.CARARRAY.push(parameters.modelo);
-
+   if (isDefined(parameters.modelo))
+   {
+    if(sender in config.SEGUNI)
+    {
+      console.log("estado: "+ config.SEGUNI[sender].status);
+    }
+    config.CARARRAY.push(parameters.modelo);
+   }
    if (isDefined(parameters.sumaAseg))
    {
     console.log("tengo valor asignado -> "+parameters.sumaAseg);
