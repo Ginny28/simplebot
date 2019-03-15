@@ -88,6 +88,9 @@ function receivedMessage(event) {
 
   if (!sessionIds.has(senderID)) {
     sessionIds.set(senderID, uuid.v1());
+    for (var i = 0; i < sessionIds.length; i++) {
+       console.log("map:" + sessionIds[i]);
+    }
   }
 
   var messageId = message.mid;
