@@ -116,6 +116,30 @@ function receivedMessage(event) {
   }
 }
 
+
+function addNewAuto(sender,atributo,tipoAtrib)
+{
+	if (sender in config.SEGUNI)
+{
+     switch(tipoAtrib)
+     {
+     	case 1:
+     		config.SEGUNI[sender].modelo = atributo;
+     	break;
+     	case 2:
+     		config.SEGUNI[sender].sumaAseg = atributo;
+     	break;
+     	case 3:
+     		config.SEGUNI[sender].marca = atributo;
+     	break;
+     	case 4:
+     		config.SEGUNI[sender].estilo = atributo;
+     	break;
+     }
+    
+}
+
+
 function handleQuickReply(senderID, quickReply, messageId) {
   var quickReplyPayload = quickReply.payload;
   console.log(
@@ -215,11 +239,13 @@ function handleApiAiResponse(sender, response) {
       console.log("estado: "+ config.SEGUNI[sender].status);
     }
     config.CARARRAY.push(parameters.modelo);
+    addNewAuto(sender,parameters.modelo,1);
    }
    if (isDefined(parameters.sumaAseg))
    {
     console.log("tengo valor asignado -> "+parameters.sumaAseg);
     config.CARARRAY.push(parameters.sumaAseg);
+    addNewAuto(sender,parameters.sumaAseg,2);
    }
    if (isDefined(parameters.marca))
    {
@@ -457,7 +483,7 @@ function getCoti(sender,parametros)
     {
     var response ="Le adjunto el link de su cotización \n http://test.universales.com/reportes/reporte?"+dataCoti.url
     sendTextMessage(sender,response)
-    console.log("coti",dataCoti);
+    recorrer();
     });
 
 
@@ -500,4 +526,20 @@ await axios.get(urlUser).then(function (response) {
    .catch(function (error) {
       console.log('ErRo:'+ error.response.headers);
     });
+}
+
+
+function recorrer()
+{
+	for (var x in config.SEGUNI)
+{
+    console.log('Key: ' + x + '\n');
+    console.log('Values: ');
+    var value = config.SEGUNI[x];
+    for (var y in value)
+    {
+        console.log('—- ' + y + ':' + value[y]);
+    }
+    console.log('\n');
+}
 }
