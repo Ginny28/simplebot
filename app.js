@@ -117,27 +117,7 @@ function receivedMessage(event) {
 }
 
 
-function addNewAuto(sender,atributo,tipoAtrib)
-{
-	if (sender in config.SEGUNI)
-{
-     switch(tipoAtrib)
-     {
-     	case 1:
-     		config.SEGUNI[sender].modelo = atributo;
-     	break;
-     	case 2:
-     		config.SEGUNI[sender].sumaAseg = atributo;
-     	break;
-     	case 3:
-     		config.SEGUNI[sender].marca = atributo;
-     	break;
-     	case 4:
-     		config.SEGUNI[sender].estilo = atributo;
-     	break;
-     }
-    
-}
+
 
 
 function handleQuickReply(senderID, quickReply, messageId) {
@@ -239,13 +219,11 @@ function handleApiAiResponse(sender, response) {
       console.log("estado: "+ config.SEGUNI[sender].status);
     }
     config.CARARRAY.push(parameters.modelo);
-    addNewAuto(sender,parameters.modelo,1);
    }
    if (isDefined(parameters.sumaAseg))
    {
     console.log("tengo valor asignado -> "+parameters.sumaAseg);
     config.CARARRAY.push(parameters.sumaAseg);
-    addNewAuto(sender,parameters.sumaAseg,2);
    }
    if (isDefined(parameters.marca))
    {
