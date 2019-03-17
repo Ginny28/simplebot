@@ -482,7 +482,7 @@ function getCoti(sender,parametros)
     .on('complete', function(dataCoti, response)
     {
     var response ="Le adjunto el link de su cotización \n http://test.universales.com/reportes/reporte?"+dataCoti.url
-    sendTextMessage(sender,response)
+    sendTextMessage(sender,response);
     recorrer();
     });
 
