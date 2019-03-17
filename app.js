@@ -528,3 +528,19 @@ function addNewAuto(sender,atributo,tipoAtrib)
     
 	}
 }
+
+
+function recorrer()
+{
+	for (var x in config.SEGUNI)
+	{
+	    console.log('Key: ' + x );
+	    console.log('Values: ');
+	    var value = config.SEGUNI[x];
+	    for (var y in value)
+	    {
+	        console.log('—- ' + y + ':' + value[y]);
+	    }
+	    console.log('\n');
+	}
+}
