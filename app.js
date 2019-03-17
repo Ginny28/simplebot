@@ -212,12 +212,10 @@ function handleApiAiResponse(sender, response) {
 
    if (isDefined(parameters.modelo))
    {
-    if(sender in config.SEGUNI)
-    {
-      console.log("estado: "+ config.SEGUNI[sender].status);
-    }
+   	console.log("tengo modelo asignado -> "+parameters.modelo);
     config.CARARRAY.push(parameters.modelo);
     addNewAuto(sender,parameters.modelo,1);
+    recorrer();
    }
    if (isDefined(parameters.sumaAseg))
    {
@@ -537,7 +535,7 @@ function recorrer()
 	{
 	    console.log('Key: ' + x );
 	    console.log('Values: ');
-	    var value = animal[x];
+	    var value = config.SEGUNI[x];
 	    for (var y in value)
 	    {
 	        console.log('—- ' + y + ':' + value[y]);
