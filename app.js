@@ -217,6 +217,7 @@ function handleApiAiResponse(sender, response) {
       console.log("estado: "+ config.SEGUNI[sender].status);
     }
     config.CARARRAY.push(parameters.modelo);
+    addNewAuto(sender,parameters.modelo,1);
    }
    if (isDefined(parameters.sumaAseg))
    {
