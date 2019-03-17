@@ -118,8 +118,6 @@ function receivedMessage(event) {
 
 
 
-
-
 function handleQuickReply(senderID, quickReply, messageId) {
   var quickReplyPayload = quickReply.payload;
   console.log(
@@ -507,3 +505,25 @@ await axios.get(urlUser).then(function (response) {
 }
 
 
+function addNewAuto(sender,atributo,tipoAtrib)
+{
+	if (sender in config.SEGUNI)
+	{
+     switch(tipoAtrib)
+     {
+     	case 1:
+     		config.SEGUNI[sender].modelo = atributo;
+     	break;
+     	case 2:
+     		config.SEGUNI[sender].sumaAseg = atributo;
+     	break;
+     	case 3:
+     		config.SEGUNI[sender].marca = atributo;
+     	break;
+     	case 4:
+     		config.SEGUNI[sender].estilo = atributo;
+     	break;
+     }
+    
+	}
+}
