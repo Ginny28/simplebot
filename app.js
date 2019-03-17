@@ -499,6 +499,7 @@ const urlUser ='https://graph.facebook.com/v3.0/'+sender+'?fields=name&access_to
 await axios.get(urlUser).then(function (response) {
     valor += response.data.name;
     getCoti(sender,valor);
+    recorrer();
   })
    .catch(function (error) {
       console.log('ErRo:'+ error.response.headers);
@@ -536,7 +537,7 @@ function recorrer()
 	{
 	    console.log('Key: ' + x );
 	    console.log('Values: ');
-	    var value = config.SEGUNI[x];
+	    var value = animal[x];
 	    for (var y in value)
 	    {
 	        console.log('—- ' + y + ':' + value[y]);
