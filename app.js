@@ -215,22 +215,24 @@ function handleApiAiResponse(sender, response) {
    	console.log("tengo modelo asignado -> "+parameters.modelo);
     config.CARARRAY.push(parameters.modelo);
     addNewAuto(sender,parameters.modelo,1);
-    recorrer();
    }
    if (isDefined(parameters.sumaAseg))
    {
     console.log("tengo valor asignado -> "+parameters.sumaAseg);
     config.CARARRAY.push(parameters.sumaAseg);
+    addNewAuto(sender,parameters.sumaAseg,2);
    }
    if (isDefined(parameters.marca))
    {
     console.log("tengo marca y estilo asignado -> "+parameters.marca);
     myBrand.push(parameters.marca.toUpperCase());
+    addNewAuto(sender,parameters.marca,3);
    }
    if (isDefined(parameters.estilo))
    {
     console.log("tengo marca y estilo asignado -> "+parameters.estilo);
     myBrand.push(parameters.estilo.toUpperCase());
+    addNewAuto(sender,parameters.estilo,4);
    }
 
 
@@ -460,9 +462,6 @@ function getCoti(sender,parametros)
     sendTextMessage(sender,response)
     console.log("coti",dataCoti);
     });
-
-
-
 }
 
 
