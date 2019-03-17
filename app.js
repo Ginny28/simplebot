@@ -482,7 +482,8 @@ function getCoti(sender,parametros)
     .on('complete', function(dataCoti, response)
     {
     var response ="Le adjunto el link de su cotización \n http://test.universales.com/reportes/reporte?"+dataCoti.url
-    sendTextMessage(sender,response);
+    sendTextMessage(sender,response)
+    console.log("coti",dataCoti);
     });
 
 
@@ -528,17 +529,3 @@ await axios.get(urlUser).then(function (response) {
 }
 
 
-function recorrer()
-{
-	for (var x in config.SEGUNI)
-{
-    console.log('Key: ' + x + '\n');
-    console.log('Values: ');
-    var value = config.SEGUNI[x];
-    for (var y in value)
-    {
-        console.log('—- ' + y + ':' + value[y]);
-    }
-    console.log('\n');
-}
-}
