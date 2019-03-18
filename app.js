@@ -477,8 +477,23 @@ await axios.get(urlUser).then(function (response) {
     });
 }
 
+const getCoti = async (sender) => {
+const url = var urlCoti = 'http://test.universales.com/universales-fe/camel/cotizadorAutos?'+getAutoData(sender);
+  await axios.post(url)
+    .then(function (response) {
+      var responseText ="Le adjunto el link de su cotización \n http://test.universales.com/reportes/reporte?"+response.data.url
+      console.log("res:" + responseText);
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
+}
 
-function getCoti(sender)
+
+
+
+
+function getCotis(sender)
 {
 
     var urlCoti = 'http://test.universales.com/universales-fe/camel/cotizadorAutos?'+getAutoData(sender);
