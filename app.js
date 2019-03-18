@@ -321,7 +321,7 @@ const sendButtonMessage = async (recipientId, text, buttons) => {
 
 function handleApiAiAction(sender, action, responseText, contexts, parameters) {
    switch (action) {
-    case "Init-Chat":
+    /*case "Init-Chat":
               const responseText = "Hola Soy Seguni 🤖,con gusto te apoyaré en lo que necesites.\n Por favor, selecciona una de las opciones que se presentan a continuación. ";
               const elements = [{
               "type": "web_url",
@@ -337,28 +337,28 @@ function handleApiAiAction(sender, action, responseText, contexts, parameters) {
               "payload": "+50212121112"
               }]
               sendButtonMessage(sender, responseText, elements)
-    break;
+    break;*/
     case "textos":
-      var responseText = "Prueba mensaje"
-      sendTextMessage(sender, responseText);
+      var responseVal = "Prueba mensaje"
+      sendTextMessage(sender, responseVal);
       break;
     case "tipo-seguro":
-      const textRp = "Le ofrecemos seguros de vehículo, personal, hogar y gastos médicos, favor indicar cual le interesa. Para conocer más de nuestros productos visite:  \n https://www.universales.com/productos/"
-      const replies = [{
-        "content_type": "text",
-        "title": "Vehiculo",
-        "payload": "Vehiculo",
-      },
-      {
-        "content_type": "text",
-        "title": "Gastos Medicos",
-        "payload": "Gastos Medicos",
-      },
-      {
-        "content_type": "text",
-        "title": "Personal",
-        "payload": "Seguros de Vida",
-      }];
+          const textRp = "Le ofrecemos seguros de vehículo, personal, hogar y gastos médicos, favor indicar cual le interesa. Para conocer más de nuestros productos visite:  \n https://www.universales.com/productos/"
+          const replies = [{
+            "content_type": "text",
+            "title": "Vehiculo",
+            "payload": "Vehiculo",
+          },
+          {
+            "content_type": "text",
+            "title": "Gastos Medicos",
+            "payload": "Gastos Medicos",
+          },
+          {
+            "content_type": "text",
+            "title": "Personal",
+            "payload": "Seguros de Vida",
+          }];
       sendQuickReply(sender, textRp, replies);
       break;
     case "Auto-marca":
