@@ -88,6 +88,25 @@ function receivedPostback(event) {
   var timeOfPostback = event.timestamp;
   var payload = event.postback.payload;
   handleApiAiAction(senderID, payload, "", "", "")
+  switch (payload) {
+    case 'CV':
+    textPayload = 'Gracias por tu interés en trabajar con nosotros. '+
+                       'Por favor llena nuestro formulario de empleos y adjunta tu CV.\n'+
+                       'En cuanto tengamos una plaza disponible en el área de tu interés tomaremos en cuenta tu perfil. \n'+
+                       'Para tener acceso al formulario de empleo haz clic en el siguiente botón:';
+    elements = [{
+                  "type": "web_url",
+                  "url": "https://www.universales.com/contactenos/empleos/",
+                  "title": "Formulario",
+                   }]
+
+      sendButtonMessage(sender, textPayload, elements);
+
+      break;
+    default:
+
+  }
+
 }
 
 
@@ -121,10 +140,6 @@ function receivedMessage(event) {
   {
   	handleQuickReply(senderID, quickReply, messageId);
     return;
-  }
-  else if (postback)
-  {
-
   }
 }
 
@@ -380,7 +395,7 @@ function handleApiAiAction(sender, action, responseText, contexts, parameters) {
            elements = [{
                 "type": "postback",
                 "title": "Enviar CV",
-                "payload": "Enviar CV"
+                "payload": "CV"
                },
                {
                     "type": "postback",
