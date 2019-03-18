@@ -456,7 +456,7 @@ function getCoti(sender,parametros)
 {
 
 	console.log(" valores: ",parametros);
-   /* rest.post('http://test.universales.com/universales-fe/camel/cotizadorAutos?'+parametros)
+    rest.post('http://test.universales.com/universales-fe/camel/cotizadorAutos?'+parametros)
     .on('complete', function(dataCoti, response)
     {
     var response ="Le adjunto el link de su cotización \n http://test.universales.com/reportes/reporte?"+dataCoti.url
@@ -465,7 +465,7 @@ function getCoti(sender,parametros)
     recorrer();
     console.log("coti",dataCoti);
     });
-    */
+    
 }
 
 
@@ -485,7 +485,7 @@ await axios.get(urlAuto,
           	addNewAuto(sender,rs.brandCode,3);
           	addNewAuto(sender,rs.styleCode,4);
           	addNewAuto(sender,rs.type,5);
-          	
+
             //var parametros = "&marca="+rs.brandCode+"&modelo="+config.CARARRAY[0]+"&estilo="+rs.styleCode+"&ttipovehi="+rs.type+"&valor="+config.CARARRAY[1]+"&nombreCliente=";
             //var datos = 'paquete=1019&oficina=01&observacion=CotizacionFB&formaPago=BC'+parametros;
             //getUserData(sender,datos);
@@ -536,7 +536,7 @@ function addNewAuto(sender,atributo,tipoAtrib)
      		config.SEGUNI[sender].tvehi = atributo;
      	break;
      }
-    
+
 	}
 }
 
