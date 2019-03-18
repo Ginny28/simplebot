@@ -454,13 +454,13 @@ await axios.get(urlSaldo,
 
 function getCoti(sender,parametros)
 {
-
+	console.log("ws: "+datos);
     rest.post('http://test.universales.com/universales-fe/camel/cotizadorAutos?'+parametros)
     .on('complete', function(dataCoti, response)
     {
     var response ="Le adjunto el link de su cotización \n http://test.universales.com/reportes/reporte?"+dataCoti.url
     sendTextMessage(sender,response)
-    deleteAuto(sender);
+    //deleteAuto(sender);
     recorrer();
     console.log("coti",dataCoti);
     });
@@ -504,7 +504,6 @@ const urlUser ='https://graph.facebook.com/v3.0/'+sender+'?fields=name&access_to
 await axios.get(urlUser).then(function (response) {
 	parametros = 'paquete=1019&oficina=01&observacion=CotizacionFB&formaPago=BC&nombreCliente='+response.data.name;
     datos = parametros+"&modelo="+getvalues(sender,1)+"&valor="+getvalues(sender,2)+"&marca="+getvalues(sender,3)+"&modelo="+getvalues(sender,4)+"&ttipovehi="+getvalues(sender,5);
-	console.log("ws: "+datos);
     getCoti(sender,valor);
   })
    .catch(function (error) {
