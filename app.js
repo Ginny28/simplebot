@@ -448,23 +448,23 @@ await axios.get(urlSaldo,
 }
 
 
-const getCoti = async (sender,parametros) => {
+/* const getCoti = async (sender,parametros) => {
  await axios.post("http://test.universales.com/universales-fe/camel/cotizadorAutos?"+parametros).then(function (response) {
 
     console.log("result: "+ response.data.url);
-      // var response ="Le adjunto el link de su cotización \n http://test.universales.com/reportes/reporte?"+dataCoti.url
-    //sendTextMessage(sender,response)
+       var response ="Le adjunto el link de su cotización \n http://test.universales.com/reportes/reporte?"+dataCoti.url
+    sendTextMessage(sender,response)
 
     })
     .catch(function (error) {
       console.log('ErRo:'+ error.response.headers);
     });
 }
+*/
 
 
 
-
-/*function getCoti(sender,parametros)
+function getCoti(sender,parametros)
 {
 
 	console.log("sender: "+sender +" valores: " + parametros);
@@ -478,7 +478,7 @@ const getCoti = async (sender,parametros) => {
     });
 
 }
-*/
+
 
 
 
