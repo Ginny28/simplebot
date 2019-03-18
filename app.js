@@ -356,6 +356,19 @@ function handleApiAiAction(sender, action, responseText, contexts, parameters) {
 
         sendButtonMessage(sender, textPayload, elements);
     break;
+    case "Init-Chat":
+          const textPayload = 'Gracias por comunicarte con nosotros, Soy Seguni 🤖. '+
+                        'En que puedo ayudarle, favor seleccione una opción';
+          const elements = [{
+                "type": "postback",
+                "title": "Enviar CV",
+                "payload": "Enviar mi CV"
+                }]
+
+
+    sendButtonMessage(sender, textPayload, elements);
+    break;
+
     default:
       //unhandled action, just send back the text
     sendTextMessage(sender, responseText);
