@@ -297,9 +297,47 @@ const sendQuickReply = async (recipientId, text, replies, metadata) => {
   await callSendAPI(messageData);
 }
 
+const sendButtonMessage = async (recipientId, text, buttons) => {
+  var messageData = {
+    recipient: {
+      id: recipientId
+    },
+    message: {
+      attachment: {
+        type: "template",
+        payload: {
+          template_type: "button",
+          text: text,
+          buttons: buttons
+        }
+      }
+    }
+  };
+  await callSendAPI(messageData);
+}
+
+
+
 
 function handleApiAiAction(sender, action, responseText, contexts, parameters) {
    switch (action) {
+    case "Init-Chat":
+              const responseText = "Hola Soy Seguni 🤖,con gusto te apoyaré en lo que necesites.\n Por favor, selecciona una de las opciones que se presentan a continuación. ";
+              const elements = [{
+              "type": "web_url",
+              "url": "https://www.universales.com/",
+              "title": "VISITANOS",
+              }, {
+              "type": "postback",
+              "title": "POSTBACK",
+              "payload": "POSTBACK TEST"
+              }, {
+              "type": "phone_number",
+              "title": "LLAMAR",
+              "payload": "+50212121112"
+              }]
+              sendButtonMessage(sender, responseText, elements)
+    break;
     case "textos":
       var responseText = "Prueba mensaje"
       sendTextMessage(sender, responseText);
