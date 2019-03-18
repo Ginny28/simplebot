@@ -482,14 +482,14 @@ function getCoti(sender)
 {
 
     var urlCoti = 'http://test.universales.com/universales-fe/camel/cotizadorAutos?'+getAutoData(sender);
-  /*  rest.post(urlCoti)
+    rest.post(urlCoti)
     .on('complete', function(dataCoti, response)
     {
     var response ="Le adjunto el link de su cotización \n http://test.universales.com/reportes/reporte?"+dataCoti.url
     sendTextMessage(sender,response)
     //deleteAuto(sender);
     //recorrer();
-  });*/
+  });
   console.log("String: "+ urlCoti);
 
 
@@ -595,7 +595,7 @@ function getAutoData(sender)
   var parameters ="";
   if (sender in config.SEGUNI)
 	{
-    parameters = 'paquete=1019&oficina=01&observacion=CotizacionFB&formaPago=BC&modelo='+config.SEGUNI[sender].modelo+'&&valor='+config.SEGUNI[sender].sumaAseg+
+    parameters = 'paquete=1019&oficina=01&observacion=CotizacionFB&formaPago=BC&modelo='+config.SEGUNI[sender].modelo+'&valor='+config.SEGUNI[sender].sumaAseg+
                  '&ttipovehi='+config.SEGUNI[sender].tvehi+'&marca='+config.SEGUNI[sender].marca+'&estilo='+config.SEGUNI[sender].estilo+"&nombreCliente="+config.SEGUNI[sender].userN;
 	}
   return parameters;
