@@ -6,8 +6,6 @@ var rest = require('restler');
 const axios = require("axios");
 var SimpleDate = require('simple-datejs');
 var config = require('./Global.js');
-var myBrand = [];
-
 
 
 
@@ -209,13 +207,11 @@ function handleApiAiResponse(sender, response) {
    if (isDefined(parameters.modelo))
    {
    	console.log("tengo modelo asignado -> "+parameters.modelo);
-    config.CARARRAY.push(parameters.modelo);
     addNewAuto(sender,parameters.modelo,1);
    }
    if (isDefined(parameters.sumaAseg))
    {
     console.log("tengo valor asignado -> "+parameters.sumaAseg);
-    config.CARARRAY.push(parameters.sumaAseg);
     addNewAuto(sender,parameters.sumaAseg,2);
    }
    if (isDefined(parameters.marca))
@@ -485,7 +481,7 @@ await axios.get(urlUser).then(function (response) {
 function getCoti(sender)
 {
 
-
+/*
     rest.post('http://test.universales.com/universales-fe/camel/cotizadorAutos?'+getAutoData(sender))
     .on('complete', function(dataCoti, response)
     {
@@ -493,8 +489,9 @@ function getCoti(sender)
     sendTextMessage(sender,response)
     //deleteAuto(sender);
     //recorrer();
-  });
+  });*/
   console.log("String: "+ getAutoData(sender));
+  recorrer();
 
 }
 
