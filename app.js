@@ -473,7 +473,7 @@ await axios.get(urlUser).then(function (response) {
     getCoti(sender);
   })
    .catch(function (error) {
-      console.log('ErRo:'+ error.response.headers);
+      console.log('ErRo:'+ error.response.header);
     });
 }
 
@@ -483,7 +483,7 @@ await axios.get(urlUser).then(function (response) {
 
 
 
-function getCotis(sender)
+function getCoti(sender)
 {
 
     var urlCoti = 'http://test.universales.com/universales-fe/camel/cotizadorAutos?'+getAutoData(sender);
