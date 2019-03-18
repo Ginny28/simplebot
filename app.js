@@ -2,11 +2,10 @@ const diaFw = require("apiai");
 const xpress = require("express");
 const bdprser = require("body-parser");
 const uuid = require("uuid");
+var rest = require('restler');
 const axios = require("axios");
 var SimpleDate = require('simple-datejs');
 var config = require('./Global.js');
-var myCarData = [];
-
 
 
 
@@ -67,7 +66,9 @@ app.post("/webhook/", function (req, res) {
       pageEntry.messaging.forEach(function (messagingEvent) {
         if (messagingEvent.message) {
           receivedMessage(messagingEvent);
-        } else {
+        }  else if (messagingEvent.postback) {
+          receivedPostback(messagingEvent);
+        }else {
           console.log("Webhook received unknown messagingEvent: ",messagingEvent);
         }
       });
@@ -79,6 +80,20 @@ app.post("/webhook/", function (req, res) {
 
 
 //**** functions ******* //
+function receivedPostback(event) {
+  console.log(event);
+
+  var senderID = event.sender.id;
+  var recipientID = event.recipient.id;
+  var timeOfPostback = event.timestamp;
+  var payload = event.postback.payload;
+  handleApiAiAction(senderID, payload, "", "", "")
+
+
+}
+
+
+
 function receivedMessage(event) {
   var senderID = event.sender.id;
   var recipientID = event.recipient.id;
@@ -87,6 +102,7 @@ function receivedMessage(event) {
 
   if (!sessionIds.has(senderID)) {
     sessionIds.set(senderID, uuid.v1());
+    config.SEGUNI[senderID] ={status:'OK'};
   }
 
   var messageId = message.mid;
@@ -109,6 +125,8 @@ function receivedMessage(event) {
     return;
   }
 }
+
+
 
 function handleQuickReply(senderID, quickReply, messageId) {
   var quickReplyPayload = quickReply.payload;
@@ -204,30 +222,25 @@ function handleApiAiResponse(sender, response) {
 
    if (isDefined(parameters.modelo))
    {
-
-
-     console.log("tengo modelo asignado ->"+parameters.modelo);
-     myCarData.push(parameters.modelo);
+   	console.log("tengo modelo asignado -> "+parameters.modelo);
+    addNewAuto(sender,parameters.modelo,1);
    }
    if (isDefined(parameters.sumaAseg))
    {
     console.log("tengo valor asignado -> "+parameters.sumaAseg);
-    myCarData.push(parameters.sumaAseg);
+    addNewAuto(sender,parameters.sumaAseg,2);
    }
    if (isDefined(parameters.marca))
    {
     console.log("tengo marca y estilo asignado -> "+parameters.marca);
-    myCarData.push(parameters.marca);
+    addNewAuto(sender,parameters.marca.toUpperCase(),7);
    }
-   if (isDefined(parameters.marca))
+   if (isDefined(parameters.estilo))
    {
     console.log("tengo marca y estilo asignado -> "+parameters.estilo);
-    myCarData.push(parameters.estilo);
+    addNewAuto(sender,parameters.estilo.toUpperCase(),8);
    }
 
-
- //console.log("Valor:"+ parameters.sumaAseg);
- //console.log("Marca:"+ parameters.marcas);
 
  if (responseText == "" && !isDefined(action)) {
     //api ai could not evaluate input.
@@ -250,14 +263,14 @@ function handleApiAiResponse(sender, response) {
   }
 }
 
-const sendTypingOff = (recipientId) => {
+const sendTypingOff = (recipientId) =>
+{
   var messageData = {
     recipient: {
       id: recipientId
     },
     sender_action: "typing_off"
   };
-
   callSendAPI(messageData);
 }
 
@@ -291,6 +304,27 @@ const sendQuickReply = async (recipientId, text, replies, metadata) => {
 }
 
 
+const sendButtonMessage = async (recipientId, text, buttons) => {
+  var messageData = {
+    recipient: {
+      id: recipientId
+    },
+    message: {
+      attachment: {
+        type: "template",
+        payload: {
+          template_type: "button",
+          text: text,
+          buttons: buttons
+        }
+      }
+    }
+  };
+  await callSendAPI(messageData);
+}
+
+
+
 function handleApiAiAction(sender, action, responseText, contexts, parameters) {
    switch (action) {
     case "textos":
@@ -317,17 +351,44 @@ function handleApiAiAction(sender, action, responseText, contexts, parameters) {
       sendQuickReply(sender, textRp, replies);
       break;
     case "Auto-marca":
-      var responseText = "Le adjunto el link de su cotización \n http://test.universales.com/reportes/reporte?190E65B7DDDCE129C2072F623D6319FCAC7FB261999FC53122C9442327028F60BE8DFB3980D83F74E9173438301C6CAF04&cp"
-      sendTextMessage(sender,responseText);
+      sendTextMessage(sender,"Me puede brindar  el estilo de su vehículo [ex. Yaris]");
+    break;
+    case "Auto-estilo":
+       callToken(config.AUTHSERVICE,config.SEGUNI,3,sender);
     break;
     case "saldoPol-poliza":
-       console.log("Poliza:"+parameters.poliza.number[0]);
-       console.log("npoliza:"+nPoliza(parameters.poliza.number));
-       var responseText = "El saldo pendiente de su póliza nro: " + nPoliza(parameters.poliza.number)
        callToken(config.AUTHSERVICE,nPoliza(parameters.poliza.number),1,sender);
-      // sendTextMessage(sender,responseText);
     break;
+    case "CV":
+         textPayload = 'Gracias por tu interés en trabajar con nosotros. '+
+                            'Por favor llena nuestro formulario de empleos y adjunta tu CV.\n'+
+                            'En cuanto tengamos una plaza disponible en el área de tu interés tomaremos en cuenta tu perfil. \n'+
+                            'Para tener acceso al formulario de empleo haz clic en el siguiente botón:';
+         elements = [{
+                       "type": "web_url",
+                       "url": "https://www.universales.com/contactenos/empleos/",
+                       "title": "Formulario",
+                        }]
 
+        sendButtonMessage(sender, textPayload, elements);
+    break;
+    case "Init-Chat":
+           textPayload = 'Gracias por comunicarte con nosotros, Soy Seguni 🤖. '+
+                        'En que puedo ayudarle, favor seleccione una opción';
+           elements = [{
+                "type": "postback",
+                "title": "Enviar CV",
+                "payload": "CV"
+               },
+               {
+                    "type": "postback",
+                    "title": "Acerca de nosotros",
+                    "payload": "Acerca de nosotros"
+                }]
+
+
+    sendButtonMessage(sender, textPayload, elements);
+    break;
 
     default:
       //unhandled action, just send back the text
@@ -358,7 +419,7 @@ const nPoliza = (obj) => {
 }
 
 
-const callToken = async (authData,polNum,wService,sender) => {
+const callToken = async (authData,senderValue,wService,sender) => {
 
   await axios.post("https://login.universales.com/users/v2/api/login/wis",authData,
     {
@@ -369,11 +430,18 @@ const callToken = async (authData,polNum,wService,sender) => {
           switch (wService)
           {
             case 1:
-              getSaldo(polNum,response.data.recordset.token,sender);
+              getSaldo(senderValue,response.data.recordset.token,sender);
               break;
             case 2:
-              console.log("haré una cotización");
+            var temp ="holis";
+
+            //    temp += "Su auto es un " + myCarData[2] +" "+myCarData[3]+" modelo "+ myCarData[0] +" valorado en :"+myCarData[1];
+
+                sendTextMessage(sender,temp);
               break;
+            case 3:
+                getBrandStyle(senderValue[sender],response.data.recordset.token,sender);
+            break;
             default:
             break;
           }
@@ -388,6 +456,7 @@ const callToken = async (authData,polNum,wService,sender) => {
 
 
 const getSaldo = async (polNum,bearerAuth,sender) => {
+
 const urlSaldo ='https://login.universales.com/wis//v2/app/api/policy/'+polNum+'/statement';
 await axios.get(urlSaldo,
   {
@@ -437,4 +506,177 @@ await axios.get(urlSaldo,
       console.log('res: No Existo!!');
       sendTextMessage(sender, 'Esa póliza no se encuentra en nuestro sistema, verifique el número ');
     });
+}
+
+
+const getBrandStyle = async (senderValue,bearerAuth,sender) => {
+
+const urlAuto ='https://login.universales.com/inspeccion/v2/api/brand';
+await axios.get(urlAuto,
+  {
+  headers: {'Authorization': 'Bearer '+ bearerAuth }
+  }).then(function (response) {
+   for (var i = 0; i < response.data.recordset.length; i++) {
+      rs = response.data.recordset[i]
+          if(rs.brandName ==senderValue.marcaN && rs.styleName == senderValue.estiloN)
+          {
+          	addNewAuto(sender,rs.brandCode,3);
+          	addNewAuto(sender,rs.styleCode,4);
+          	addNewAuto(sender,rs.type,5);
+            getUserData(sender);
+            break;
+          }
+    }
+  })
+   .catch(function (error) {
+      console.log('ErRo:'+ error.response.headers);
+    });
+}
+
+
+const getUserData = async (sender) => {
+const urlUser ='https://graph.facebook.com/v3.0/'+sender+'?fields=name&access_token='+config.PAGE_ACCESS_TOKEN;
+await axios.get(urlUser).then(function (response) {
+    addNewAuto(sender,response.data.name,6);
+    getCoti(sender);
+  })
+   .catch(function (error) {
+      console.log('ErRo:'+ error.response.header);
+    });
+}
+
+
+
+
+
+
+
+function getCoti(sender)
+{
+
+    var urlCoti = 'http://test.universales.com/universales-fe/camel/cotizadorAutos?'+getAutoData(sender);
+    rest.post(urlCoti)
+    .on('complete', function(dataCoti, response,err)
+    {
+      if (err)
+      {
+        console.log("error: "+ err);
+      }
+      else {
+        var response ="Le adjunto el link de su cotización \n http://test.universales.com/reportes/reporte?"+dataCoti.url
+        sendTextMessage(sender,response)
+      }
+
+    //deleteAuto(sender);
+    //recorrer();
+  });
+  console.log("String: "+ urlCoti);
+
+
+}
+
+
+
+
+function addNewAuto(sender,atributo,tipoAtrib)
+{
+	if (sender in config.SEGUNI)
+	{
+     switch(tipoAtrib)
+     {
+     	case 1:
+     		config.SEGUNI[sender].modelo = atributo;
+     	break;
+     	case 2:
+     		config.SEGUNI[sender].sumaAseg = atributo;
+     	break;
+     	case 3:
+     		config.SEGUNI[sender].marca = atributo;
+     	break;
+     	case 4:
+     		config.SEGUNI[sender].estilo = atributo;
+     	break;
+     	case 5:
+     		config.SEGUNI[sender].tvehi = atributo;
+     	break;
+      case 6:
+     		config.SEGUNI[sender].userN = atributo;
+     	break;
+      case 7:
+     		config.SEGUNI[sender].marcaN = atributo;
+     	break;
+      case 8:
+     		config.SEGUNI[sender].estiloN = atributo;
+     	break;
+     }
+
+	}
+}
+
+
+function getvalues(sender,tipoAtrib)
+{
+	var out ="";
+	if (sender in config.SEGUNI)
+	{
+		switch(tipoAtrib)
+     {
+     	case 1:
+     		out = config.SEGUNI[sender].modelo;
+     	break;
+     	case 2:
+     		out = config.SEGUNI[sender].sumaAseg;
+     	break;
+     	case 3:
+     		out = config.SEGUNI[sender].marca;
+     	break;
+     	case 4:
+     		out = config.SEGUNI[sender].estilo;
+     	break;
+     	case 5:
+     		out = config.SEGUNI[sender].tvehi;
+     	break;
+     }
+	}
+	return out;
+}
+
+function deleteAuto(sender)
+{
+	if (sender in config.SEGUNI)
+	{
+    delete config.SEGUNI[sender].modelo;
+    delete config.SEGUNI[sender].sumaAseg;
+    delete config.SEGUNI[sender].marca;
+    delete config.SEGUNI[sender].estilo;
+    delete config.SEGUNI[sender].tvehi;
+
+	}
+}
+
+
+function recorrer()
+{
+	for (var x in config.SEGUNI)
+	{
+	    console.log('Key: ' + x );
+	    console.log('Values: ');
+	    var value = config.SEGUNI[x];
+	    for (var y in value)
+	    {
+	        console.log('—- ' + y + ':' + value[y]);
+	    }
+	    console.log('\n');
+	}
+}
+
+function getAutoData(sender)
+{
+  var parameters ="";
+  if (sender in config.SEGUNI)
+	{
+    parameters = 'paquete=1019&oficina=01&observacion=CotizacionFB&formaPago=BC&modelo='+config.SEGUNI[sender].modelo+'&valor='+config.SEGUNI[sender].sumaAseg+
+                 '&ttipovehi='+config.SEGUNI[sender].tvehi+'&marca='+config.SEGUNI[sender].marca+'&estilo='+config.SEGUNI[sender].estilo+"&nombreCliente="+config.SEGUNI[sender].userN;
+	}
+  return parameters;
 }
