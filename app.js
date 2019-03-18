@@ -288,6 +288,27 @@ const sendQuickReply = async (recipientId, text, replies, metadata) => {
 }
 
 
+const sendButtonMessage = async (recipientId, text, buttons) => {
+  var messageData = {
+    recipient: {
+      id: recipientId
+    },
+    message: {
+      attachment: {
+        type: "template",
+        payload: {
+          template_type: "button",
+          text: text,
+          buttons: buttons
+        }
+      }
+    }
+  };
+  await callSendAPI(messageData);
+}
+
+
+
 function handleApiAiAction(sender, action, responseText, contexts, parameters) {
    switch (action) {
     case "textos":
@@ -321,6 +342,19 @@ function handleApiAiAction(sender, action, responseText, contexts, parameters) {
     break;
     case "saldoPol-poliza":
        callToken(config.AUTHSERVICE,nPoliza(parameters.poliza.number),1,sender);
+    break;
+    case "CV":
+        const textPayload = 'Gracias por tu interés en trabajar con nosotros. '+
+                            'Por favor llena nuestro formulario de empleos y adjunta tu CV.\n'+
+                            'En cuanto tengamos una plaza disponible en el área de tu interés tomaremos en cuenta tu perfil. \n'+
+                            'Para tener acceso al formulario de empleo haz clic en el siguiente botón:';
+        const elements = [{
+                       "type": "web_url",
+                       "url": "https://www.universales.com/contactenos/empleos/",
+                       "title": "Formulario",
+                        }]
+
+        sendButtonMessage(sender, textPayload, elements);
     break;
     default:
       //unhandled action, just send back the text
