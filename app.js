@@ -500,7 +500,7 @@ const getUserData = async (sender) => {
 const urlUser ='https://graph.facebook.com/v3.0/'+sender+'?fields=name&access_token='+config.PAGE_ACCESS_TOKEN;
 await axios.get(urlUser).then(function (response) {
 	parametros = 'paquete=1019&oficina=01&observacion=CotizacionFB&formaPago=BC&nombreCliente='+response.data.name;
-    datos = parametros+"&modelo="+getvalues(sender,1)+"&valor="+getvalues(sender,2)+"&marca="+getvalues(sender,3)+"&modelo="+getvalues(sender,4)+"&ttipovehi="+getvalues(sender,5);
+    datos = parametros+"&modelo="+getvalues(sender,1)+"&valor="+getvalues(sender,2)+"&marca="+getvalues(sender,3)+"&estilo="+getvalues(sender,4)+"&ttipovehi="+getvalues(sender,5);
     getCoti(sender,datos);
   })
    .catch(function (error) {
