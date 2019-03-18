@@ -463,9 +463,8 @@ function getCoti(sender,parametros)
     sendTextMessage(sender,response)
     deleteAuto(sender);
     recorrer();
-    console.log("coti",dataCoti);
     });
-    
+
 }
 
 
@@ -485,10 +484,6 @@ await axios.get(urlAuto,
           	addNewAuto(sender,rs.brandCode,3);
           	addNewAuto(sender,rs.styleCode,4);
           	addNewAuto(sender,rs.type,5);
-
-            //var parametros = "&marca="+rs.brandCode+"&modelo="+config.CARARRAY[0]+"&estilo="+rs.styleCode+"&ttipovehi="+rs.type+"&valor="+config.CARARRAY[1]+"&nombreCliente=";
-            //var datos = 'paquete=1019&oficina=01&observacion=CotizacionFB&formaPago=BC'+parametros;
-            //getUserData(sender,datos);
             getUserData(sender);
             break;
           }
@@ -572,7 +567,12 @@ function deleteAuto(sender)
 {
 	if (sender in config.SEGUNI)
 	{
-    delete config.SEGUNI[sender];
+    delete config.SEGUNI[sender].modelo;
+    delete config.SEGUNI[sender].sumaAseg;
+    delete config.SEGUNI[sender].marca;
+    delete config.SEGUNI[sender].estilo;
+    delete config.SEGUNI[sender].tvehi;
+
 	}
 }
 
