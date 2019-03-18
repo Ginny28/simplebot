@@ -221,14 +221,12 @@ function handleApiAiResponse(sender, response) {
    if (isDefined(parameters.marca))
    {
     console.log("tengo marca y estilo asignado -> "+parameters.marca);
-    myBrand.push(parameters.marca.toUpperCase());
-    addNewAuto(sender,parameters.marca,3);
+    addNewAuto(sender,parameters.marca.toUpperCase(),7);
    }
    if (isDefined(parameters.estilo))
    {
     console.log("tengo marca y estilo asignado -> "+parameters.estilo);
-    myBrand.push(parameters.estilo.toUpperCase());
-    addNewAuto(sender,parameters.estilo,4);
+    addNewAuto(sender,parameters.estilo.toUpperCase(),8);
    }
 
 
@@ -323,8 +321,7 @@ function handleApiAiAction(sender, action, responseText, contexts, parameters) {
       sendTextMessage(sender,"Me puede brindar  el estilo de su vehículo [ex. Yaris]");
     break;
     case "Auto-estilo":
-       callToken(config.AUTHSERVICE,myBrand,3,sender);
-
+       callToken(config.AUTHSERVICE,config.SEGUNI,3,sender);
     break;
     case "saldoPol-poliza":
        callToken(config.AUTHSERVICE,nPoliza(parameters.poliza.number),1,sender);
@@ -379,7 +376,8 @@ const callToken = async (authData,senderValue,wService,sender) => {
                 sendTextMessage(sender,temp);
               break;
             case 3:
-              getBrandStyle(senderValue,response.data.recordset.token,sender);
+              recorrer();
+              //getBrandStyle(senderValue,response.data.recordset.token,sender);
             break;
             default:
             break;
@@ -508,13 +506,10 @@ await axios.get(urlAuto,
 }
 
 
-//const getUserData = async (sender,valor) => {
 const getUserData = async (sender) => {
 const urlUser ='https://graph.facebook.com/v3.0/'+sender+'?fields=name&access_token='+config.PAGE_ACCESS_TOKEN;
 await axios.get(urlUser).then(function (response) {
-//parametros = 'paquete=1019&oficina=01&observacion=CotizacionFB&formaPago=BC&ttipovehi='+getvalues(sender,5)
-    //datos = parametros+"&modelo="+getvalues(sender,1)+"&valor="+getvalues(sender,2)+"&marca="+getvalues(sender,3)+"&estilo="+getvalues(sender,4)+'&nombreCliente='+response.data.name;
-  //  addNewAuto(sender,response.data.name,6);
+    addNewAuto(sender,response.data.name,6);
     getCoti(sender);
   })
    .catch(function (error) {
@@ -546,6 +541,12 @@ function addNewAuto(sender,atributo,tipoAtrib)
      	break;
       case 6:
      		config.SEGUNI[sender].userN = atributo;
+     	break;
+      case 7:
+     		config.SEGUNI[sender].marcaN = atributo;
+     	break;
+      case 8:
+     		config.SEGUNI[sender].estiloN = atributo;
      	break;
      }
 
