@@ -464,10 +464,10 @@ await axios.get(urlSaldo,
 
 
 
-function getCoti(sender,parametros)
+function getCoti(sender)
 {
 
-	console.log("sender: "+sender +" valores: " + parametros);
+
   /*  rest.post('http://test.universales.com/universales-fe/camel/cotizadorAutos?'+parametros)
     .on('complete', function(dataCoti, response)
     {
@@ -512,9 +512,10 @@ await axios.get(urlAuto,
 const getUserData = async (sender) => {
 const urlUser ='https://graph.facebook.com/v3.0/'+sender+'?fields=name&access_token='+config.PAGE_ACCESS_TOKEN;
 await axios.get(urlUser).then(function (response) {
-	parametros = 'paquete=1019&oficina=01&observacion=CotizacionFB&formaPago=BC&ttipovehi='+getvalues(sender,5)
-    datos = parametros+"&modelo="+getvalues(sender,1)+"&valor="+getvalues(sender,2)+"&marca="+getvalues(sender,3)+"&estilo="+getvalues(sender,4)+'&nombreCliente='+response.data.name;;
-    getCoti(sender,datos);
+//parametros = 'paquete=1019&oficina=01&observacion=CotizacionFB&formaPago=BC&ttipovehi='+getvalues(sender,5)
+    //datos = parametros+"&modelo="+getvalues(sender,1)+"&valor="+getvalues(sender,2)+"&marca="+getvalues(sender,3)+"&estilo="+getvalues(sender,4)+'&nombreCliente='+response.data.name;
+    addNewAuto(sender,response.data.name,6);
+    getCoti(sender);
   })
    .catch(function (error) {
       console.log('ErRo:'+ error.response.headers);
@@ -542,6 +543,9 @@ function addNewAuto(sender,atributo,tipoAtrib)
      	break;
      	case 5:
      		config.SEGUNI[sender].tvehi = atributo;
+     	break;
+      case 6:
+     		config.SEGUNI[sender].userN = atributo;
      	break;
      }
 
