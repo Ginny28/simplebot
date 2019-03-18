@@ -66,7 +66,9 @@ app.post("/webhook/", function (req, res) {
       pageEntry.messaging.forEach(function (messagingEvent) {
         if (messagingEvent.message) {
           receivedMessage(messagingEvent);
-        } else {
+        }  else if (messagingEvent.postback) {
+          receivedPostback(messagingEvent);
+        }else {
           console.log("Webhook received unknown messagingEvent: ",messagingEvent);
         }
       });
@@ -78,6 +80,18 @@ app.post("/webhook/", function (req, res) {
 
 
 //**** functions ******* //
+function receivedPostback(event) {
+  console.log(event);
+
+  var senderID = event.sender.id;
+  var recipientID = event.recipient.id;
+  var timeOfPostback = event.timestamp;
+  var payload = event.postback.payload;
+  handleApiAiAction(senderID, payload, "", "", "")
+}
+
+
+
 function receivedMessage(event) {
   var senderID = event.sender.id;
   var recipientID = event.recipient.id;
@@ -107,6 +121,10 @@ function receivedMessage(event) {
   {
   	handleQuickReply(senderID, quickReply, messageId);
     return;
+  }
+  else if (postback)
+  {
+
   }
 }
 
@@ -362,7 +380,12 @@ function handleApiAiAction(sender, action, responseText, contexts, parameters) {
            elements = [{
                 "type": "postback",
                 "title": "Enviar CV",
-                "payload": "Enviar mi CV"
+                "payload": "Enviar CV"
+               },
+               {
+                    "type": "postback",
+                    "title": "Acerca de nosotros",
+                    "payload": "Acerca de nosotros"
                 }]
 
 
