@@ -460,6 +460,8 @@ function getCoti(sender,parametros)
     {
     var response ="Le adjunto el link de su cotización \n http://test.universales.com/reportes/reporte?"+dataCoti.url
     sendTextMessage(sender,response)
+    deleteAuto(sender);
+    recorrer();
     console.log("coti",dataCoti);
     });
 }
@@ -501,12 +503,9 @@ const getUserData = async (sender) => {
 const urlUser ='https://graph.facebook.com/v3.0/'+sender+'?fields=name&access_token='+config.PAGE_ACCESS_TOKEN;
 await axios.get(urlUser).then(function (response) {
 	parametros = 'paquete=1019&oficina=01&observacion=CotizacionFB&formaPago=BC&nombreCliente='+response.data.name;
-	//datos = "&marca="+rs.brandCode+"&modelo="+config.CARARRAY[0]+"&estilo="+rs.styleCode+"&ttipovehi="+rs.type;
     datos = parametros+"&modelo="+getvalues(sender,1)+"&valor="+getvalues(sender,2)+"&marca="+getvalues(sender,3)+"&modelo="+getvalues(sender,4)+"&ttipovehi="+getvalues(sender,5);
 	console.log("ws: "+datos);
-    //valor += response.data.name;
-    //getCoti(sender,valor);
-    recorrer();
+    getCoti(sender,valor);
   })
    .catch(function (error) {
       console.log('ErRo:'+ error.response.headers);
@@ -568,8 +567,13 @@ function getvalues(sender,tipoAtrib)
 	return out;
 }
 
-
-
+function deleteAuto(sender)
+{
+	if (sender in config.SEGUNI)
+	{
+    delete config.SEGUNI[sender];
+	}
+}
 
 
 function recorrer()
