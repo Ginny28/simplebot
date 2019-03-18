@@ -481,7 +481,7 @@ await axios.get(urlUser).then(function (response) {
 function getCoti(sender)
 {
 
-/*
+
     rest.post('http://test.universales.com/universales-fe/camel/cotizadorAutos?'+getAutoData(sender))
     .on('complete', function(dataCoti, response)
     {
@@ -489,9 +489,9 @@ function getCoti(sender)
     sendTextMessage(sender,response)
     //deleteAuto(sender);
     //recorrer();
-  });*/
+  });
   console.log("String: "+ getAutoData(sender));
-  recorrer();
+
 
 }
 
