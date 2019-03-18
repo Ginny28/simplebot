@@ -449,10 +449,7 @@ await axios.get(urlSaldo,
 
 
 const getCoti = async (sender,parametros) => {
- await axios.post("http://test.universales.com/universales-fe/camel/cotizadorAutos?",parametros,
-  {
-  headers: {'Content-Type' : 'application/json' }
-  }).then(function (response) {
+ await axios.post("http://test.universales.com/universales-fe/camel/cotizadorAutos?"+parametros).then(function (response) {
 
     console.log("result: "+ response.data.url);
       // var response ="Le adjunto el link de su cotización \n http://test.universales.com/reportes/reporte?"+dataCoti.url
