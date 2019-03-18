@@ -478,9 +478,14 @@ await axios.get(urlAuto,
       rs = response.data.recordset[i]
           if(rs.brandName ==senderValue[0] && rs.styleName == senderValue[1] )
           {
-            var parametros = "&marca="+rs.brandCode+"&modelo="+config.CARARRAY[0]+"&estilo="+rs.styleCode+"&ttipovehi="+rs.type+"&valor="+config.CARARRAY[1]+"&nombreCliente=";
-            var datos = 'paquete=1019&oficina=01&observacion=CotizacionFB&formaPago=BC'+parametros;
-            getUserData(sender,datos);
+          	addNewAuto(sender,rs.brandCode,3);
+          	addNewAuto(sender,rs.styleCode,4);
+          	addNewAuto(sender,rs.type,5);
+          	
+            //var parametros = "&marca="+rs.brandCode+"&modelo="+config.CARARRAY[0]+"&estilo="+rs.styleCode+"&ttipovehi="+rs.type+"&valor="+config.CARARRAY[1]+"&nombreCliente=";
+            //var datos = 'paquete=1019&oficina=01&observacion=CotizacionFB&formaPago=BC'+parametros;
+            //getUserData(sender,datos);
+            getUserData(sender);
             break;
           }
     }
@@ -491,11 +496,16 @@ await axios.get(urlAuto,
 }
 
 
-const getUserData = async (sender,valor) => {
+//const getUserData = async (sender,valor) => {
+const getUserData = async (sender) => {
 const urlUser ='https://graph.facebook.com/v3.0/'+sender+'?fields=name&access_token='+config.PAGE_ACCESS_TOKEN;
 await axios.get(urlUser).then(function (response) {
-    valor += response.data.name;
-    getCoti(sender,valor);
+	parametros = 'paquete=1019&oficina=01&observacion=CotizacionFB&formaPago=BC&nombreCliente='+response.data.name;
+	//datos = "&marca="+rs.brandCode+"&modelo="+config.CARARRAY[0]+"&estilo="+rs.styleCode+"&ttipovehi="+rs.type;
+    datos = parametros+"&modelo="+getvalues(sender,1)+"&valor="+getvalues(sender,2)+"&marca="+getvalues(sender,3)+"&modelo="+getvalues(sender,4)+"&ttipovehi="+getvalues(sender,5);
+	console.log("ws: "+datos);
+    //valor += response.data.name;
+    //getCoti(sender,valor);
     recorrer();
   })
    .catch(function (error) {
@@ -522,10 +532,44 @@ function addNewAuto(sender,atributo,tipoAtrib)
      	case 4:
      		config.SEGUNI[sender].estilo = atributo;
      	break;
+     	case 5:
+     		config.SEGUNI[sender].tvehi = atributo;
+     	break;
      }
     
 	}
 }
+
+
+function getvalues(sender,tipoAtrib)
+{
+	var out ="";
+	if (sender in config.SEGUNI)
+	{
+		switch(tipoAtrib)
+     {
+     	case 1:
+     		out = config.SEGUNI[sender].modelo;
+     	break;
+     	case 2:
+     		out = config.SEGUNI[sender].sumaAseg;
+     	break;
+     	case 3:
+     		out = config.SEGUNI[sender].marca;
+     	break;
+     	case 4:
+     		out = config.SEGUNI[sender].estilo;
+     	break;
+     	case 5:
+     		out = config.SEGUNI[sender].tvehi;
+     	break;
+     }
+	}
+	return out;
+}
+
+
+
 
 
 function recorrer()
