@@ -595,7 +595,7 @@ function getAutoData(sender)
   var parameters ="";
   if (sender in config.SEGUNI)
 	{
-    parameters = 'paquete=1019&oficina=01&observacion=CotizacionFB&formaPago=BC&modelo='+config.SEGUNI[sender].modelo+'&&valor='+delete config.SEGUNI[sender].sumaAseg+
+    parameters = 'paquete=1019&oficina=01&observacion=CotizacionFB&formaPago=BC&modelo='+config.SEGUNI[sender].modelo+'&&valor='+config.SEGUNI[sender].sumaAseg+
                  '&ttipovehi='+config.SEGUNI[sender].tvehi+'&marca='+config.SEGUNI[sender].marca+'&estilo='+config.SEGUNI[sender].estilo+"&nombreCliente="+config.SEGUNI[sender].userN;
 	}
   return parameters;
