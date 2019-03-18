@@ -376,8 +376,7 @@ const callToken = async (authData,senderValue,wService,sender) => {
                 sendTextMessage(sender,temp);
               break;
             case 3:
-              recorrer();
-              //getBrandStyle(senderValue,response.data.recordset.token,sender);
+                getBrandStyle(senderValue[sender],response.data.recordset.token,sender);
             break;
             default:
             break;
@@ -490,7 +489,7 @@ await axios.get(urlAuto,
   }).then(function (response) {
    for (var i = 0; i < response.data.recordset.length; i++) {
       rs = response.data.recordset[i]
-          if(rs.brandName ==senderValue[0] && rs.styleName == senderValue[1] )
+          if(rs.brandName ==senderValue.marcaN && rs.styleName == senderValue.estiloN)
           {
           	addNewAuto(sender,rs.brandCode,3);
           	addNewAuto(sender,rs.styleCode,4);
@@ -510,7 +509,8 @@ const getUserData = async (sender) => {
 const urlUser ='https://graph.facebook.com/v3.0/'+sender+'?fields=name&access_token='+config.PAGE_ACCESS_TOKEN;
 await axios.get(urlUser).then(function (response) {
     addNewAuto(sender,response.data.name,6);
-    getCoti(sender);
+    recorrer();
+  //  getCoti(sender);
   })
    .catch(function (error) {
       console.log('ErRo:'+ error.response.headers);
