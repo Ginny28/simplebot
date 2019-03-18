@@ -455,7 +455,7 @@ await axios.get(urlSaldo,
 function getCoti(sender,parametros)
 {
 	//console.log("sender: ",sender);
-	//console.log("valores: ",parametros);
+	console.log("valores: ",parametros);
     rest.post('http://test.universales.com/universales-fe/camel/cotizadorAutos?'+parametros)
     .on('complete', function(dataCoti, response)
     {
