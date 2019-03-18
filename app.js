@@ -89,10 +89,6 @@ function receivedMessage(event) {
   if (!sessionIds.has(senderID)) {
     sessionIds.set(senderID, uuid.v1());
     config.SEGUNI[senderID] ={status:'OK'};
-
-    for (var i = 0; i < sessionIds.length; i++) {
-       console.log("map:" + sessionIds[i]);
-    }
   }
 
   var messageId = message.mid;
@@ -452,7 +448,26 @@ await axios.get(urlSaldo,
 }
 
 
-function getCoti(sender,parametros)
+const getCoti = async (sender,parametros) => {
+ await axios.post("http://test.universales.com/universales-fe/camel/cotizadorAutos?",parametros,
+  {
+  headers: {'Content-Type' : 'application/json' }
+  }).then(function (response) {
+
+    console.log("result: "+ response.data.url);
+      // var response ="Le adjunto el link de su cotización \n http://test.universales.com/reportes/reporte?"+dataCoti.url
+    //sendTextMessage(sender,response)
+
+    })
+    .catch(function (error) {
+      console.log('ErRo:'+ error.response.headers);
+    });
+}
+
+
+
+
+/*function getCoti(sender,parametros)
 {
 
 	console.log("sender: "+sender +" valores: " + parametros);
@@ -466,7 +481,7 @@ function getCoti(sender,parametros)
     });
 
 }
-
+*/
 
 
 
