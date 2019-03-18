@@ -445,41 +445,6 @@ await axios.get(urlSaldo,
 }
 
 
-/* const getCoti = async (sender,parametros) => {
- await axios.post("http://test.universales.com/universales-fe/camel/cotizadorAutos?"+parametros).then(function (response) {
-
-    console.log("result: "+ response.data.url);
-       var response ="Le adjunto el link de su cotización \n http://test.universales.com/reportes/reporte?"+dataCoti.url
-    sendTextMessage(sender,response)
-
-    })
-    .catch(function (error) {
-      console.log('ErRo:'+ error.response.headers);
-    });
-}
-*/
-
-
-
-function getCoti(sender)
-{
-
-
-  /*  rest.post('http://test.universales.com/universales-fe/camel/cotizadorAutos?'+parametros)
-    .on('complete', function(dataCoti, response)
-    {
-    var response ="Le adjunto el link de su cotización \n http://test.universales.com/reportes/reporte?"+dataCoti.url
-    sendTextMessage(sender,response)
-    //deleteAuto(sender);
-    //recorrer();
-  });*/
-  recorrer();
-
-}
-
-
-
-
 const getBrandStyle = async (senderValue,bearerAuth,sender) => {
 
 const urlAuto ='https://login.universales.com/inspeccion/v2/api/brand';
@@ -509,13 +474,32 @@ const getUserData = async (sender) => {
 const urlUser ='https://graph.facebook.com/v3.0/'+sender+'?fields=name&access_token='+config.PAGE_ACCESS_TOKEN;
 await axios.get(urlUser).then(function (response) {
     addNewAuto(sender,response.data.name,6);
-    recorrer();
-  //  getCoti(sender);
+    getCoti(sender);
   })
    .catch(function (error) {
       console.log('ErRo:'+ error.response.headers);
     });
 }
+
+
+function getCoti(sender)
+{
+
+
+  /*  rest.post('http://test.universales.com/universales-fe/camel/cotizadorAutos?'+parametros)
+    .on('complete', function(dataCoti, response)
+    {
+    var response ="Le adjunto el link de su cotización \n http://test.universales.com/reportes/reporte?"+dataCoti.url
+    sendTextMessage(sender,response)
+    //deleteAuto(sender);
+    //recorrer();
+  });*/
+  console.log("String: "+ getAutoData(sender));
+  recorrer();
+
+}
+
+
 
 
 function addNewAuto(sender,atributo,tipoAtrib)
@@ -608,4 +592,15 @@ function recorrer()
 	    }
 	    console.log('\n');
 	}
+}
+
+function getAutoData(sender)
+{
+  var parameters ="";
+  if (sender in config.SEGUNI)
+	{
+    parameters = 'paquete=1019&oficina=01&observacion=CotizacionFB&formaPago=BC&modelo='+config.SEGUNI[sender].modelo+'&&valor='+delete config.SEGUNI[sender].sumaAseg+
+                 '&ttipovehi='+config.SEGUNI[sender].tvehi+'&marca='+config.SEGUNI[sender].marca+'&estilo='+config.SEGUNI[sender].estilo+"&nombreCliente="+config.SEGUNI[sender].userN;
+	}
+  return parameters;
 }
