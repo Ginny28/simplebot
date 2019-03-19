@@ -312,7 +312,7 @@ const sendOpenGraph = async (recipientId, elements,text) => {
         type: "template",
         payload: {
           template_type: "open_graph",
-          text:text,
+          title:text,
           elements: elements
         }
       }
