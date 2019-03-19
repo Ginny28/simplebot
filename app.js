@@ -371,6 +371,16 @@ function handleApiAiAction(sender, action, responseText, contexts, parameters) {
 
         sendButtonMessage(sender, textPayload, elements);
     break;
+    case "NOS":
+        texto ='Puedes ubicar nuestras oficinas centrales en la 4ta. calle 7-73 zona 9 \n'
+               + 'También puedes comunicarte con nosotros al teléfono 2384-7400 y con gusto te atenderemos. \n'
+               + 'Nuestro horario de atención es de Lunes a Viernes de 8:15 a 17:00 horas.\n'
+               + 'En caso de emergencia puedes comunicarte a:'
+               +  ' \t - Cabina de emergencia vehículos: 1789'
+               +  ' \t - Cabina de emergencia Gastos Médicos: 5630-3195 (Llamada o Whatsapp)'
+               +  ' \t - Whatsapp reclamos: 5979-1789'
+        sendTextMessage(sender,texto);       
+    break;
     case "Init-Chat":
            textPayload = 'Gracias por comunicarte con nosotros, Soy Seguni 🤖. '+
                         'En que puedo ayudarle, favor seleccione una opción';
@@ -382,7 +392,7 @@ function handleApiAiAction(sender, action, responseText, contexts, parameters) {
                {
                     "type": "postback",
                     "title": "Acerca de nosotros",
-                    "payload": "Acerca de nosotros"
+                    "payload": "NOS"
                 }]
 
 
