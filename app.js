@@ -419,7 +419,7 @@ function handleApiAiAction(sender, action, responseText, contexts, parameters) {
     reply = [
     {
       "content_type": "text",
-      "title": "Emergencia Médica",
+      "title": "Médica",
       "payload": "Emer-Medic"
     },
     {
