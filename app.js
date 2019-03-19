@@ -401,7 +401,8 @@ function handleApiAiAction(sender, action, responseText, contexts, parameters) {
                +  ' \t - Whatsapp reclamos: 5979-1789'
         sendTextMessage(sender,texto);
         var element = [{
-          "url": "https://l.messenger.com/l.php?u=https%3A%2F%2Fwaze.com%2Ful%2Fh9fxeh5z23&h=AT1wbVVBZhAbWu35emUPrsAw5B8IkTPk2UI0rN6orbXcicqUm0HZiJyfQyC4nVPkLIOY987fALlZui1_HhH3H7aw1-S0hf0jeQGQ-LS3WTtQE10z6Y1clYAUET70pWuwfm_qmQ",
+          //"url": "https://l.messenger.com/l.php?u=https%3A%2F%2Fwaze.com%2Ful%2Fh9fxeh5z23&h=AT1wbVVBZhAbWu35emUPrsAw5B8IkTPk2UI0rN6orbXcicqUm0HZiJyfQyC4nVPkLIOY987fALlZui1_HhH3H7aw1-S0hf0jeQGQ-LS3WTtQE10z6Y1clYAUET70pWuwfm_qmQ",
+          "url": "https://waze.com/ul/h9fxeh78x1",
           "buttons": [
             {
               "type": "web_url",
@@ -414,25 +415,47 @@ function handleApiAiAction(sender, action, responseText, contexts, parameters) {
 
     break;
     case "SOS":
-   /*var element = [{
-      "url": "https://wa.me/50256303195?text=Tengo%20una%20Emergencia",
-      "buttons": [
-        {
-          "type": "web_url",
-          "url": "https://www.universales.com/",
-          "title": "Mas"
-        }
-      ]
-      }]*/
-      textPayload = 'Queremos saber tu emergencia:';
-         elements = [{
-                       "type": "web_url",
-                       "url": "https://wa.me/50256303195?text=Tengo%20una%20Emergencia",
-                       "title": "Escribenos 💬",
-                        }]
+    textPayload = 'seleccione su tipo de Emergencia';
+    elements = [{
+         "type": "postback",
+         "title": "Emergencia Médica",
+         "payload": "Emer-Medic"
+        },{
+         "type": "postback",
+         "title": "Emergencia Auto",
+         "payload": "Emer-Auto"
+       }]
+       sendButtonMessage(sender, textPayload, elements);
+    break;
+    case "Emer-Medic":
+    textPayload = 'Queremos saber tu emergencia:';
+       elements = [{
+                     "type": "web_url",
+                     "url": "https://wa.me/50256303195?text=Tengo%20una%20Emergencia",
+                     "title": "Escribenos 💬",
+                   },
+                   {
+                      "type": "phone_number",
+                      "payload": "+50247682965",
+                      "title": "Llamar a Emergencia",
+                   }]
 
-        sendButtonMessage(sender, textPayload, elements);
-     
+      sendButtonMessage(sender, textPayload, elements);
+    break;
+    case "Emer-Auto":
+    textPayload = 'Queremos saber tu emergencia:';
+       elements = [{
+                     "type": "web_url",
+                     "url": "https://wa.me/50259791789?text=Tengo%20una%20Emergencia",
+                     "title": "Escribenos 💬",
+                   },
+                   {
+                      "type": "phone_number",
+                      "payload": "+50247682965",
+                      "title": "Llamar a Emergencia",
+                   }]
+
+      sendButtonMessage(sender, textPayload, elements);
     break;
     case "Init-Chat":
            textPayload = 'Gracias por comunicarte con nosotros, Soy Seguni 🤖. '+
