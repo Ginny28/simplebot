@@ -414,7 +414,30 @@ function handleApiAiAction(sender, action, responseText, contexts, parameters) {
 
     break;
     case "SOS":
-    var element = [{
+
+    var element = [
+     {
+      "title":"Escribenos",
+      "image_url":"https://png.pngtree.com/element_our/png/20181023/whatsapp-icon-png_216841.jpg",
+      "subtitle":"a nuestro Whatsapp",
+      "default_action": {
+        "type": "web_url",
+        "url": "https://wa.me/50256303195?text=Tengo%20una%20Emergencia",
+        "messenger_extensions": true,
+        "webview_height_ratio": "COMPACT"
+      },
+      "buttons":[
+        {
+          "type": "web_url",
+          "url": "https://www.universales.com/",
+          "title": "Mas"
+        }
+      ]
+      }      
+  ]
+
+
+ /*   var element = [{
       "url": "https://wa.me/50256303195?text=Tengo%20una%20Emergencia",
       "title": "Escribenos",
       "buttons": [
@@ -424,7 +447,7 @@ function handleApiAiAction(sender, action, responseText, contexts, parameters) {
           "title": "Mas"
         }
       ]
-      }]
+      }]*/
     sendOpenGraph(sender,element);
     break;
     case "Init-Chat":
