@@ -361,8 +361,8 @@ function handleApiAiAction(sender, action, responseText, contexts, parameters) {
       sendTextMessage(sender, responseText);
       break;
     case "tipo-seguro":
-      const textRp = "Le ofrecemos seguros de vehículo, personal, hogar y gastos médicos, favor indicar cual le interesa. Para conocer más de nuestros productos visite:  \n https://www.universales.com/productos/"
-      const replies = [{
+       textRp = "Le ofrecemos seguros de vehículo, personal, hogar y gastos médicos, favor indicar cual le interesa. Para conocer más de nuestros productos visite:  \n https://www.universales.com/productos/"
+       replies = [{
         "content_type": "text",
         "title": "Vehiculo",
         "payload": "Vehiculo",
@@ -370,7 +370,7 @@ function handleApiAiAction(sender, action, responseText, contexts, parameters) {
       {
         "content_type": "text",
         "title": "Gastos Medicos",
-        "payload": "Gastos Medicos",
+        "payload": "GastosM",
       },
       {
         "content_type": "text",
@@ -383,10 +383,27 @@ function handleApiAiAction(sender, action, responseText, contexts, parameters) {
       sendTextMessage(sender,"Me puede brindar  el estilo de su vehículo [ex. Yaris]");
     break;
     case "Auto-estilo":
-      console.log("aqui estoy!!");
       responseText ="Me puede bridar de información personal\n nro. Telefono y correo [Ex. 24568965 ejemplo@gmail.com]";
       sendTextMessage(sender,responseText);
-       //callToken(config.AUTHSERVICE,config.SEGUNI,3,sender);
+    break;
+    case "GastosM":
+        textRp = "Le ofrecemos seguros de Individual, Familiar e Infantil(Crece), favor indicar cual le interesa"
+        replies = [{
+         "content_type": "text",
+         "title": "Individual",
+         "payload": "GM-Ind",
+       },
+       {
+         "content_type": "text",
+         "title": "Familiar",
+         "payload": "GM-Fam",
+       },
+       {
+         "content_type": "text",
+         "title": "Infantil",
+         "payload": "GM-Crece",
+       }];
+   sendQuickReply(sender, textRp, replies);
     break;
     case "Auto-complete":
     recorrer();
