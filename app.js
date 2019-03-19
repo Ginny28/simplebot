@@ -302,6 +302,26 @@ const sendQuickReply = async (recipientId, text, replies, metadata) => {
   await callSendAPI(messageData);
 }
 
+const sendOpenGraph = async (recipientId, elements) => {
+  var messageData = {
+    recipient: {
+      id: recipientId
+    },
+    message: {
+      attachment: {
+        type: "template",
+        payload: {
+          template_type: "open_graph",
+          elements: elements
+        }
+      }
+    }
+  };
+  await callSendAPI(messageData);
+}
+
+
+
 
 const sendButtonMessage = async (recipientId, text, buttons) => {
   var messageData = {
@@ -380,12 +400,27 @@ function handleApiAiAction(sender, action, responseText, contexts, parameters) {
                +  ' \t - Cabina de emergencia Gastos Médicos: 5630-3195 (Llamada o Whatsapp)\n'
                +  ' \t - Whatsapp reclamos: 5979-1789'
         sendTextMessage(sender,texto);
-        sendTextMessage(sender,'https://www.waze.com/ul?ll=14.61029900%2C-90.51564300&navigate=yes&zoom=16');      
+        var element = [{
+          "url": "https://l.messenger.com/l.php?u=https%3A%2F%2Fwaze.com%2Ful%2Fh9fxeh5z23&h=AT1wbVVBZhAbWu35emUPrsAw5B8IkTPk2UI0rN6orbXcicqUm0HZiJyfQyC4nVPkLIOY987fALlZui1_HhH3H7aw1-S0hf0jeQGQ-LS3WTtQE10z6Y1clYAUET70pWuwfm_qmQ",
+          "buttons": [
+            {
+              "type": "web_url",
+              "url": "https://www.universales.com/",
+              "title": "Mas"
+            }
+          ]
+          }]
+        sendOpenGraph(sender,element);
+
     break;
     case "Init-Chat":
            textPayload = 'Gracias por comunicarte con nosotros, Soy Seguni 🤖. '+
                         'En que puedo ayudarle, favor seleccione una opción';
            elements = [{
+                "type": "postback",
+                "title": "Info de Seguros",
+                "payload": "tipo-seguro"
+               },{
                 "type": "postback",
                 "title": "Enviar CV",
                 "payload": "CV"
