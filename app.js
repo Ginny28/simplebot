@@ -374,7 +374,7 @@ function handleApiAiAction(sender, action, responseText, contexts, parameters) {
            elements = [{
                 "type": "postback",
                 "title": "Info de Seguros",
-                "payload": "Info de Seguros"
+                "payload": "InfoSeg"
               },
               {
                 "type": "postback",
@@ -384,7 +384,7 @@ function handleApiAiAction(sender, action, responseText, contexts, parameters) {
                {
                     "type": "postback",
                     "title": "Acerca de nosotros",
-                    "payload": "Acerca de nosotros"
+                    "payload": "nosotros"
                 }
                 ]
 
