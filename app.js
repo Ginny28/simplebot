@@ -416,6 +416,7 @@ function handleApiAiAction(sender, action, responseText, contexts, parameters) {
     case "SOS":
     var element = [{
       "url": "https://wa.me/50256303195?text=Tengo%20una%20Emergencia",
+      "title": "Escribenos",
       "buttons": [
         {
           "type": "web_url",
