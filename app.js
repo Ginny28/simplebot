@@ -424,11 +424,11 @@ function handleApiAiAction(sender, action, responseText, contexts, parameters) {
         }
       ]
       }]*/
-      textPayload = 'Escribenos a nuestro Whatsapp';
+      textPayload = 'Queremos saber tu emergencia:';
          elements = [{
                        "type": "web_url",
                        "url": "https://wa.me/50256303195?text=Tengo%20una%20Emergencia",
-                       "title": "Whatsapp",
+                       "title": "Escribenos 💬",
                         }]
 
         sendButtonMessage(sender, textPayload, elements);
