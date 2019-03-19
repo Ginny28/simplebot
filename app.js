@@ -415,7 +415,26 @@ function handleApiAiAction(sender, action, responseText, contexts, parameters) {
 
     break;
     case "SOS":
-    textPayload = 'seleccione su tipo de Emergencia';
+    const textRp = "seleccione su tipo de Emergencia"
+    const replies = [{
+      "content_type": "text",
+      "title": "Vehiculo",
+      "payload": "Vehiculo",
+    },
+    {
+      "content_type": "text",
+      "title": "Gastos Medicos",
+      "payload": "Gastos Medicos",
+    },
+    {
+      "content_type": "text",
+      "title": "Personal",
+      "payload": "Seguros de Vida",
+    }];
+    sendQuickReply(sender, textRp, replies);
+
+
+    textPayload = '';
     elements = [{
          "type": "postback",
          "title": "Emergencia Médica",
@@ -457,6 +476,26 @@ function handleApiAiAction(sender, action, responseText, contexts, parameters) {
 
       sendButtonMessage(sender, textPayload, elements);
     break;
+    case "CONTACTO":
+          textPayload = 'Como le podemos Ayudar?';
+          elements = [
+              {
+               "type": "postback",
+               "title": "Enviar CV",
+               "payload": "CV"
+              },
+              {
+               "type": "postback",
+               "title": "Ubicación",
+               "payload": "NOS"
+              },
+              {
+                "type": "phone_number",
+                "title": "Llamar",
+                "payload": "+50223847400"
+              }]
+              sendButtonMessage(sender, textPayload, elements);
+    break;
     case "Init-Chat":
            textPayload = 'Gracias por comunicarte con nosotros, Soy Seguni 🤖. '+
                         'En que puedo ayudarle, favor seleccione una opción';
@@ -466,8 +505,8 @@ function handleApiAiAction(sender, action, responseText, contexts, parameters) {
                 "payload": "tipo-seguro"
                },{
                 "type": "postback",
-                "title": "Enviar CV",
-                "payload": "CV"
+                "title": "Contáctenos",
+                "payload": "CONTACTO"
                },{
                 "type": "postback",
                 "title": "Emergencia",
@@ -638,11 +677,6 @@ await axios.get(urlUser).then(function (response) {
       console.log('ErRo:'+ error.response.header);
     });
 }
-
-
-
-
-
 
 
 function getCoti(sender)
