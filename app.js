@@ -81,15 +81,11 @@ app.post("/webhook/", function (req, res) {
 
 //**** functions ******* //
 function receivedPostback(event) {
-  console.log(event);
-
   var senderID = event.sender.id;
   var recipientID = event.recipient.id;
   var timeOfPostback = event.timestamp;
   var payload = event.postback.payload;
   handleApiAiAction(senderID, payload, "", "", "")
-
-
 }
 
 
@@ -377,6 +373,11 @@ function handleApiAiAction(sender, action, responseText, contexts, parameters) {
                         'En que puedo ayudarle, favor seleccione una opción';
            elements = [{
                 "type": "postback",
+                "title": "Info de Seguros",
+                "payload": "Info de Seguros"
+              },
+              {
+                "type": "postback",
                 "title": "Enviar CV",
                 "payload": "CV"
                },
@@ -384,7 +385,8 @@ function handleApiAiAction(sender, action, responseText, contexts, parameters) {
                     "type": "postback",
                     "title": "Acerca de nosotros",
                     "payload": "Acerca de nosotros"
-                }]
+                }
+                ]
 
 
     sendButtonMessage(sender, textPayload, elements);
