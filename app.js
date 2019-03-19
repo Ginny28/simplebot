@@ -424,18 +424,15 @@ function handleApiAiAction(sender, action, responseText, contexts, parameters) {
         }
       ]
       }]*/
-      var element = [
-           {
-            "url":"https://wa.me/50256303195?text=Tengo%20una%20Emergencia",
-            "buttons":[
-              {
-                "type":"web_url",
-                "url":"https://www.universales.com",
-                "title":"Escribanos"
-              }              
-            ]
-            }] 
-    sendOpenGraph(sender,element);
+      textPayload = 'Escribenos a nuestro Whatsapp';
+         elements = [{
+                       "type": "web_url",
+                       "url": "https://wa.me/50256303195?text=Tengo%20una%20Emergencia",
+                       "title": "Whatsapp",
+                        }]
+
+        sendButtonMessage(sender, textPayload, elements);
+     
     break;
     case "Init-Chat":
            textPayload = 'Gracias por comunicarte con nosotros, Soy Seguni 🤖. '+
