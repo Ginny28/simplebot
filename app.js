@@ -415,8 +415,8 @@ function handleApiAiAction(sender, action, responseText, contexts, parameters) {
 
     break;
     case "SOS":
-    const textRp = "seleccione su tipo de Emergencia"
-    const replies = [{
+    textQRp = "seleccione su tipo de Emergencia"
+    reply = [{
       "content_type": "text",
       "title": "Vehiculo",
       "payload": "Vehiculo",
@@ -431,7 +431,7 @@ function handleApiAiAction(sender, action, responseText, contexts, parameters) {
       "title": "Personal",
       "payload": "Seguros de Vida",
     }];
-    sendQuickReply(sender, textRp, replies);
+    sendQuickReply(sender, textQRp, reply);
 
 
     textPayload = '';
