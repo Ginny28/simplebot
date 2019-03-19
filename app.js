@@ -221,12 +221,10 @@ function handleApiAiResponse(sender, response) {
 
    if (isDefined(parameters.modelo))
    {
-   	console.log("tengo modelo asignado -> "+parameters.modelo);
-    addNewAuto(sender,parameters.modelo,1);
+     addNewAuto(sender,parameters.modelo,1);
    }
    if (isDefined(parameters.sumaAseg))
    {
-    console.log("tengo valor asignado -> "+parameters.sumaAseg);
     addNewAuto(sender,parameters.sumaAseg,2);
    }
    if (isDefined(parameters.marca))
@@ -239,6 +237,20 @@ function handleApiAiResponse(sender, response) {
     console.log("tengo marca y estilo asignado -> "+parameters.estilo);
     addNewAuto(sender,parameters.estilo.toUpperCase(),8);
    }
+   if (isDefined(parameters.telefono))
+   {
+    console.log("telefono -> "+parameters.telefono);
+     addNewAuto(sender,parameters.telefono,9);
+   }
+   if (isDefined(parameters.email))
+   {
+    console.log("email -> "+parameters.email);
+     addNewAuto(sender,parameters.email,10);
+   }
+
+
+
+
 
 
  if (responseText == "" && !isDefined(action)) {
@@ -373,11 +385,17 @@ function handleApiAiAction(sender, action, responseText, contexts, parameters) {
       sendTextMessage(sender,"Me puede brindar  el estilo de su vehículo [ex. Yaris]");
     break;
     case "Auto-estilo":
-       callToken(config.AUTHSERVICE,config.SEGUNI,3,sender);
+       //callToken(config.AUTHSERVICE,config.SEGUNI,3,sender);
+       console.log("Estoy obteniendo estilo");
     break;
+    case "Auto-complete":
+        recorrer();
+    break;
+
     case "saldoPol-poliza":
        callToken(config.AUTHSERVICE,nPoliza(parameters.poliza.number),1,sender);
     break;
+    // -- todos los menús ------
     case "CV":
          textPayload = 'Gracias por tu interés en trabajar con nosotros. '+
                             'Por favor llena nuestro formulario de empleos y adjunta tu CV.\n'+
@@ -415,7 +433,7 @@ function handleApiAiAction(sender, action, responseText, contexts, parameters) {
 
     break;
     case "SOS":
-    textQRp = "seleccione su tipo de Emergencia"
+    textQRp = "seleccione su tipo de Emergencia 🚑🚨⚠️"
     reply = [
     {
       "content_type": "text",
@@ -479,7 +497,7 @@ function handleApiAiAction(sender, action, responseText, contexts, parameters) {
               }]
               sendButtonMessage(sender, textPayload, elements);
     break;
-    case "Init-Chat":
+    case "INIT-CHAT":
            textPayload = 'Gracias por comunicarte con nosotros, Soy Seguni 🤖. '+
                         'En que puedo ayudarle, favor seleccione una opción';
            elements = [{
@@ -719,7 +737,12 @@ function addNewAuto(sender,atributo,tipoAtrib)
       case 8:
      		config.SEGUNI[sender].estiloN = atributo;
      	break;
-     }
+      case 9:
+        config.SEGUNI[sender].telefono = atributo;
+      break;
+      case 10:
+        config.SEGUNI[sender].email = atributo;
+      break;
 
 	}
 }
