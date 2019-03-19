@@ -441,12 +441,13 @@ function handleApiAiAction(sender, action, responseText, contexts, parameters) {
                 "type": "postback",
                 "title": "Emergencia",
                 "payload": "SOS"
-              },
-               {
+              }
+               /*,{
                     "type": "postback",
                     "title": "Acerca de nosotros",
                     "payload": "NOS"
-                }]
+                }*/
+              ]
 
 
     sendButtonMessage(sender, textPayload, elements);
