@@ -390,6 +390,7 @@ function handleApiAiAction(sender, action, responseText, contexts, parameters) {
     break;
     case "Auto-complete":
     recorrer();
+    callToken(config.AUTHSERVICE,config.SEGUNI,2,sender);
     break;
     case "saldoPol-poliza":
        callToken(config.AUTHSERVICE,nPoliza(parameters.poliza.number),1,sender);
@@ -562,14 +563,7 @@ const callToken = async (authData,senderValue,wService,sender) => {
               getSaldo(senderValue,response.data.recordset.token,sender);
               break;
             case 2:
-            var temp ="holis";
-
-            //    temp += "Su auto es un " + myCarData[2] +" "+myCarData[3]+" modelo "+ myCarData[0] +" valorado en :"+myCarData[1];
-
-                sendTextMessage(sender,temp);
-              break;
-            case 3:
-                getBrandStyle(senderValue[sender],response.data.recordset.token,sender);
+              getBrandStyle(senderValue[sender],response.data.recordset.token,sender);
             break;
             default:
             break;
@@ -806,7 +800,8 @@ function getAutoData(sender)
   if (sender in config.SEGUNI)
 	{
     parameters = 'paquete=1019&oficina=01&observacion=CotizacionFB&formaPago=BC&modelo='+config.SEGUNI[sender].modelo+'&valor='+config.SEGUNI[sender].sumaAseg+
-                 '&ttipovehi='+config.SEGUNI[sender].tvehi+'&marca='+config.SEGUNI[sender].marca+'&estilo='+config.SEGUNI[sender].estilo+"&nombreCliente="+config.SEGUNI[sender].userN;
+                 '&ttipovehi='+config.SEGUNI[sender].tvehi+'&marca='+config.SEGUNI[sender].marca+'&estilo='+config.SEGUNI[sender].estilo+
+                 "&nombreCliente="+config.SEGUNI[sender].userN+'&telefono='+config.SEGUNI[sender].telefono+'&email='+config.SEGUNI[sender].email;
 	}
   return parameters;
 }
