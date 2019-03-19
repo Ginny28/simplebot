@@ -419,7 +419,7 @@ function handleApiAiAction(sender, action, responseText, contexts, parameters) {
 
     break;
     case "SOS":
-    textQRp = "seleccione su tipo de Emergencia"
+    textQRp = "seleccione su tipo de Emergencia 🚑"
     reply = [
     {
       "content_type": "text",
@@ -720,6 +720,12 @@ function addNewAuto(sender,atributo,tipoAtrib)
       case 8:
      		config.SEGUNI[sender].estiloN = atributo;
      	break;
+      case 9:
+        config.SEGUNI[sender].telefono = atributo;
+      break;
+      case 10:
+        config.SEGUNI[sender].email = atributo;
+      break;
      }
 
 	}
