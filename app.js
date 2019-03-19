@@ -409,6 +409,15 @@ function handleApiAiAction(sender, action, responseText, contexts, parameters) {
     recorrer();
     callToken(config.AUTHSERVICE,config.SEGUNI,2,sender);
     break;
+    case "GM-Ind":
+    sendTextMessage(sender,"Me puede indicar su fecha de nacimiento [dd/mm/yyyy]");
+    break;
+    case "GM-Fam":
+    sendTextMessage(sender,"Me puede indicar cuantos hijos menores de 24 años");
+    break;
+    case "GM-Crece":
+    sendTextMessage(sender,"Me puede indicar el nombre del niño/a");
+    break;
     case "saldoPol-poliza":
        callToken(config.AUTHSERVICE,nPoliza(parameters.poliza.number),1,sender);
     break;
