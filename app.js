@@ -373,7 +373,11 @@ function handleApiAiAction(sender, action, responseText, contexts, parameters) {
       sendTextMessage(sender,"Me puede brindar  el estilo de su vehículo [ex. Yaris]");
     break;
     case "Auto-estilo":
-       callToken(config.AUTHSERVICE,config.SEGUNI,3,sender);
+      console.log("aqui estoy!!");
+       //callToken(config.AUTHSERVICE,config.SEGUNI,3,sender);
+    break;
+    case "Auto-complete":
+    recorrer();
     break;
     case "saldoPol-poliza":
        callToken(config.AUTHSERVICE,nPoliza(parameters.poliza.number),1,sender);
