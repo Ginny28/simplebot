@@ -378,7 +378,6 @@ function handleApiAiAction(sender, action, responseText, contexts, parameters) {
     case "saldoPol-poliza":
        callToken(config.AUTHSERVICE,nPoliza(parameters.poliza.number),1,sender);
     break;
-    // -- todos los menús ------
     case "CV":
          textPayload = 'Gracias por tu interés en trabajar con nosotros. '+
                             'Por favor llena nuestro formulario de empleos y adjunta tu CV.\n'+
@@ -416,7 +415,7 @@ function handleApiAiAction(sender, action, responseText, contexts, parameters) {
 
     break;
     case "SOS":
-    textQRp = "seleccione su tipo de Emergencia 🚑🚨⚠️"
+    textQRp = "seleccione su tipo de Emergencia"
     reply = [
     {
       "content_type": "text",
@@ -502,11 +501,8 @@ function handleApiAiAction(sender, action, responseText, contexts, parameters) {
                     "payload": "NOS"
                 }*/
               ]
-
-
     sendButtonMessage(sender, textPayload, elements);
     break;
-
     default:
       //unhandled action, just send back the text
     sendTextMessage(sender, responseText);
