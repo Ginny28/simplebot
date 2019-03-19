@@ -302,7 +302,7 @@ const sendQuickReply = async (recipientId, text, replies, metadata) => {
   await callSendAPI(messageData);
 }
 
-const sendOpenGraph = async (recipientId, elements,text) => {
+const sendOpenGraph = async (recipientId, elements) => {
   var messageData = {
     recipient: {
       id: recipientId
@@ -312,7 +312,6 @@ const sendOpenGraph = async (recipientId, elements,text) => {
         type: "template",
         payload: {
           template_type: "open_graph",
-          name_placeholder:text,
           elements: elements
         }
       }
@@ -415,9 +414,7 @@ function handleApiAiAction(sender, action, responseText, contexts, parameters) {
 
     break;
     case "SOS":
-
-   var text  = "Escribenos"
-   var element = [{
+   /*var element = [{
       "url": "https://wa.me/50256303195?text=Tengo%20una%20Emergencia",
       "buttons": [
         {
@@ -426,8 +423,19 @@ function handleApiAiAction(sender, action, responseText, contexts, parameters) {
           "title": "Mas"
         }
       ]
-      }]
-    sendOpenGraph(sender,element,text);
+      }]*/
+      var element = [
+           {
+            "url":"https://open.spotify.com/track/7GhIk7Il098yCjg4BQjzvb",
+            "buttons":[
+              {
+                "type":"web_url",
+                "url":"https://en.wikipedia.org/wiki/Rickrolling",
+                "title":"View More"
+              }              
+            ]
+            }] 
+    sendOpenGraph(sender,element);
     break;
     case "Init-Chat":
            textPayload = 'Gracias por comunicarte con nosotros, Soy Seguni 🤖. '+
