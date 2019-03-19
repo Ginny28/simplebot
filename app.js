@@ -413,6 +413,20 @@ function handleApiAiAction(sender, action, responseText, contexts, parameters) {
         sendOpenGraph(sender,element);
 
     break;
+    case "SOS":
+    var element = [{
+      "url": "https://wa.me/50256303195?text=Tengo%20una%20Emergencia",
+      "buttons": [
+        {
+          "type": "web_url",
+          "url": "https://www.universales.com/",
+          "title": "Mas"
+        }
+      ]
+      }]
+    sendOpenGraph(sender,element);
+
+    break;
     case "Init-Chat":
            textPayload = 'Gracias por comunicarte con nosotros, Soy Seguni 🤖. '+
                         'En que puedo ayudarle, favor seleccione una opción';
@@ -429,6 +443,10 @@ function handleApiAiAction(sender, action, responseText, contexts, parameters) {
                     "type": "postback",
                     "title": "Acerca de nosotros",
                     "payload": "NOS"
+                },{
+                 "type": "postback",
+                 "title": "¡Emergencia!",
+                 "payload": "SOS"
                 }]
 
 
