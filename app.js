@@ -416,38 +416,21 @@ function handleApiAiAction(sender, action, responseText, contexts, parameters) {
     break;
     case "SOS":
     textQRp = "seleccione su tipo de Emergencia"
-    reply = [{
+    reply = [
+    {
       "content_type": "text",
-      "title": "Vehiculo",
-      "payload": "Vehiculo",
+      "title": "Emergencia Médica",
+      "payload": "Emer-Medic"
     },
     {
       "content_type": "text",
-      "title": "Gastos Medicos",
-      "payload": "Gastos Medicos",
-    },
-    {
-      "content_type": "text",
-      "title": "Personal",
-      "payload": "Seguros de Vida",
+      "title": "Emergencia Auto",
+      "payload": "Emer-Auto"
     }];
     sendQuickReply(sender, textQRp, reply);
-
-
-    textPayload = '';
-    elements = [{
-         "type": "postback",
-         "title": "Emergencia Médica",
-         "payload": "Emer-Medic"
-        },{
-         "type": "postback",
-         "title": "Emergencia Auto",
-         "payload": "Emer-Auto"
-       }]
-       sendButtonMessage(sender, textPayload, elements);
     break;
     case "Emer-Medic":
-    textPayload = 'Queremos saber tu emergencia:';
+       textPayload = 'Queremos saber tu emergencia:';
        elements = [{
                      "type": "web_url",
                      "url": "https://wa.me/50256303195?text=Tengo%20una%20Emergencia",
