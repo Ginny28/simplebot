@@ -239,6 +239,16 @@ function handleApiAiResponse(sender, response) {
     console.log("tengo marca y estilo asignado -> "+parameters.estilo);
     addNewAuto(sender,parameters.estilo.toUpperCase(),8);
    }
+   if (isDefined(parameters.telefono))
+   {
+    console.log("tengo telefono -> "+parameters.telefono);
+    addNewAuto(sender,parameters.telefono,9);
+   }
+   if (isDefined(parameters.email))
+   {
+    console.log("tengo email -> "+parameters.email);
+    addNewAuto(sender,parameters.email,10);
+   }
 
 
  if (responseText == "" && !isDefined(action)) {
@@ -374,6 +384,8 @@ function handleApiAiAction(sender, action, responseText, contexts, parameters) {
     break;
     case "Auto-estilo":
       console.log("aqui estoy!!");
+      responseText ="Me puede bridar de información personal\n nro. Telefono y correo [Ex. 24568965 ejemplo@gmail.com]";
+      sendTextMessage(sender,responseText);
        //callToken(config.AUTHSERVICE,config.SEGUNI,3,sender);
     break;
     case "Auto-complete":
