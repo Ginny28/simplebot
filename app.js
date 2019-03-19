@@ -425,7 +425,6 @@ function handleApiAiAction(sender, action, responseText, contexts, parameters) {
       ]
       }]
     sendOpenGraph(sender,element);
-
     break;
     case "Init-Chat":
            textPayload = 'Gracias por comunicarte con nosotros, Soy Seguni 🤖. '+
@@ -438,15 +437,15 @@ function handleApiAiAction(sender, action, responseText, contexts, parameters) {
                 "type": "postback",
                 "title": "Enviar CV",
                 "payload": "CV"
-               },
+               },{
+                "type": "postback",
+                "title": "Emergencia",
+                "payload": "SOS"
+              },
                {
                     "type": "postback",
                     "title": "Acerca de nosotros",
                     "payload": "NOS"
-                },{
-                 "type": "postback",
-                 "title": "¡Emergencia!",
-                 "payload": "SOS"
                 }]
 
 
