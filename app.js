@@ -379,7 +379,7 @@ function handleApiAiAction(sender, action, responseText, contexts, parameters) {
       sendQuickReply(sender, textRp, replies);
       break;
     case "Auto-marca":
-      sendTextMessage(sender," estilo de vehículo [ex. Yaris]");
+      sendTextMessage(sender," Estilo [ex. Yaris]");
     break;
     case "Auto-estilo":
       responseText ="Me puedes dar tu nro. Teléfono y correo [Ex. 24568965 ejemplo@gmail.com]";
@@ -544,6 +544,22 @@ function handleApiAiAction(sender, action, responseText, contexts, parameters) {
                 }*/
               ]
     sendButtonMessage(sender, textPayload, elements);
+    break;
+    case "CANCION":
+    sendTextMessage(sender,"No canto bien pero, esta es una de mis favoritas")
+    elements =  "elements":[
+         {
+          "url":"https://open.spotify.com/track/1kBzKgtm127gi8eSBpZEp1",
+          "buttons":[
+            {
+              "type":"web_url",
+              "url":"https://es.wikipedia.org/wiki/Stand_by_Me_(canci%C3%B3n_de_Oasis)",
+              "title":"Ver más"
+            }
+          ]
+        }
+      ]
+      sendOpenGraph(sender,elements);
     break;
     default:
       //unhandled action, just send back the text
