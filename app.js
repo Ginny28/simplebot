@@ -329,8 +329,22 @@ const sendOpenGraph = async (recipientId, elements) => {
   await callSendAPI(messageData);
 }
 
-
-
+const sendImageMessage = async (recipientId, imageUrl) => {
+  var messageData = {
+    recipient: {
+      id: recipientId
+    },
+    message: {
+      attachment: {
+        type: "image",
+        payload: {
+          url: imageUrl
+        }
+      }
+    }
+  };
+    await callSendAPI(messageData);
+}
 
 const sendButtonMessage = async (recipientId, text, buttons) => {
   var messageData = {
@@ -560,6 +574,11 @@ function handleApiAiAction(sender, action, responseText, contexts, parameters) {
         }
       ]
       sendOpenGraph(sender,elements);
+    break;
+    case "Act-gracias":
+    sendTextMessage(sender,"Ha sido un placer!");
+    var urlImg = "https://github.com/andycha28/MyIcons/blob/master/Gify.gif";
+    sendImageMessage(sender,urlImg);
     break;
     default:
       //unhandled action, just send back the text
