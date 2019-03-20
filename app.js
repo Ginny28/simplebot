@@ -547,7 +547,7 @@ function handleApiAiAction(sender, action, responseText, contexts, parameters) {
     break;
     case "CANCION":
     sendTextMessage(sender,"No canto bien pero, esta es una de mis favoritas")
-    elements =  "elements":[
+    elements = [
          {
           "url":"https://open.spotify.com/track/1kBzKgtm127gi8eSBpZEp1",
           "buttons":[
