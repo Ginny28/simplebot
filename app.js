@@ -523,8 +523,7 @@ function handleApiAiAction(sender, action, responseText, contexts, parameters) {
               sendButtonMessage(sender, textPayload, elements);
     break;
     case "INIT-CHAT":
-           textPayload = 'Gracias por comunicarte con nosotros, Soy Seguni 🤖. '+
-                        'En que puedo ayudarle, favor seleccione una opción';
+           textPayload = 'En que puedo ayudarle, favor seleccione una opción';
            elements = [{
                 "type": "postback",
                 "title": "Info de Seguros",
@@ -798,7 +797,8 @@ function deleteAuto(sender)
     delete config.SEGUNI[sender].marca;
     delete config.SEGUNI[sender].estilo;
     delete config.SEGUNI[sender].tvehi;
-
+    delete config.SEGUNI[sender].marcaN;
+    delete config.SEGUNI[sender].estiloN;
 	}
 }
 
