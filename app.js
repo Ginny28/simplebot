@@ -365,23 +365,27 @@ const sendButtonMessage = async (recipientId, text, buttons) => {
   await callSendAPI(messageData);
 }
 
-const sendGenericMessage = async (recipientId, elements) => {
+
+
+
+  const sendGifMessage = async (recipientId)=> {
   var messageData = {
     recipient: {
       id: recipientId
     },
     message: {
       attachment: {
-        type: "template",
+        type: "image",
         payload: {
-          template_type: "generic",
-          elements: elements
+          url: "https://raw.githubusercontent.com/andycha28/MyIcons/master/Gify.gif?raw=true"
         }
       }
     }
   };
-  await callSendAPI(messageData);
+
+    await callSendAPI(messageData);
 }
+
 
 
 function handleApiAiAction(sender, action, responseText, contexts, parameters) {
@@ -594,21 +598,8 @@ function handleApiAiAction(sender, action, responseText, contexts, parameters) {
     break;
     case "Act-gracias":
     sendTextMessage(sender,"Ha sido un placer!");
-    var urlImg = [
-              {
-               "title":"Ha sido un placer!!",
-               "image_url":"https://github.com/andycha28/MyIcons/blob/master/Gify.gif",
-               "subtitle":"Que tenga un lindo día.",
-               "default_action": {
-                 "type": "web_url",
-                 "url": "https://github.com/andycha28/MyIcons/blob/master/Gify.gif",
-                 "messenger_extensions": false,
-                 "webview_height_ratio": "compact",
-                 "fallback_url": "https://github.com/andycha28/MyIcons"
-               }
-             }
-           ]
-    sendGenericMessage(sender,urlImg);
+
+    sendGifMessage(sender);
     break;
     default:
       //unhandled action, just send back the text
