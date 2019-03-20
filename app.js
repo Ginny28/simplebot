@@ -360,15 +360,15 @@ function handleApiAiAction(sender, action, responseText, contexts, parameters) {
       sendTextMessage(sender, responseText);
       break;
     case "tipo-seguro":
-       textRp = "Le ofrecemos seguros de vehículo, personal, hogar y gastos médicos, favor indicar cual le interesa. Para conocer más de nuestros productos visite:  \n https://www.universales.com/productos/"
+       textRp = "Te ofrecemos seguros de vehículo, personal, hogar y gastos médicos, indicarme cuál te interesa. Para que conozcas más de nuestros productos visita:  \n https://www.universales.com/productos/"
        replies = [{
         "content_type": "text",
-        "title": "Vehiculo",
+        "title": "Vehículo",
         "payload": "Vehiculo",
       },
       {
         "content_type": "text",
-        "title": "Gastos Medicos",
+        "title": "Gastos Médicos",
         "payload": "GastosM",
       },
       {
@@ -379,14 +379,14 @@ function handleApiAiAction(sender, action, responseText, contexts, parameters) {
       sendQuickReply(sender, textRp, replies);
       break;
     case "Auto-marca":
-      sendTextMessage(sender,"Me puede brindar  el estilo de su vehículo [ex. Yaris]");
+      sendTextMessage(sender," estilo de vehículo [ex. Yaris]");
     break;
     case "Auto-estilo":
-      responseText ="Me puede bridar de información personal\n nro. Telefono y correo [Ex. 24568965 ejemplo@gmail.com]";
+      responseText ="Me puedes dar tu nro. Teléfono y correo [Ex. 24568965 ejemplo@gmail.com]";
       sendTextMessage(sender,responseText);
     break;
     case "GastosM":
-        textRp = "Le ofrecemos seguros de Individual, Familiar e Infantil(Crece), favor indicar cual le interesa"
+        textRp = "Te ofrecemos seguros  Individual, Familiar e Infantil(Crece), favor indicar cual le interesa"
       /*  replies = [{
          "content_type": "text",
          "title": "Individual",
@@ -410,22 +410,22 @@ function handleApiAiAction(sender, action, responseText, contexts, parameters) {
     callToken(config.AUTHSERVICE,config.SEGUNI,2,sender);
     break;
     case "GM-Ind":
-    sendTextMessage(sender,"Me puede indicar su fecha de nacimiento [dd/mm/yyyy]");
+    sendTextMessage(sender,"Me su fecha de nacimiento [dd/mm/yyyy]");
     break;
     case "GM-Fam":
-    sendTextMessage(sender,"Me puede indicar cuantos hijos menores de 24 años");
+    sendTextMessage(sender,"¿Cuántos hijos menores de 24 años tiene?");
     break;
     case "GM-Crece":
-    sendTextMessage(sender,"Me puede indicar el nombre del niño/a");
+    sendTextMessage(sender,"¿Cuál es el nombre del niño/a ?");
     break;
     case "saldoPol-poliza":
        callToken(config.AUTHSERVICE,nPoliza(parameters.poliza.number),1,sender);
     break;
     case "CV":
          textPayload = 'Gracias por tu interés en trabajar con nosotros. '+
-                            'Por favor llena nuestro formulario de empleos y adjunta tu CV.\n'+
-                            'En cuanto tengamos una plaza disponible en el área de tu interés tomaremos en cuenta tu perfil. \n'+
-                            'Para tener acceso al formulario de empleo haz clic en el siguiente botón:';
+                        'Por favor llena nuestro formulario de empleos y adjunta tu CV.\n'+
+                        'En cuanto tengamos una plaza disponible en el área de tu interés tomaremos en cuenta tu perfil. \n'+
+                        'Para tener acceso al formulario de empleo haz clic en el siguiente botón:';
          elements = [{
                        "type": "web_url",
                        "url": "https://www.universales.com/contactenos/empleos/",
@@ -450,7 +450,7 @@ function handleApiAiAction(sender, action, responseText, contexts, parameters) {
             {
               "type": "web_url",
               "url": "https://www.universales.com/",
-              "title": "Mas"
+              "title": "Más"
             }
           ]
           }]
@@ -458,7 +458,7 @@ function handleApiAiAction(sender, action, responseText, contexts, parameters) {
 
     break;
     case "SOS":
-    textQRp = "seleccione su tipo de Emergencia 🚑"
+    textQRp = "selecciona tu tipo de Emergencia 🚑"
     reply = [
     {
       "content_type": "text",
@@ -477,11 +477,11 @@ function handleApiAiAction(sender, action, responseText, contexts, parameters) {
        elements = [{
                      "type": "web_url",
                      "url": "https://wa.me/50256303195?text=Tengo%20una%20Emergencia",
-                     "title": "Escribenos 💬",
+                     "title": "Escríbenos 💬",
                    },
                    {
                       "type": "phone_number",
-                      "payload": "+50247682965",
+                      "payload": "+50256303195",
                       "title": "Llamar a Emergencia",
                    }]
 
@@ -492,18 +492,18 @@ function handleApiAiAction(sender, action, responseText, contexts, parameters) {
        elements = [{
                      "type": "web_url",
                      "url": "https://wa.me/50259791789?text=Tengo%20una%20Emergencia",
-                     "title": "Escribenos 💬",
+                     "title": "Escríbenos 💬",
                    },
                    {
                       "type": "phone_number",
-                      "payload": "+50247682965",
+                      "payload": "+5021789",
                       "title": "Llamar a Emergencia",
                    }]
 
       sendButtonMessage(sender, textPayload, elements);
     break;
     case "CONTACTO":
-          textPayload = 'Como le podemos Ayudar?';
+          textPayload = '¿Como le podemos Ayudar?';
           elements = [
               {
                "type": "postback",
@@ -517,13 +517,13 @@ function handleApiAiAction(sender, action, responseText, contexts, parameters) {
               },
               {
                 "type": "phone_number",
-                "title": "Llamar",
+                "title": "Llamar a Seguros universales",
                 "payload": "+50223847400"
               }]
               sendButtonMessage(sender, textPayload, elements);
     break;
     case "INIT-CHAT":
-           textPayload = 'En que puedo ayudarle, favor seleccione una opción';
+           textPayload = 'selecciona una opción';
            elements = [{
                 "type": "postback",
                 "title": "Info de Seguros",
