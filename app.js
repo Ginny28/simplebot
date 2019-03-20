@@ -605,14 +605,7 @@ function handleApiAiAction(sender, action, responseText, contexts, parameters) {
                  "messenger_extensions": false,
                  "webview_height_ratio": "compact",
                  "fallback_url": "https://github.com/andycha28/MyIcons"
-               },
-               "buttons":[
-                 {
-                   "type":"web_url",
-                   "url":"https://petersfancybrownhats.com",
-                   "title":"View Website"
-                 }
-               ]
+               }
              }
            ]
     sendGenericMessage(sender,urlImg);
