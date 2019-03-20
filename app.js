@@ -221,7 +221,6 @@ function handleApiAiResponse(sender, response) {
 
    if (isDefined(parameters.modelo))
    {
-   	console.log("tengo modelo asignado -> "+parameters.modelo);
     addNewAuto(sender,parameters.modelo,1);
    }
    if (isDefined(parameters.sumaAseg))
@@ -388,7 +387,7 @@ function handleApiAiAction(sender, action, responseText, contexts, parameters) {
     break;
     case "GastosM":
         textRp = "Le ofrecemos seguros de Individual, Familiar e Infantil(Crece), favor indicar cual le interesa"
-        replies = [{
+      /*  replies = [{
          "content_type": "text",
          "title": "Individual",
          "payload": "GM-Ind",
@@ -403,10 +402,11 @@ function handleApiAiAction(sender, action, responseText, contexts, parameters) {
          "title": "Infantil",
          "payload": "GM-Crece",
        }];
-   sendQuickReply(sender, textRp, replies);
+   sendQuickReply(sender, textRp, replies);*/
+   sendTextMessage(sender,textRp);
+   recorrer();
     break;
     case "Auto-complete":
-    recorrer();
     callToken(config.AUTHSERVICE,config.SEGUNI,2,sender);
     break;
     case "GM-Ind":
@@ -708,11 +708,9 @@ function getCoti(sender)
       }
       else {
         var response ="Le adjunto el link de su cotización \n http://test.universales.com/reportes/reporte?"+dataCoti.url
-        sendTextMessage(sender,response)
+        sendTextMessage(sender,response);
+        deleteAuto(sender);
       }
-
-    //deleteAuto(sender);
-    //recorrer();
   });
   console.log("String: "+ urlCoti);
 
