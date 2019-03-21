@@ -377,7 +377,7 @@ const sendButtonMessage = async (recipientId, text, buttons) => {
       attachment: {
         type: "image",
         payload: {
-          url: "https://raw.githubusercontent.com/andycha28/MyIcons/master/Gify.gif?raw=true"
+          url: "https://raw.githubusercontent.com/andycha28/MyIcons/master/boot.gif?raw=true"
         }
       }
     }
@@ -596,9 +596,8 @@ function handleApiAiAction(sender, action, responseText, contexts, parameters) {
       ]
       sendOpenGraph(sender,elements);
     break;
-    case "Act-gracias":
-    sendTextMessage(sender,"Ha sido un placer!");
-
+    case "Act-chao":
+    sendTextMessage(sender,"Fue un placer haberle ayudado!");
     sendGifMessage(sender);
     break;
     default:
