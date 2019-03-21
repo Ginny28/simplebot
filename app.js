@@ -377,7 +377,7 @@ const sendButtonMessage = async (recipientId, text, buttons) => {
       attachment: {
         type: "image",
         payload: {
-          url: "https://raw.githubusercontent.com/andycha28/MyIcons/master/boot2.gif?raw=true"
+          url: "https://raw.githubusercontent.com/andycha28/MyIcons/master/boot3.gif?raw=true"
         }
       }
     }
