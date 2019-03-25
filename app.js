@@ -936,7 +936,8 @@ function recorrerGM()
       console.log('Key: ' + x );
       console.log('Values: ');
 	    var value = config.FAM[x]
-	    for (var y in value)
+      console.log( "---" + value);
+	   /* for (var y in value)
 	    {
 
           if (y != 'coreDetaill')
@@ -955,7 +956,7 @@ function recorrerGM()
                 }
              }
           }
-	    }
+	    }*/
 	    console.log('\n');
 	}
 }
