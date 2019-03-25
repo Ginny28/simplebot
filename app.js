@@ -759,9 +759,9 @@ await axios.get(urlUser).then(function (response) {
      var datesys = new SimpleDate();
      if (sender in config.FAM)
    	{
-      config.FAM[sender].requestDateField = datesys.toString('dd/MM/yyyy')
-      config.FAM[sender].userSave = "ABSALAZAR"
-      config.FAM[sender].coreDetaill= config.CORE[senderID]
+      config.FAM[sender].requestDateField = datesys.toString('dd/MM/yyyy');
+      config.FAM[sender].userSave = "ABSALAZAR";
+      config.FAM[sender].coreDetaill= config.CORE[senderID];
     }
     break;
     default:
