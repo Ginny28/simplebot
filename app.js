@@ -935,9 +935,21 @@ function recorrerGM()
 	    console.log('Key: ' + x );
 	    console.log('Values: ');
 	    var value = config.FAM[x];
+
 	    for (var y in value)
 	    {
-	        console.log('—- ' + y + ':' + value[y]);
+          console.log('—- ' + y + ':' + value[y]);
+          for (var h in config.CORE)
+          {
+            console.log('KeyI: ' + h );
+            console.log('ValuesI: ');
+            var value2 = config.CORE[h];
+            for (var i in config.CORE[h])
+            {
+              console.log('—- ' + i + ':' + value2[i]);
+            }
+          }
+
 	    }
 	    console.log('\n');
 	}
