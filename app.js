@@ -380,7 +380,7 @@ const sendGifMessage = async (recipientId)=> {
       attachment: {
         type: "image",
         payload: {
-          url: "https://raw.githubusercontent.com/andycha28/MyIcons/master/Gify.gif?raw=true"
+          url: "https://raw.githubusercontent.com/andycha28/MyIcons/master/boot3.gif?raw=true"
         }
       }
     }
@@ -604,9 +604,9 @@ function handleApiAiAction(sender, action, responseText, contexts, parameters) {
       ]
       sendOpenGraph(sender,elements);
     break;
-    case "Act-gracias":
-    sendTextMessage(sender,"Ha sido un placer!");
-     sendGifMessage(sender);
+    case "Act-chao":
+    sendTextMessage(sender,"Fue un placer haberle ayudado!");
+    sendGifMessage(sender);
     break;
     default:
       //unhandled action, just send back the text
