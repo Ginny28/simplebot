@@ -756,13 +756,10 @@ await axios.get(urlUser).then(function (response) {
      addGM(sender,response.data.first_name,1);
      addGM(sender,response.data.middle_name,2);
      addGM(sender,response.data.last_name,5);
-     var datesys = new SimpleDate();
-     if (sender in config.FAM)
-   	{
-      config.FAM[sender].requestDateField = datesys.toString('dd/MM/yyyy');
-      config.FAM[sender].userSave = "ABSALAZAR";
-      config.FAM[sender].coreDetaill= config.CORE[senderID];
-    }
+     var datesys = new SimpleDate
+     addMember(sender,datesys.toString('dd/MM/yyyy'),1);
+     addMember(sender,'ABSALAZAR',2);
+     addMember(sender,config.CORE[sender],3);
     break;
     default:
 
@@ -906,6 +903,28 @@ function getAutoData(sender)
                  "&nombreCliente="+config.SEGUNI[sender].userN+'&telefono='+config.SEGUNI[sender].telefono+'&email='+config.SEGUNI[sender].email;
 	}
   return parameters;
+}
+
+
+
+function addMember(sender,atributo,tipoAtrib)
+{
+	if (sender in config.FAM)
+	{
+     switch(tipoAtrib)
+     {
+     	case 1:
+     		config.FAM[sender].requestDateField = atributo;
+     	break;
+     	case 2:
+     		config.FAM[sender].userSave = atributo;
+     	break;
+     	case 3:
+     		config.FAM[sender].coreDetaill = atributo;
+     	break;
+
+    }
+	}
 }
 
 function addGM(sender,atributo,tipoAtrib)

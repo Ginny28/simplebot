@@ -8,7 +8,7 @@ var authData = {
   }
   var myCarData = [];
   var myDataAuto = {};
-  var nucleoGM = [];
+  var nucleoGM = {};
   var core = [];
 
 module.exports = {
