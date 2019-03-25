@@ -929,18 +929,32 @@ function addGM(sender,atributo,tipoAtrib)
 	}
 }
 
-function recorrerGM(sender)
+function recorrerGM()
 {
-	for (var x in config.FAM)
-	{
-	    console.log('Key: ' + x );
-	    console.log('Values: ');
-	    var value = config.FAM[x];
-
+  for (var x in config.FAM)
+  {
+      console.log('Key: ' + x );
+      console.log('Values: ');
+	    var value = config.FAM[x]
 	    for (var y in value)
 	    {
-          console.log('—- ' + y + ':' + value[y]);
-          for (var p in config.CORE[sender])
+
+          if (y != 'coreDetaill')
+          {
+            console.log('—- ' + y + ':' + value[y]);
+          }
+          else {
+             var ss = value[y]
+             for(var m in ss)
+             {
+                var k = ss[m];
+                console.log('Key2.0: ' + m );
+                for(var q in k)
+                {
+                  console.log('   —-> ' + q + ':' + k[q]);
+                }
+             }
+          }
 	    }
 	    console.log('\n');
 	}
