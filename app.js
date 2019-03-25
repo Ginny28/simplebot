@@ -760,7 +760,8 @@ await axios.get(urlUser).then(function (response) {
      addMember(sender,datesys.toString('dd/MM/yyyy'),1);
      addMember(sender,'ABSALAZAR',2);
      addMember(sender,config.CORE[sender],3);
-     recorrer2();
+     //recorrer2();
+     recorrerGM();
     break;
     default:
 
@@ -992,15 +993,10 @@ function recorrer2()
 
 function recorrerGM()
 {
-	for (var x in config.FAM)
-	{
-	    console.log('Key: ' + x );
-	    console.log('Values:');
-	    var value = config.FAM[x];
-	    for (var y in value)
-	    {
-	        console.log('—- ' + y + ':' + value[y]);
-	    }
-	    console.log('\n');
-	}
+  for (var usuario in  config.FAM) {
+    console.log('Key:\n—- ' + usuario + '\n');
+      console.log('Values: ');
+      var value = config.FAM[usuario];
+      console.log(value);
+  }
 }
