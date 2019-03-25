@@ -496,7 +496,7 @@ function handleApiAiAction(sender, action, responseText, contexts, parameters) {
               "title": "Más"
             }
           ]
-          }]
+        }]
         sendOpenGraph(sender,element);
 
     break;
