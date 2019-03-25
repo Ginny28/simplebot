@@ -103,7 +103,7 @@ function receivedMessage(event) {
     sessionIds.set(senderID, uuid.v1());
     config.SEGUNI[senderID] ={status:'OK'};
     config.CORE[senderID]={};
-    config.SEGUNI[senderID]={requestDateField : datesys.toString('dd/MM/yyyy'),
+    config.FAM[senderID]={requestDateField : datesys.toString('dd/MM/yyyy'),
                              userSave : "ABSALAZAR",
                              coreDetaill:config.CORE[senderID]}
   }
