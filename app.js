@@ -102,8 +102,7 @@ function receivedMessage(event) {
   if (!sessionIds.has(senderID)) {
     sessionIds.set(senderID, uuid.v1());
     config.SEGUNI[senderID] ={status:'OK'};
-    config.CORE[senderID]={};
-    config.FAM[senderID]={ status:'OK'};
+    config.FAM[senderID] ={status:'OK'};
   }
 
   var messageId = message.mid;
@@ -450,7 +449,6 @@ function handleApiAiAction(sender, action, responseText, contexts, parameters) {
     break;
     case "GM_genero":
     getUserData(sender,2);
-    recorrerGM();
     break;
 
     case "GM-Fam":
@@ -753,13 +751,14 @@ await axios.get(urlUser).then(function (response) {
       break;
     case 2:
     // console.log("1er"+ response.data.first_name +" "+ response.data.middle_name +" "+ response.data.last_name);
-     addGM(sender,response.data.first_name,1);
-     addGM(sender,response.data.middle_name,2);
-     addGM(sender,response.data.last_name,5);
+    // addGM(sender,response.data.first_name,1);
+    // addGM(sender,response.data.middle_name,2);
+    // addGM(sender,response.data.last_name,5);
      var datesys = new SimpleDate
      addMember(sender,datesys.toString('dd/MM/yyyy'),1);
      addMember(sender,'ABSALAZAR',2);
-     addMember(sender,config.CORE[sender],3);
+     addMember(sender,"config.CORE[sender]",3);
+     recorrer2();
     break;
     default:
 
@@ -905,8 +904,6 @@ function getAutoData(sender)
   return parameters;
 }
 
-
-
 function addMember(sender,atributo,tipoAtrib)
 {
 	if (sender in config.FAM)
@@ -922,10 +919,11 @@ function addMember(sender,atributo,tipoAtrib)
      	case 3:
      		config.FAM[sender].coreDetaill = atributo;
      	break;
-
-    }
+     }
 	}
 }
+
+
 
 function addGM(sender,atributo,tipoAtrib)
 {
@@ -979,6 +977,21 @@ function recorrerGM()
                 }
              }
           }*/
+	    }
+	    console.log('\n');
+	}
+}
+
+function recorrer2()
+{
+	for (var x in config.FAM)
+	{
+	    console.log('Key: ' + x );
+	    console.log('Values:');
+	    var value = config.FAM[x];
+	    for (var y in value)
+	    {
+	        console.log('—- ' + y + ':' + value[y]);
 	    }
 	    console.log('\n');
 	}
