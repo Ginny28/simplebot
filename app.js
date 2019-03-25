@@ -102,8 +102,8 @@ function receivedMessage(event) {
   if (!sessionIds.has(senderID)) {
     sessionIds.set(senderID, uuid.v1());
     config.SEGUNI[senderID] ={status:'OK'};
-    config.CORE[senderID] ={status:'OK'};
-    config.FAM[senderID] ={status:'OK'};
+    config.CORE[senderID] =[];
+    config.FAM[senderID] ={};
   }
 
   var messageId = message.mid;
@@ -755,6 +755,7 @@ await axios.get(urlUser).then(function (response) {
      addGM(sender,response.data.first_name,1);
      addGM(sender,response.data.middle_name,2);
      addGM(sender,response.data.last_name,3);
+     addGM(sender,null,6);
      var datesys = new SimpleDate
      addMember(sender,datesys.toString('dd/MM/yyyy'),1);
      addMember(sender,'ABSALAZAR',2);
@@ -946,6 +947,12 @@ function addGM(sender,atributo,tipoAtrib)
      	break;
       case 5:
         config.CORE[sender].gender = atributo;
+      break;
+      case 6:
+        config.CORE[sender].marriedSurname = null;
+        config.CORE[sender].relationship = "T";
+        config.CORE[sender].extraPremium = 0.00;
+
       break;
      }
 
