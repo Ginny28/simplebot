@@ -952,7 +952,7 @@ function addGM(sender,atributo,tipoAtrib)
 	}
 }
 
-function recorrerGM()
+function recorrer2()
 {
   for (var x in config.FAM)
   {
@@ -961,8 +961,7 @@ function recorrerGM()
 	    var value = config.FAM[x]
 	    for (var y in value)
 	    {
-        console.log('—- ' + y + ':' + value[y]);
-        /*  if (y != 'coreDetaill')
+        if (y != 'coreDetaill')
           {
             console.log('—- ' + y + ':' + value[y]);
           }
@@ -977,13 +976,13 @@ function recorrerGM()
                   console.log('   —-> ' + q + ':' + k[q]);
                 }
              }
-          }*/
+          }
 	    }
 	    console.log('\n');
 	}
 }
 
-function recorrer2()
+function recorrerGM()
 {
 	for (var x in config.FAM)
 	{
