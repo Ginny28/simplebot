@@ -754,7 +754,7 @@ await axios.get(urlUser).then(function (response) {
     // console.log("1er"+ response.data.first_name +" "+ response.data.middle_name +" "+ response.data.last_name);
      addGM(sender,response.data.first_name,1);
      addGM(sender,response.data.middle_name,2);
-     addGM(sender,response.data.last_name,5);
+     addGM(sender,response.data.last_name,3);
      var datesys = new SimpleDate
      addMember(sender,datesys.toString('dd/MM/yyyy'),1);
      addMember(sender,'ABSALAZAR',2);
@@ -969,12 +969,13 @@ function recorrer2()
              var ss = value[y]
              for(var m in ss)
              {
-                var k = ss[m];
-                console.log('Key2.0: ' + m );
-                for(var q in k)
+               //console.log('Key2.0: ' + m );
+                //var k = ss[m];
+                console.log('   —-> ' + m + ':' + ss[m]);
+              /*  for(var q in k)
                 {
-                  console.log('   —-> ' + q + ':' + k[q]);
-                }
+                  console.log('   —-> ' + q + ':' + k);
+                }*/
              }
           }
 	    }
