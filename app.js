@@ -754,10 +754,10 @@ await axios.get(urlUser).then(function (response) {
         getCoti(sender);
       break;
     case 2:
-     console.log("1er"+ response.data.first_name +" "+ response.data.middle_name +" "+ response.data.last_name);
-    // addGM(sender,response.data.first_name,1);
-    // addGM(sender,response.data.middle_name,2);
-    // addGM(sender,response.data.last_name,5);
+    // console.log("1er"+ response.data.first_name +" "+ response.data.middle_name +" "+ response.data.last_name);
+     addGM(sender,response.data.first_name,1);
+     addGM(sender,response.data.middle_name,2);
+     addGM(sender,response.data.last_name,5);
     break;
     default:
 
