@@ -98,10 +98,14 @@ function receivedMessage(event) {
   var recipientID = event.recipient.id;
   var timeOfMessage = event.timestamp;
   var message = event.message;
-
+  var datesys = new SimpleDate();
   if (!sessionIds.has(senderID)) {
     sessionIds.set(senderID, uuid.v1());
     config.SEGUNI[senderID] ={status:'OK'};
+    config.CORE[senderID]={};
+    config.SEGUNI[senderID]={requestDateField : datesys.toString('dd/MM/yyyy'),
+                             userSave : "ABSALAZAR",
+                             coreDetaill:config.CORE[senderID]}
   }
 
   var messageId = message.mid;
@@ -248,6 +252,8 @@ function handleApiAiResponse(sender, response) {
     console.log("tengo email -> "+parameters.email);
     addNewAuto(sender,parameters.email,10);
    }
+   if(isDefined(parameters.nacimiento)) addGM(sender,parameters.nacimiento,4);
+   if(isDefined(parameters.genero)) addGM(sender,parameters.genero,5);
 
 
  if (responseText == "" && !isDefined(action)) {
@@ -365,10 +371,7 @@ const sendButtonMessage = async (recipientId, text, buttons) => {
   await callSendAPI(messageData);
 }
 
-
-
-
-  const sendGifMessage = async (recipientId)=> {
+const sendGifMessage = async (recipientId)=> {
   var messageData = {
     recipient: {
       id: recipientId
@@ -447,6 +450,11 @@ function handleApiAiAction(sender, action, responseText, contexts, parameters) {
     case "GM-Ind":
     sendTextMessage(sender,"Me su fecha de nacimiento [dd/mm/yyyy]");
     break;
+    case "GM_genero":
+    getUserData(sender,2);
+    recorrerGM();
+    break;
+
     case "GM-Fam":
     sendTextMessage(sender,"¿Cuántos hijos menores de 24 años tiene?");
     break;
@@ -598,8 +606,7 @@ function handleApiAiAction(sender, action, responseText, contexts, parameters) {
     break;
     case "Act-gracias":
     sendTextMessage(sender,"Ha sido un placer!");
-
-    sendGifMessage(sender);
+     sendGifMessage(sender);
     break;
     default:
       //unhandled action, just send back the text
@@ -727,7 +734,7 @@ await axios.get(urlAuto,
           	addNewAuto(sender,rs.brandCode,3);
           	addNewAuto(sender,rs.styleCode,4);
           	addNewAuto(sender,rs.type,5);
-            getUserData(sender);
+            getUserData(sender,1);
             break;
           }
     }
@@ -738,11 +745,22 @@ await axios.get(urlAuto,
 }
 
 
-const getUserData = async (sender) => {
-const urlUser ='https://graph.facebook.com/v3.0/'+sender+'?fields=name&access_token='+config.PAGE_ACCESS_TOKEN;
+const getUserData = async (sender,tipo) => {
+const urlUser ='https://graph.facebook.com/v3.0/'+sender+'?fields=name,first_name,middle_name,last_name&access_token='+config.PAGE_ACCESS_TOKEN;
 await axios.get(urlUser).then(function (response) {
-    addNewAuto(sender,response.data.name,6);
-    getCoti(sender);
+  switch (tipo) {
+    case 1:
+        addNewAuto(sender,response.data.name,6);
+        getCoti(sender);
+      break;
+    case 2:
+     addGM(sender,response.data.first_name,1);
+     addGM(sender,response.data.middle_name,2);
+     addGM(sender,response.data.last_name,5);
+    break;
+    default:
+
+  }
   })
    .catch(function (error) {
       console.log('ErRo:'+ error.response.header);
@@ -816,7 +834,6 @@ function addNewAuto(sender,atributo,tipoAtrib)
 	}
 }
 
-
 function getvalues(sender,tipoAtrib)
 {
 	var out ="";
@@ -858,7 +875,6 @@ function deleteAuto(sender)
 	}
 }
 
-
 function recorrer()
 {
 	for (var x in config.SEGUNI)
@@ -884,4 +900,46 @@ function getAutoData(sender)
                  "&nombreCliente="+config.SEGUNI[sender].userN+'&telefono='+config.SEGUNI[sender].telefono+'&email='+config.SEGUNI[sender].email;
 	}
   return parameters;
+}
+
+function addGM(sender,atributo,tipoAtrib)
+{
+  if (sender in config.CORE)
+	{
+     switch(tipoAtrib)
+     {
+     	case 1:
+     		config.CORE[sender].first_name = atributo;
+     	break;
+     	case 2:
+     		config.CORE[sender].middleName = atributo;
+     	break;
+     	case 3:
+     		config.CORE[sender].lastName = atributo;
+     	break;
+      case 4:
+     		config.CORE[sender].birthDateField = atributo;
+     	break;
+      case 5:
+        config.CORE[sender].gender = atributo;
+        gender
+      break;
+     }
+
+	}
+}
+
+function recorrerGM()
+{
+	for (var x in config.FAM)
+	{
+	    console.log('Key: ' + x );
+	    console.log('Values: ');
+	    var value = config.FAM[x];
+	    for (var y in value)
+	    {
+	        console.log('—- ' + y + ':' + value[y]);
+	    }
+	    console.log('\n');
+	}
 }

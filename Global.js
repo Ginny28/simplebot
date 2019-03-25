@@ -8,6 +8,8 @@ var authData = {
   }
   var myCarData = [];
   var myDataAuto = {};
+  var nucleoGM = [];
+  var core [];
 
 module.exports = {
   //PAGE_ACCESS_TOKEN:"EAAFaqvFNq6oBAPTymLOVt5WOH5Y6782wjhZBI9jLIfkHs4ktaclsIxzGFcZC7msNQdATIqZBsf6UPVMgpLg8bVIKlkMWj8zcZB5hNWwaQ6XNgfAJBToFw5qWXeqpo5SQVI26GwfYei3eYLOa8vphsAxsprt85SY3seH7CYYwsq93krjQmLsX",
@@ -17,5 +19,7 @@ module.exports = {
   PORT: "5000",
   AUTHSERVICE : authData,
   CARARRAY: myCarData,
-  SEGUNI: myDataAuto
+  SEGUNI: myDataAuto,
+  FAM: nucleoGM,
+  CORE:core
 };
