@@ -754,9 +754,10 @@ await axios.get(urlUser).then(function (response) {
         getCoti(sender);
       break;
     case 2:
-     addGM(sender,response.data.first_name,1);
-     addGM(sender,response.data.middle_name,2);
-     addGM(sender,response.data.last_name,5);
+     console.log("1er"+ response.data.first_name +" "+ response.data.middle_name +" "+ response.data.last_name);
+    // addGM(sender,response.data.first_name,1);
+    // addGM(sender,response.data.middle_name,2);
+    // addGM(sender,response.data.last_name,5);
     break;
     default:
 
@@ -928,7 +929,7 @@ function addGM(sender,atributo,tipoAtrib)
 	}
 }
 
-function recorrerGM()
+function recorrerGM(sender)
 {
 	for (var x in config.FAM)
 	{
@@ -939,17 +940,7 @@ function recorrerGM()
 	    for (var y in value)
 	    {
           console.log('—- ' + y + ':' + value[y]);
-          for (var h in config.CORE)
-          {
-            console.log('KeyI: ' + h );
-            console.log('ValuesI: ');
-            var value2 = config.CORE[h];
-            for (var i in config.CORE[h])
-            {
-              console.log('—- ' + i + ':' + value2[i]);
-            }
-          }
-
+          for (var p in config.CORE[sender])
 	    }
 	    console.log('\n');
 	}
