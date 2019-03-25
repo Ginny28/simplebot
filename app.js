@@ -102,6 +102,7 @@ function receivedMessage(event) {
   if (!sessionIds.has(senderID)) {
     sessionIds.set(senderID, uuid.v1());
     config.SEGUNI[senderID] ={status:'OK'};
+    config.CORE[senderID] ={status:'OK'};
     config.FAM[senderID] ={status:'OK'};
   }
 
@@ -751,13 +752,13 @@ await axios.get(urlUser).then(function (response) {
       break;
     case 2:
     // console.log("1er"+ response.data.first_name +" "+ response.data.middle_name +" "+ response.data.last_name);
-    // addGM(sender,response.data.first_name,1);
-    // addGM(sender,response.data.middle_name,2);
-    // addGM(sender,response.data.last_name,5);
+     addGM(sender,response.data.first_name,1);
+     addGM(sender,response.data.middle_name,2);
+     addGM(sender,response.data.last_name,5);
      var datesys = new SimpleDate
      addMember(sender,datesys.toString('dd/MM/yyyy'),1);
      addMember(sender,'ABSALAZAR',2);
-     addMember(sender,"config.CORE[sender]",3);
+     addMember(sender,config.CORE[sender],3);
      recorrer2();
     break;
     default:
