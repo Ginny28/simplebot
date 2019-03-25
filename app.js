@@ -922,7 +922,6 @@ function addGM(sender,atributo,tipoAtrib)
      	break;
       case 5:
         config.CORE[sender].gender = atributo;
-        gender
       break;
      }
 
