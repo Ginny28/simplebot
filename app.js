@@ -98,14 +98,12 @@ function receivedMessage(event) {
   var recipientID = event.recipient.id;
   var timeOfMessage = event.timestamp;
   var message = event.message;
-  var datesys = new SimpleDate();
+
   if (!sessionIds.has(senderID)) {
     sessionIds.set(senderID, uuid.v1());
     config.SEGUNI[senderID] ={status:'OK'};
     config.CORE[senderID]={};
-    config.FAM[senderID]={requestDateField : datesys.toString('dd/MM/yyyy'),
-                             userSave : "ABSALAZAR",
-                             coreDetaill:config.CORE[senderID]}
+    config.FAM[senderID]={ status:'OK'};
   }
 
   var messageId = message.mid;
@@ -758,6 +756,13 @@ await axios.get(urlUser).then(function (response) {
      addGM(sender,response.data.first_name,1);
      addGM(sender,response.data.middle_name,2);
      addGM(sender,response.data.last_name,5);
+     var datesys = new SimpleDate();
+     if (sender in config.FAM)
+   	{
+      config.FAM[sender].requestDateField = datesys.toString('dd/MM/yyyy')
+      config.FAM[sender].userSave = "ABSALAZAR"
+      config.FAM[sender].coreDetaill= config.CORE[senderID]
+    }
     break;
     default:
 
@@ -938,8 +943,8 @@ function recorrerGM()
 	    var value = config.FAM[x]
 	    for (var y in value)
 	    {
-
-          if (y != 'coreDetaill')
+        console.log('—- ' + y + ':' + value[y]);
+        /*  if (y != 'coreDetaill')
           {
             console.log('—- ' + y + ':' + value[y]);
           }
@@ -954,7 +959,7 @@ function recorrerGM()
                   console.log('   —-> ' + q + ':' + k[q]);
                 }
              }
-          }
+          }*/
 	    }
 	    console.log('\n');
 	}
