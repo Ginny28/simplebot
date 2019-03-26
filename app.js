@@ -6,7 +6,7 @@ var rest = require('restler');
 const axios = require("axios");
 var SimpleDate = require('simple-datejs');
 var config = require('./Global.js');
-
+var detalles ={};
 
 
 // import apiai
@@ -387,8 +387,6 @@ const sendGifMessage = async (recipientId)=> {
     await callSendAPI(messageData);
 }
 
-
-
 function handleApiAiAction(sender, action, responseText, contexts, parameters) {
    switch (action) {
     case "textos":
@@ -752,7 +750,6 @@ await axios.get(urlUser).then(function (response) {
       break;
     case 2:
     // console.log("1er"+ response.data.first_name +" "+ response.data.middle_name +" "+ response.data.last_name);
-     config.CORE[sender] = {};
      addGM(sender,response.data.first_name,1);
      addGM(sender,response.data.middle_name,2);
      addGM(sender,response.data.last_name,3);
@@ -761,8 +758,10 @@ await axios.get(urlUser).then(function (response) {
      addMember(sender,datesys.toString('dd/MM/yyyy'),1);
      addMember(sender,'ABSALAZAR',2);
      addMember(sender,config.CORE,3);
+     config.CORE.push(detalles);
      //recorrer2();
-     recorrerGM();
+     //recorrerGM();
+     recorrer3();
     break;
     default:
 
@@ -929,36 +928,32 @@ function addMember(sender,atributo,tipoAtrib)
 
 
 
-function addGM(sender,atributo,tipoAtrib)
+function addGM(atributo,tipoAtrib)
 {
-  if (sender in config.CORE)
-	{
      switch(tipoAtrib)
      {
      	case 1:
-     		config.CORE[sender].first_name = atributo;
+     		detalles.first_name = atributo;
      	break;
      	case 2:
-     		config.CORE[sender].middleName = atributo;
+     		detalles.middleName = atributo;
      	break;
      	case 3:
-     		config.CORE[sender].lastName = atributo;
+     		detalles.lastName = atributo;
      	break;
       case 4:
-     		config.CORE[sender].birthDateField = atributo;
+     		detalles.birthDateField = atributo;
      	break;
       case 5:
-        config.CORE[sender].gender = atributo;
+        detalles.gender = atributo;
       break;
       case 6:
-        config.CORE[sender].marriedSurname = null;
-        config.CORE[sender].relationship = "T";
-        config.CORE[sender].extraPremium = 0.00;
+        detalles.marriedSurname = null;
+        detalles.relationship = "T";
+        detalles.extraPremium = 0.00;
 
       break;
      }
-
-	}
 }
 
 function recorrer2()
@@ -1000,4 +995,15 @@ function recorrerGM()
       var value = config.FAM[usuario];
       console.log(value);
   }
+}
+
+function recorrer3()
+{
+	for (var x in config.FAM)
+	{
+	    console.log('Key: ' + x );
+	    console.log('Values: ');
+	    var value = config.FAM[x];
+	    console.log(value);
+	}
 }
