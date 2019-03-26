@@ -7,8 +7,7 @@ const axios = require("axios");
 var SimpleDate = require('simple-datejs');
 var config = require('./Global.js');
 const { callSendAPI } = require('./fbApi.js');
-const { sendTextMessage,
-  sendQuickReply } = require('./plantilla.js');
+const { sendTextMessage,sendQuickReply } = require('./plantilla.js');
 var detalles ={};
 
 
@@ -257,84 +256,8 @@ const sendTypingOff = (recipientId) =>
   callSendAPI(messageData);
 }
 
-const sendOpenGraph = async (recipientId, elements) => {
-  var messageData = {
-    recipient: {
-      id: recipientId
-    },
-    message: {
-      attachment: {
-        type: "template",
-        payload: {
-          template_type: "open_graph",
-          elements: elements
-        }
-      }
-    }
-  };
-  await callSendAPI(messageData);
-}
-
-const sendImageMessage = async (recipientId, imageUrl) => {
-  var messageData = {
-    recipient: {
-      id: recipientId
-    },
-    message: {
-      attachment: {
-        type: "image",
-        payload: {
-          url: imageUrl
-        }
-      }
-    }
-  };
-    await callSendAPI(messageData);
-}
-
-const sendButtonMessage = async (recipientId, text, buttons) => {
-  var messageData = {
-    recipient: {
-      id: recipientId
-    },
-    message: {
-      attachment: {
-        type: "template",
-        payload: {
-          template_type: "button",
-          text: text,
-          buttons: buttons
-        }
-      }
-    }
-  };
-  await callSendAPI(messageData);
-}
-
-const sendGifMessage = async (recipientId,urlImage)=> {
-  var messageData = {
-    recipient: {
-      id: recipientId
-    },
-    message: {
-      attachment: {
-        type: "image",
-        payload: {
-          url: urlImage
-        }
-      }
-    }
-  };
-
-    await callSendAPI(messageData);
-}
-
 function handleApiAiAction(sender, action, responseText, contexts, parameters) {
    switch (action) {
-    case "textos":
-      var responseText = "Prueba mensaje"
-      sendTextMessage(sender, responseText);
-      break;
     case "tipo-seguro":
        textRp = "Te ofrecemos seguros de vehículo, personal, hogar y gastos médicos, indicarme cuál te interesa. Para que conozcas más de nuestros productos visita:  \n https://www.universales.com/productos/"
        replies = [{
@@ -352,7 +275,9 @@ function handleApiAiAction(sender, action, responseText, contexts, parameters) {
         "title": "Personal",
         "payload": "Seguros de Vida",
       }];
+      sendTypingOn(sender);
       sendQuickReply(sender, textRp, replies);
+      sendTypingOff(sender);
       break;
     case "Auto-marca":
       sendTextMessage(sender," Estilo [ex. Yaris]");
@@ -517,11 +442,6 @@ function handleApiAiAction(sender, action, responseText, contexts, parameters) {
                 "title": "Emergencia",
                 "payload": "SOS"
               }
-               /*,{
-                    "type": "postback",
-                    "title": "Acerca de nosotros",
-                    "payload": "NOS"
-                }*/
               ]
     sendButtonMessage(sender, textPayload, elements);
     break;
@@ -740,9 +660,6 @@ function getCoti(sender)
 
 }
 
-
-
-
 function addNewAuto(sender,atributo,tipoAtrib)
 {
 	if (sender in config.SEGUNI)
@@ -784,32 +701,6 @@ function addNewAuto(sender,atributo,tipoAtrib)
 	}
 }
 
-function getvalues(sender,tipoAtrib)
-{
-	var out ="";
-	if (sender in config.SEGUNI)
-	{
-		switch(tipoAtrib)
-     {
-     	case 1:
-     		out = config.SEGUNI[sender].modelo;
-     	break;
-     	case 2:
-     		out = config.SEGUNI[sender].sumaAseg;
-     	break;
-     	case 3:
-     		out = config.SEGUNI[sender].marca;
-     	break;
-     	case 4:
-     		out = config.SEGUNI[sender].estilo;
-     	break;
-     	case 5:
-     		out = config.SEGUNI[sender].tvehi;
-     	break;
-     }
-	}
-	return out;
-}
 
 function deleteAuto(sender)
 {
