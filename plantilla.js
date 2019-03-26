@@ -1,5 +1,6 @@
+
+
 const { callSendAPI } = require('./fbApi.js');
-const request = require("request-promise");
 
 // Enviar mensaje sencillo
 const sendTextMessage = async (recipientId, text) => {
@@ -30,9 +31,8 @@ const sendTextMessage = async (recipientId, text) => {
     await callSendAPI(messageData);
   }
 
-
-  module.exports
-  {
+  module.exports = {
     sendTextMessage,
     sendQuickReply
   }
+  
