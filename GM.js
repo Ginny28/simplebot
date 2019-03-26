@@ -31,17 +31,11 @@ var gmCoti = {
 
 
 const getGMCoti = async (grupoId) => {
-    var today = new SimpleDate();
-    var validity = new SimpleDate();
-        validity.addDays(30);
-    gmCoti.group = grupoId;
-    gmCoti.startOfValidity = validity.toString('dd/MM/yyyy');
-    gmCoti.endOfValidity = validity.toString('dd/MM/yyyy');
-    gmCoti.dateReception = today.toString('dd/MM/yyyy');
-
-    console.log("json: "+ gmCoti);
     
-    /*const url = "https://login.universales.com/cotizador-gm/api/api_cotizador/cotizar";
+
+   /* console.log("json: "+ gmCoti);
+    
+    const url = "https://login.universales.com/cotizador-gm/api/api_cotizador/cotizar";
       await axios.post(url, messageData)
         .then(function (response) {
           if (response.status == 200) {
@@ -67,5 +61,6 @@ const getGMCoti = async (grupoId) => {
     }
     
     module.exports = {
-        getGMCoti
+        getGMCoti,
+        gmCoti
       }

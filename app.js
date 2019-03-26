@@ -855,3 +855,17 @@ const getGrupo = async (messageData) => {
         console.log(error.response.headers);
       });
   }
+
+function getcot(groupId)
+{
+  var today = new SimpleDate();
+    var validity = new SimpleDate();
+        validity.addDays(30);
+    gmCoti.group = grupoId;
+    gmCoti.startOfValidity = validity.toString('dd/MM/yyyy');
+    gmCoti.endOfValidity = validity.toString('dd/MM/yyyy');
+    gmCoti.dateReception = today.toString('dd/MM/yyyy');
+    
+    console.log("valores: "+ gmCoti);
+    
+}
