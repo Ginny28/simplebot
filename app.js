@@ -762,7 +762,7 @@ await axios.get(urlUser).then(function (response) {
      //recorrer2();
      //recorrerGM();
     // recorrer3();
-    console.log("valor"+ detalles);
+    console.log("valor"+ detalles["firstName"]);
     break;
     default:
 
