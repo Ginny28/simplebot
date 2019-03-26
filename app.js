@@ -99,7 +99,7 @@ function receivedMessage(event) {
   var message = event.message;
 
   if (!sessionIds.has(senderID)) {
-    sessionIds.set(senderID);
+    sessionIds.set(senderID, uuid.v1());
     config.SEGUNI[senderID] ={status:'OK'};
     config.CORE = [];
     config.FAM[senderID] ={};
