@@ -6,6 +6,7 @@ var rest = require('restler');
 const axios = require("axios");
 var SimpleDate = require('simple-datejs');
 var config = require('./Global.js');
+const { callSendAPI } = require('./fbApi.js');
 var detalles ={};
 
 
@@ -177,33 +178,6 @@ const isDefined = (obj) => {
 }
 
 
-// envia respuesta a facebook!!
-const callSendAPI = async (messageData) => {
-
-const url = "https://graph.facebook.com/v3.0/me/messages?access_token=" + config.PAGE_ACCESS_TOKEN;
-  await axios.post(url, messageData)
-    .then(function (response) {
-      if (response.status == 200) {
-        var recipientId = response.data.recipient_id;
-        var messageId = response.data.message_id;
-        if (messageId) {
-          console.log(
-            "Exito %s al usuario %s",
-            messageId,
-            recipientId
-          );
-        } else {
-          console.log(
-            "Se envio al API para el usuario %s",
-            recipientId
-          );
-        }
-      }
-    })
-    .catch(function (error) {
-      console.log(error.response.headers);
-    });
-}
 
 
 function handleApiAiResponse(sender, response) {
@@ -246,8 +220,8 @@ function handleApiAiResponse(sender, response) {
     console.log("tengo email -> "+parameters.email);
     addNewAuto(sender,parameters.email,10);
    }
-   if(isDefined(parameters.nacimiento)) addGM(parameters.nacimiento,4);
-   if(isDefined(parameters.genero)) addGM(parameters.genero,5);
+   if(isDefined(parameters.nacimiento)) addFamDetail(parameters.nacimiento,4);
+   if(isDefined(parameters.genero)) addFamDetail(parameters.genero,5);
 
 
  if (responseText == "" && !isDefined(action)) {
@@ -744,11 +718,10 @@ await axios.get(urlUser).then(function (response) {
         getCoti(sender);
       break;
     case 2:
-    // console.log("1er"+ response.data.first_name +" "+ response.data.middle_name +" "+ response.data.last_name);
-     addGM(response.data.first_name,1);
-     addGM(response.data.middle_name,2);
-     addGM(response.data.last_name,3);
-     addGM(null,6);
+     addFamDetail(response.data.first_name,1);
+     addFamDetail(response.data.middle_name,2);
+     addFamDetail(response.data.last_name,3);
+     addFamDetail(null,6);
      var datesys = new SimpleDate
      addMember(sender,datesys.toString('dd/MM/yyyy'),1);
      addMember(sender,'ABSALAZAR',2);
@@ -758,7 +731,7 @@ await axios.get(urlUser).then(function (response) {
      //recorrer2();
      //recorrerGM();
      recorrer3();
-     getGrupo(config.FAM);
+     getGrupo(config.FAM); 
    
     
     break;
@@ -927,7 +900,7 @@ function addMember(sender,atributo,tipoAtrib)
 
 
 
-function addGM(atributo,tipoAtrib)
+function addFamDetail(atributo,tipoAtrib)
 {
      switch(tipoAtrib)
      {
