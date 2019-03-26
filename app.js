@@ -82,6 +82,7 @@ app.post("/webhook/", function (req, res) {
 
 
 //**** functions ******* //
+   // cuando recibe un postback de algún template.
 function receivedPostback(event) {
   console.log(event);
 
@@ -95,12 +96,10 @@ function receivedPostback(event) {
 
 function receivedMessage(event) {
   var senderID = event.sender.id;
-  var recipientID = event.recipient.id;
-  var timeOfMessage = event.timestamp;
   var message = event.message;
 
   if (!sessionIds.has(senderID)) {
-    sessionIds.set(senderID, uuid.v1());
+    sessionIds.set(senderID);
     config.SEGUNI[senderID] ={status:'OK'};
     config.CORE = [];
     config.FAM[senderID] ={};
@@ -189,8 +188,7 @@ function handleApiAiResponse(sender, response) {
   let parameters = response.result.parameters;
   sendTypingOff(sender);
 
-   console.log("accion:" + response+"--"+action);
-
+  
    if (isDefined(parameters.modelo))
    {
     addNewAuto(sender,parameters.modelo,1);
