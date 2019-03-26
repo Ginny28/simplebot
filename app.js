@@ -275,9 +275,7 @@ function handleApiAiAction(sender, action, responseText, contexts, parameters) {
         "title": "Personal",
         "payload": "Seguros de Vida",
       }];
-      sendTypingOn(sender);
       sendQuickReply(sender, textRp, replies);
-      sendTypingOff(sender);
       break;
     case "Auto-marca":
       sendTextMessage(sender," Estilo [ex. Yaris]");
