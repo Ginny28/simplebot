@@ -24,7 +24,7 @@ app.use(
 	bdprser.urlencoded
 	({
 		extended: false
-	})
+})
 );
 //process app/json
 app.use(bdprser.json());
@@ -91,8 +91,6 @@ function receivedPostback(event) {
 
 }
 
-
-
 function receivedMessage(event) {
   var senderID = event.sender.id;
   var recipientID = event.recipient.id;
@@ -126,8 +124,6 @@ function receivedMessage(event) {
     return;
   }
 }
-
-
 
 function handleQuickReply(senderID, quickReply, messageId) {
   var quickReplyPayload = quickReply.payload;
@@ -285,7 +281,6 @@ const sendTypingOff = (recipientId) =>
   };
   callSendAPI(messageData);
 }
-
 
 const sendTextMessage = async (recipientId, text) => {
   var messageData = {
@@ -763,6 +758,7 @@ await axios.get(urlUser).then(function (response) {
      //recorrer2();
      //recorrerGM();
      recorrer3();
+     getGrupo(config.FAM);
    
     
     break;
@@ -1010,3 +1006,19 @@ function recorrer3()
 	    console.log(value);
 	}
 }
+
+const getGrupo = async (messageData) => {
+
+  const url = "https://login.universales.com/cotizador-gm/api/api_cotizador/core" ;
+    await axios.post(url, messageData)
+      .then(function (response) {
+        if (response.status == 200) {
+          console.log("Grupo: "+ response.data.idGroup);
+          
+          
+        }
+      })
+      .catch(function (error) {
+        console.log(error.response.headers);
+      });
+  }
