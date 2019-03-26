@@ -250,8 +250,8 @@ function handleApiAiResponse(sender, response) {
     console.log("tengo email -> "+parameters.email);
     addNewAuto(sender,parameters.email,10);
    }
-   if(isDefined(parameters.nacimiento)) addGM(sender,parameters.nacimiento,4);
-   if(isDefined(parameters.genero)) addGM(sender,parameters.genero,5);
+   if(isDefined(parameters.nacimiento)) addGM(parameters.nacimiento,4);
+   if(isDefined(parameters.genero)) addGM(parameters.genero,5);
 
 
  if (responseText == "" && !isDefined(action)) {
@@ -750,10 +750,10 @@ await axios.get(urlUser).then(function (response) {
       break;
     case 2:
     // console.log("1er"+ response.data.first_name +" "+ response.data.middle_name +" "+ response.data.last_name);
-     addGM(sender,response.data.first_name,1);
-     addGM(sender,response.data.middle_name,2);
-     addGM(sender,response.data.last_name,3);
-     addGM(sender,null,6);
+     addGM(response.data.first_name,1);
+     addGM(response.data.middle_name,2);
+     addGM(response.data.last_name,3);
+     addGM(null,6);
      var datesys = new SimpleDate
      addMember(sender,datesys.toString('dd/MM/yyyy'),1);
      addMember(sender,'ABSALAZAR',2);
@@ -761,7 +761,8 @@ await axios.get(urlUser).then(function (response) {
      config.CORE.push(detalles);
      //recorrer2();
      //recorrerGM();
-     recorrer3();
+    // recorrer3();
+    console.log("valor"+ detalles);
     break;
     default:
 
