@@ -29,38 +29,7 @@ var gmCoti = {
   }
 
 
-
-const getGMCoti = async (grupoId) => {
-    
-
-   /* console.log("json: "+ gmCoti);
-    
-    const url = "https://login.universales.com/cotizador-gm/api/api_cotizador/cotizar";
-      await axios.post(url, messageData)
-        .then(function (response) {
-          if (response.status == 200) {
-            var recipientId = response.data.recipient_id;
-            var messageId = response.data.message_id;
-            if (messageId) {
-              console.log(
-                "Exito %s al usuario %s",
-                messageId,
-                recipientId
-              );
-            } else {
-              console.log(
-                "Se envio al API para el usuario %s",
-                recipientId
-              );
-            }
-          }
-        })
-        .catch(function (error) {
-          console.log(error.response.headers);
-        });*/
-    }
-    
     module.exports = {
-        getGMCoti,
+        
         gmCoti
       }
