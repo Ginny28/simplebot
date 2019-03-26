@@ -895,5 +895,11 @@ function getcot(grupoId)
     gmCoti.startOfValidity = validity.toString('dd/MM/yyyy');
     gmCoti.endOfValidity = validity.toString('dd/MM/yyyy');
     gmCoti.dateReception = today.toString('dd/MM/yyyy');
-    console.log("valores: "+ gmCoti);
+
+    for (var x in gmCoti)
+    {
+      console.log("valores: "+ gmCoti[x]);
+    }
+
+    
 }
