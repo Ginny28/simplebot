@@ -6,6 +6,9 @@ var rest = require('restler');
 const axios = require("axios");
 var SimpleDate = require('simple-datejs');
 var config = require('./Global.js');
+const { callSendAPI } = require('./fbApi.js');
+const { sendTextMessage,sendQuickReply } = require('./plantilla.js');
+const { gmCoti} = require('./GM.js');
 var detalles ={};
 
 
@@ -16,6 +19,9 @@ const apiAiService = diaFw(config.DIAFLOW_TOKEN, {
 });
 const sessionIds = new Map();
 
+//
+const gastosCoti = new Map();
+
 // set port
 var app = xpress();
 
@@ -24,7 +30,7 @@ app.use(
 	bdprser.urlencoded
 	({
 		extended: false
-	})
+})
 );
 //process app/json
 app.use(bdprser.json());
@@ -80,6 +86,7 @@ app.post("/webhook/", function (req, res) {
 
 
 //**** functions ******* //
+   // cuando recibe un postback de algún template.
 function receivedPostback(event) {
   console.log(event);
 
@@ -91,12 +98,8 @@ function receivedPostback(event) {
 
 }
 
-
-
 function receivedMessage(event) {
   var senderID = event.sender.id;
-  var recipientID = event.recipient.id;
-  var timeOfMessage = event.timestamp;
   var message = event.message;
 
   if (!sessionIds.has(senderID)) {
@@ -126,8 +129,6 @@ function receivedMessage(event) {
     return;
   }
 }
-
-
 
 function handleQuickReply(senderID, quickReply, messageId) {
   var quickReplyPayload = quickReply.payload;
@@ -169,7 +170,8 @@ const sendTypingOn = (recipientId) => {
   };
   callSendAPI(messageData);
 }
-//verifica validez
+
+//verifica validez de entrada
 const isDefined = (obj) => {
   if (typeof obj == "undefined") {
     return false;
@@ -178,35 +180,6 @@ const isDefined = (obj) => {
     return false;
   }
   return obj != null;
-}
-
-
-// envia respuesta a facebook!!
-const callSendAPI = async (messageData) => {
-
-const url = "https://graph.facebook.com/v3.0/me/messages?access_token=" + config.PAGE_ACCESS_TOKEN;
-  await axios.post(url, messageData)
-    .then(function (response) {
-      if (response.status == 200) {
-        var recipientId = response.data.recipient_id;
-        var messageId = response.data.message_id;
-        if (messageId) {
-          console.log(
-            "Exito %s al usuario %s",
-            messageId,
-            recipientId
-          );
-        } else {
-          console.log(
-            "Se envio al API para el usuario %s",
-            recipientId
-          );
-        }
-      }
-    })
-    .catch(function (error) {
-      console.log(error.response.headers);
-    });
 }
 
 
@@ -219,8 +192,7 @@ function handleApiAiResponse(sender, response) {
   let parameters = response.result.parameters;
   sendTypingOff(sender);
 
-   console.log("accion:" + response+"--"+action);
-
+  
    if (isDefined(parameters.modelo))
    {
     addNewAuto(sender,parameters.modelo,1);
@@ -250,8 +222,8 @@ function handleApiAiResponse(sender, response) {
     console.log("tengo email -> "+parameters.email);
     addNewAuto(sender,parameters.email,10);
    }
-   if(isDefined(parameters.nacimiento)) addGM(parameters.nacimiento,4);
-   if(isDefined(parameters.genero)) addGM(parameters.genero,5);
+   if(isDefined(parameters.nacimiento)) addFamDetail(parameters.nacimiento,4);
+   if(isDefined(parameters.genero)) addFamDetail(parameters.genero,5);
 
 
  if (responseText == "" && !isDefined(action)) {
@@ -286,113 +258,8 @@ const sendTypingOff = (recipientId) =>
   callSendAPI(messageData);
 }
 
-
-const sendTextMessage = async (recipientId, text) => {
-  var messageData = {
-    recipient: {
-      id: recipientId
-    },
-    message: {
-      text: text
-    }
-  };
-  await callSendAPI(messageData);
-}
-
-
-const sendQuickReply = async (recipientId, text, replies, metadata) => {
-  var messageData = {
-    recipient: {
-      id: recipientId
-    },
-    message: {
-      text: text,
-      metadata: isDefined(metadata) ? metadata : "",
-      quick_replies: replies
-    }
-  };
-
-  await callSendAPI(messageData);
-}
-
-const sendOpenGraph = async (recipientId, elements) => {
-  var messageData = {
-    recipient: {
-      id: recipientId
-    },
-    message: {
-      attachment: {
-        type: "template",
-        payload: {
-          template_type: "open_graph",
-          elements: elements
-        }
-      }
-    }
-  };
-  await callSendAPI(messageData);
-}
-
-const sendImageMessage = async (recipientId, imageUrl) => {
-  var messageData = {
-    recipient: {
-      id: recipientId
-    },
-    message: {
-      attachment: {
-        type: "image",
-        payload: {
-          url: imageUrl
-        }
-      }
-    }
-  };
-    await callSendAPI(messageData);
-}
-
-const sendButtonMessage = async (recipientId, text, buttons) => {
-  var messageData = {
-    recipient: {
-      id: recipientId
-    },
-    message: {
-      attachment: {
-        type: "template",
-        payload: {
-          template_type: "button",
-          text: text,
-          buttons: buttons
-        }
-      }
-    }
-  };
-  await callSendAPI(messageData);
-}
-
-const sendGifMessage = async (recipientId)=> {
-  var messageData = {
-    recipient: {
-      id: recipientId
-    },
-    message: {
-      attachment: {
-        type: "image",
-        payload: {
-          url: "https://raw.githubusercontent.com/andycha28/MyIcons/master/boot3.gif?raw=true"
-        }
-      }
-    }
-  };
-
-    await callSendAPI(messageData);
-}
-
 function handleApiAiAction(sender, action, responseText, contexts, parameters) {
    switch (action) {
-    case "textos":
-      var responseText = "Prueba mensaje"
-      sendTextMessage(sender, responseText);
-      break;
     case "tipo-seguro":
        textRp = "Te ofrecemos seguros de vehículo, personal, hogar y gastos médicos, indicarme cuál te interesa. Para que conozcas más de nuestros productos visita:  \n https://www.universales.com/productos/"
        replies = [{
@@ -575,11 +442,6 @@ function handleApiAiAction(sender, action, responseText, contexts, parameters) {
                 "title": "Emergencia",
                 "payload": "SOS"
               }
-               /*,{
-                    "type": "postback",
-                    "title": "Acerca de nosotros",
-                    "payload": "NOS"
-                }*/
               ]
     sendButtonMessage(sender, textPayload, elements);
     break;
@@ -601,7 +463,7 @@ function handleApiAiAction(sender, action, responseText, contexts, parameters) {
     break;
     case "Act-chao":
     sendTextMessage(sender,"Fue un placer haberle ayudado!");
-    sendGifMessage(sender);
+    sendGifMessage(sender,"https://raw.githubusercontent.com/andycha28/MyIcons/master/boot3.gif?raw=true");
     break;
     default:
       //unhandled action, just send back the text
@@ -715,6 +577,10 @@ await axios.get(urlSaldo,
 }
 
 
+
+
+
+
 const getBrandStyle = async (senderValue,bearerAuth,sender) => {
 
 const urlAuto ='https://login.universales.com/inspeccion/v2/api/brand';
@@ -749,11 +615,10 @@ await axios.get(urlUser).then(function (response) {
         getCoti(sender);
       break;
     case 2:
-    // console.log("1er"+ response.data.first_name +" "+ response.data.middle_name +" "+ response.data.last_name);
-     addGM(response.data.first_name,1);
-     addGM(response.data.middle_name,2);
-     addGM(response.data.last_name,3);
-     addGM(null,6);
+     addFamDetail(response.data.first_name,1);
+     addFamDetail(response.data.middle_name,2);
+     addFamDetail(response.data.last_name,3);
+     addFamDetail(null,6);
      var datesys = new SimpleDate
      addMember(sender,datesys.toString('dd/MM/yyyy'),1);
      addMember(sender,'ABSALAZAR',2);
@@ -761,9 +626,9 @@ await axios.get(urlUser).then(function (response) {
      addMember(sender,config.CORE,3);
      
      //recorrer2();
-     //recorrerGM();
-     recorrer3();
-   
+    // recorrer3();
+    // getGrupo(config.FAM); 
+    getcot(24);
     
     break;
     default:
@@ -797,6 +662,8 @@ function getCoti(sender)
 
 
 }
+
+
 
 
 
@@ -842,32 +709,6 @@ function addNewAuto(sender,atributo,tipoAtrib)
 	}
 }
 
-function getvalues(sender,tipoAtrib)
-{
-	var out ="";
-	if (sender in config.SEGUNI)
-	{
-		switch(tipoAtrib)
-     {
-     	case 1:
-     		out = config.SEGUNI[sender].modelo;
-     	break;
-     	case 2:
-     		out = config.SEGUNI[sender].sumaAseg;
-     	break;
-     	case 3:
-     		out = config.SEGUNI[sender].marca;
-     	break;
-     	case 4:
-     		out = config.SEGUNI[sender].estilo;
-     	break;
-     	case 5:
-     		out = config.SEGUNI[sender].tvehi;
-     	break;
-     }
-	}
-	return out;
-}
 
 function deleteAuto(sender)
 {
@@ -931,7 +772,7 @@ function addMember(sender,atributo,tipoAtrib)
 
 
 
-function addGM(atributo,tipoAtrib)
+function addFamDetail(atributo,tipoAtrib)
 {
      switch(tipoAtrib)
      {
@@ -990,15 +831,7 @@ function recorrer2()
 	}
 }
 
-function recorrerGM()
-{
-  for (var usuario in  config.FAM) {
-    console.log('Key:\n—- ' + usuario + '\n');
-      console.log('Values: ');
-      var value = config.FAM[usuario];
-      console.log(value);
-  }
-}
+
 
 function recorrer3()
 {
@@ -1009,4 +842,36 @@ function recorrer3()
 	    var value = config.FAM[x];
 	    console.log(value);
 	}
+}
+
+const getGrupo = async (messageData) => {
+
+  const url = "https://login.universales.com/cotizador-gm/api/api_cotizador/core" ;
+    await axios.post(url, messageData)
+      .then(function (response) {
+        if (response.status == 200) {
+          console.log("Grupo: "+ response.data.idGroup);
+          
+          
+        }
+      })
+      .catch(function (error) {
+        console.log(error.response.headers);
+      });
+  }
+
+function getcot(grupoId)
+{
+  var today = new SimpleDate();
+    var validity = new SimpleDate();
+        validity.addDays(30);
+    gmCoti.group = grupoId;
+    gmCoti.startOfValidity = validity.toString('dd/MM/yyyy');
+    gmCoti.endOfValidity = validity.toString('dd/MM/yyyy');
+    gmCoti.dateReception = today.toString('dd/MM/yyyy');
+
+    for (var x in gmCoti)
+    {
+      console.log(x +": "+ gmCoti[x]);
+    }
 }

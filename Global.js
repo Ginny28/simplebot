@@ -1,7 +1,7 @@
 
 var authData = {
-    "email":"ccarrillo@universales.com",
-    "password":"12345",
+    "email":"chatbot@universales.com",
+    "password":"abc123*",
     "loginType":"N",
     "registrationId": 1,
     "idPlatform": 1
