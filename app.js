@@ -624,7 +624,7 @@ await axios.get(urlUser).then(function (response) {
      //recorrer2();
     // recorrer3();
     // getGrupo(config.FAM); 
-    getGMCoti(24);
+    getcot(24);
     
     break;
     default:
