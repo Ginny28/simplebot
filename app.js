@@ -8,6 +8,7 @@ var SimpleDate = require('simple-datejs');
 var config = require('./Global.js');
 const { callSendAPI } = require('./fbApi.js');
 const { sendTextMessage,sendQuickReply } = require('./plantilla.js');
+const { getGMCoti} = require('./GM.js');
 var detalles ={};
 
 
@@ -17,6 +18,9 @@ const apiAiService = diaFw(config.DIAFLOW_TOKEN, {
   requestSource: "fb"
 });
 const sessionIds = new Map();
+
+//
+const gastosCoti = new Map();
 
 // set port
 var app = xpress();
@@ -618,10 +622,9 @@ await axios.get(urlUser).then(function (response) {
      addMember(sender,config.CORE,3);
      
      //recorrer2();
-     //recorrerGM();
-     recorrer3();
-     getGrupo(config.FAM); 
-   
+    // recorrer3();
+    // getGrupo(config.FAM); 
+    getGMCoti("24");
     
     break;
     default:
@@ -655,6 +658,11 @@ function getCoti(sender)
 
 
 }
+
+
+
+
+
 
 function addNewAuto(sender,atributo,tipoAtrib)
 {
@@ -819,15 +827,7 @@ function recorrer2()
 	}
 }
 
-function recorrerGM()
-{
-  for (var usuario in  config.FAM) {
-    console.log('Key:\n—- ' + usuario + '\n');
-      console.log('Values: ');
-      var value = config.FAM[usuario];
-      console.log(value);
-  }
-}
+
 
 function recorrer3()
 {
