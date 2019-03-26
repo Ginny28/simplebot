@@ -757,15 +757,13 @@ await axios.get(urlUser).then(function (response) {
      var datesys = new SimpleDate
      addMember(sender,datesys.toString('dd/MM/yyyy'),1);
      addMember(sender,'ABSALAZAR',2);
-     addMember(sender,config.CORE,3);
      config.CORE.push(detalles);
+     addMember(sender,config.CORE,3);
+     
      //recorrer2();
      //recorrerGM();
-    // recorrer3();
-    for(var p in detalles)
-    {
-      console.log("valor"+ detalles[p]);
-    }
+     recorrer3();
+   
     
     break;
     default:
