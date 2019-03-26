@@ -7,6 +7,8 @@ const axios = require("axios");
 var SimpleDate = require('simple-datejs');
 var config = require('./Global.js');
 const { callSendAPI } = require('./fbApi.js');
+const { sendTextMessage,
+  sendQuickReply } = require('./plantilla.js');
 var detalles ={};
 
 
@@ -166,7 +168,8 @@ const sendTypingOn = (recipientId) => {
   };
   callSendAPI(messageData);
 }
-//verifica validez
+
+//verifica validez de entrada
 const isDefined = (obj) => {
   if (typeof obj == "undefined") {
     return false;
@@ -176,8 +179,6 @@ const isDefined = (obj) => {
   }
   return obj != null;
 }
-
-
 
 
 function handleApiAiResponse(sender, response) {
@@ -256,34 +257,6 @@ const sendTypingOff = (recipientId) =>
   callSendAPI(messageData);
 }
 
-const sendTextMessage = async (recipientId, text) => {
-  var messageData = {
-    recipient: {
-      id: recipientId
-    },
-    message: {
-      text: text
-    }
-  };
-  await callSendAPI(messageData);
-}
-
-
-const sendQuickReply = async (recipientId, text, replies, metadata) => {
-  var messageData = {
-    recipient: {
-      id: recipientId
-    },
-    message: {
-      text: text,
-      metadata: isDefined(metadata) ? metadata : "",
-      quick_replies: replies
-    }
-  };
-
-  await callSendAPI(messageData);
-}
-
 const sendOpenGraph = async (recipientId, elements) => {
   var messageData = {
     recipient: {
@@ -338,7 +311,7 @@ const sendButtonMessage = async (recipientId, text, buttons) => {
   await callSendAPI(messageData);
 }
 
-const sendGifMessage = async (recipientId)=> {
+const sendGifMessage = async (recipientId,urlImage)=> {
   var messageData = {
     recipient: {
       id: recipientId
@@ -347,7 +320,7 @@ const sendGifMessage = async (recipientId)=> {
       attachment: {
         type: "image",
         payload: {
-          url: "https://raw.githubusercontent.com/andycha28/MyIcons/master/boot3.gif?raw=true"
+          url: urlImage
         }
       }
     }
@@ -570,7 +543,7 @@ function handleApiAiAction(sender, action, responseText, contexts, parameters) {
     break;
     case "Act-chao":
     sendTextMessage(sender,"Fue un placer haberle ayudado!");
-    sendGifMessage(sender);
+    sendGifMessage(sender,"https://raw.githubusercontent.com/andycha28/MyIcons/master/boot3.gif?raw=true");
     break;
     default:
       //unhandled action, just send back the text
