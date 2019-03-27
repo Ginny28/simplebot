@@ -8,7 +8,7 @@ var SimpleDate = require('simple-datejs');
 var config = require('./Global.js');
 const { callSendAPI } = require('./fbApi.js');
 const { sendTextMessage,sendQuickReply } = require('./plantilla.js');
-const { gmCoti} = require('./GM.js');
+//const { gmCoti} = require('./GM.js');
 var detalles ={};
 
 
@@ -107,7 +107,7 @@ function receivedMessage(event) {
     config.SEGUNI[senderID] ={status:'OK'};
     config.CORE = [];
     config.FAM[senderID] ={};
-    gastosCoti.set(senderID,config.FAM[senderID]);
+   // gastosCoti.set(senderID,config.FAM[senderID]);
   }
 
   var messageId = message.mid;
@@ -627,10 +627,10 @@ await axios.get(urlUser).then(function (response) {
      addMember(sender,config.CORE,3);
      
      //recorrer2();
-    // recorrer3();
+     recorrer3();
     // getGrupo(config.FAM); 
     
-    getcot(24);
+    //getcot(24);
     
     break;
     default:
@@ -862,7 +862,7 @@ const getGrupo = async (messageData) => {
       });
   }
 
-function getcot(grupoId)
+/*function getcot(grupoId)
 {
   var today = new SimpleDate();
     var validity = new SimpleDate();
@@ -876,4 +876,4 @@ function getcot(grupoId)
     {
       console.log(x +": "+ gmCoti[x]);
     }
-}
+}*/
