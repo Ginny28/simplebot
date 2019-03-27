@@ -28,7 +28,23 @@ var gmCoti = {
     "message":""
   }
 
+  var gmCore =  { 
+    "firstName": "",
+    "middleName": "",
+    "lastName": "",
+    "secondLastName" : "",
+    "marriedSurname": null,
+    "relationship": "T",
+    "birthDateField" : "",
+    "gender" : "",
+    "extraPremium": "0.00" }
+     
+}
+
+
+
+
 
   module.exports = {
-    gmCoti
+    gmCoti,gmCore
   }

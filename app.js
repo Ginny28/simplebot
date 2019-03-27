@@ -107,6 +107,7 @@ function receivedMessage(event) {
     config.SEGUNI[senderID] ={status:'OK'};
     config.CORE = [];
     config.FAM[senderID] ={};
+    gastosCoti.set(senderID,config.FAM[senderID]);
   }
 
   var messageId = message.mid;
@@ -628,6 +629,7 @@ await axios.get(urlUser).then(function (response) {
      //recorrer2();
     // recorrer3();
     // getGrupo(config.FAM); 
+    
     getcot(24);
     
     break;
