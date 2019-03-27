@@ -7,8 +7,7 @@ const axios = require("axios");
 var SimpleDate = require('simple-datejs');
 var config = require('./Global.js');
 const { callSendAPI } = require('./fbApi.js');
-const { sendTextMessage,sendQuickReply } = require('./plantilla.js');
-//const { gmCoti} = require('./GM.js');
+const { sendTextMessage,sendQuickReply,sendGifMessage,sendButtonMessage,sendOpenGraph } = require('./plantilla.js');
 var detalles ={};
 
 
@@ -18,9 +17,6 @@ const apiAiService = diaFw(config.DIAFLOW_TOKEN, {
   requestSource: "fb"
 });
 const sessionIds = new Map();
-
-//
-const gastosCoti = new Map();
 
 // set port
 var app = xpress();
@@ -86,7 +82,6 @@ app.post("/webhook/", function (req, res) {
 
 
 //**** functions ******* //
-   // cuando recibe un postback de algún template.
 function receivedPostback(event) {
   console.log(event);
 
@@ -100,6 +95,8 @@ function receivedPostback(event) {
 
 function receivedMessage(event) {
   var senderID = event.sender.id;
+  var recipientID = event.recipient.id;
+  var timeOfMessage = event.timestamp;
   var message = event.message;
 
   if (!sessionIds.has(senderID)) {
@@ -107,7 +104,6 @@ function receivedMessage(event) {
     config.SEGUNI[senderID] ={status:'OK'};
     config.CORE = [];
     config.FAM[senderID] ={};
-   // gastosCoti.set(senderID,config.FAM[senderID]);
   }
 
   var messageId = message.mid;
@@ -578,10 +574,6 @@ await axios.get(urlSaldo,
 }
 
 
-
-
-
-
 const getBrandStyle = async (senderValue,bearerAuth,sender) => {
 
 const urlAuto ='https://login.universales.com/inspeccion/v2/api/brand';
@@ -627,10 +619,10 @@ await axios.get(urlUser).then(function (response) {
      addMember(sender,config.CORE,3);
      
      //recorrer2();
+     //recorrerGM();
      recorrer3();
-    // getGrupo(config.FAM); 
-    
-    //getcot(24);
+     getGrupo(config.FAM); 
+   
     
     break;
     default:
@@ -664,11 +656,6 @@ function getCoti(sender)
 
 
 }
-
-
-
-
-
 
 function addNewAuto(sender,atributo,tipoAtrib)
 {
@@ -833,7 +820,15 @@ function recorrer2()
 	}
 }
 
-
+function recorrerGM()
+{
+  for (var usuario in  config.FAM) {
+    console.log('Key:\n—- ' + usuario + '\n');
+      console.log('Values: ');
+      var value = config.FAM[usuario];
+      console.log(value);
+  }
+}
 
 function recorrer3()
 {
@@ -861,19 +856,3 @@ const getGrupo = async (messageData) => {
         console.log(error.response.headers);
       });
   }
-
-/*function getcot(grupoId)
-{
-  var today = new SimpleDate();
-    var validity = new SimpleDate();
-        validity.addDays(30);
-    gmCoti.group = grupoId;
-    gmCoti.startOfValidity = validity.toString('dd/MM/yyyy');
-    gmCoti.endOfValidity = validity.toString('dd/MM/yyyy');
-    gmCoti.dateReception = today.toString('dd/MM/yyyy');
-
-    for (var x in gmCoti)
-    {
-      console.log(x +": "+ gmCoti[x]);
-    }
-}*/
