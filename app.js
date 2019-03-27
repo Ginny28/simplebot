@@ -7,7 +7,7 @@ const axios = require("axios");
 var SimpleDate = require('simple-datejs');
 var config = require('./Global.js');
 const { callSendAPI } = require('./fbApi.js');
-const { sendTextMessage,sendQuickReply } = require('./plantilla.js');
+const { sendTextMessage,sendQuickReply,sendGifMessage,sendButtonMessage,sendOpenGraph } = require('./plantilla.js');
 const { gmCoti} = require('./GM.js');
 var detalles ={};
 
