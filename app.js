@@ -218,8 +218,8 @@ function handleApiAiResponse(sender, response) {
     console.log("tengo email -> "+parameters.email);
     addNewAuto(sender,parameters.email,10);
    }
-   if(isDefined(parameters.nacimiento)) addFamDetail(parameters.nacimiento,4);
-   if(isDefined(parameters.genero)) addFamDetail(parameters.genero,5);
+   if(isDefined(parameters.nacimientoconsole.log("tengo fechanac -> "+parameters.nacimiento);
+   if(isDefined(parameters.genero)) console.log("tengo sexo -> "+parameters.genero);
 
 
  if (responseText == "" && !isDefined(action)) {
