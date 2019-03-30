@@ -608,19 +608,15 @@ await axios.get(urlUser).then(function (response) {
         getCoti(sender);
       break;
     case 2:
-    // addFamDetail(response.data.first_name,1);
-    // addFamDetail(response.data.middle_name,2);
-    // addFamDetail(response.data.last_name,3);
-    // addFamDetail(null,6);
-    // var datesys = new SimpleDate
-    // addMember(sender,datesys.toString('dd/MM/yyyy'),1);
-    // addMember(sender,'ABSALAZAR',2);
-    // config.CORE.push(detalles);
-    // addMember(sender,config.CORE,3);
+    if (sessionIds.has(sender))
+        {
+          config.SEGUNI[sender].requestDateField = datesys.toString('dd/MM/yyyy');
+          config.SEGUNI[sender].userSave = 'SEGUNIFB';
+          config.SEGUNI[sender].coreDetaill =[config.CORE[sender]];
+        }
 
-     //recorrer2();
-    // recorrer3();
-    console.log("mi nombre es: "+ response.data.first_name +" "+response.data.middle_name);
+        recorrer();
+        console.log("mi nombre es: "+ response.data.first_name +" "+response.data.middle_name);
   //  getcot(24);
 
     break;
@@ -658,7 +654,34 @@ function getCoti(sender)
 }
 
 
-
+function addNewPerson(sender,atributo,tipoAtrib)
+{
+	if (sender in config.CORE)
+	{
+     switch(tipoAtrib)
+     {
+       case 1:
+     		config.CORE[sender].firstName = atributo;
+     	break;
+     	case 2:
+     		config.CORE[sender].middleName = atributo;
+     	break;
+     	case 3:
+     		config.CORE[sender].lastName = atributo;
+      break;
+      case 4:
+      var fecha = atributo.split('-');
+      config.CORE[sender].birthDateField = fecha[2]+'/'+fecha[1]+'/'+fecha[0];
+      break;
+      case 5:
+      config.CORE[sender].gender = atributo;
+      break;
+      case 6:
+      config.CORE[sender].relationship = "T";
+      break;
+     }
+	}
+}
 
 
 
@@ -760,8 +783,6 @@ const getGrupo = async (messageData) => {
         console.log(error.response.headers);
       });
   }
-
-
 
 function deleteArray(sender)
   {
