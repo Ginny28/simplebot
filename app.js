@@ -86,7 +86,6 @@ app.post("/webhook/", function (req, res) {
    // cuando recibe un postback de algún template.
 function receivedPostback(event) {
   console.log(event);
-
   var senderID = event.sender.id;
   var recipientID = event.recipient.id;
   var timeOfPostback = event.timestamp;
@@ -101,7 +100,7 @@ function receivedMessage(event) {
 
   if (!sessionIds.has(senderID)) {
     sessionIds.set(senderID, uuid.v1());
-    config.SEGUNI[senderID] ={status:'OK'};
+    config.SEGUNI[senderID] ={};
     config.CORE = [];
   }
 
@@ -136,8 +135,6 @@ function handleQuickReply(senderID, quickReply, messageId) {
   //send payload to api.ai
   sendToApiAi(senderID, quickReplyPayload);
 }
-
-
 
 // maneja el envio a DialogFlow!!
 function sendToApiAi(sender, text) {
@@ -651,7 +648,8 @@ function getCoti(sender)
       else {
         var response ="Le adjunto el link de su cotización \n http://test.universales.com/reportes/reporte?"+dataCoti.url
         sendTextMessage(sender,response);
-        deleteAuto(sender);
+        deleteArray(sender);
+        //deleteAuto(sender);
       }
   });
   console.log("String: "+ urlCoti);
@@ -761,4 +759,18 @@ const getGrupo = async (messageData) => {
       .catch(function (error) {
         console.log(error.response.headers);
       });
+  }
+
+
+
+function deleteArray(sender)
+  {
+     if (sender in config.SEGUNI)
+     {
+      var value = config.SEGUNI[sender];
+        for (var y in value)
+          {
+           delete value[y]
+          }
+      }
   }
