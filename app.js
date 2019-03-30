@@ -218,7 +218,7 @@ function handleApiAiResponse(sender, response) {
     console.log("tengo email -> "+parameters.email);
     addNewAuto(sender,parameters.email,10);
    }
-   if(isDefined(parameters.nacimientoconsole.log("tengo fechanac -> "+parameters.nacimiento);
+   if(isDefined(parameters.nacimiento))console.log("tengo fechanac -> "+parameters.nacimiento);
    if(isDefined(parameters.genero)) console.log("tengo sexo -> "+parameters.genero);
 
 
