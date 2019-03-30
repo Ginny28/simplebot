@@ -8,7 +8,7 @@ var SimpleDate = require('simple-datejs');
 var config = require('./Global.js');
 const { callSendAPI } = require('./fbApi.js');
 const { sendTextMessage,sendQuickReply,sendGifMessage,sendButtonMessage,sendOpenGraph } = require('./plantilla.js');
-const { gmCoti} = require('./GM.js');
+const { callCotiGM} = require('./GM.js');
 var detalles ={};
 
 
@@ -18,9 +18,6 @@ const apiAiService = diaFw(config.DIAFLOW_TOKEN, {
   requestSource: "fb"
 });
 const sessionIds = new Map();
-
-//
-const gastosCoti = new Map();
 
 // set port
 var app = xpress();
@@ -106,7 +103,6 @@ function receivedMessage(event) {
     sessionIds.set(senderID, uuid.v1());
     config.SEGUNI[senderID] ={status:'OK'};
     config.CORE = [];
-    config.FAM[senderID] ={};
   }
 
   var messageId = message.mid;
@@ -192,7 +188,7 @@ function handleApiAiResponse(sender, response) {
   let parameters = response.result.parameters;
   sendTypingOff(sender);
 
-  
+
    if (isDefined(parameters.modelo))
    {
     addNewAuto(sender,parameters.modelo,1);
@@ -615,21 +611,21 @@ await axios.get(urlUser).then(function (response) {
         getCoti(sender);
       break;
     case 2:
-     addFamDetail(response.data.first_name,1);
-     addFamDetail(response.data.middle_name,2);
-     addFamDetail(response.data.last_name,3);
-     addFamDetail(null,6);
-     var datesys = new SimpleDate
-     addMember(sender,datesys.toString('dd/MM/yyyy'),1);
-     addMember(sender,'ABSALAZAR',2);
-     config.CORE.push(detalles);
-     addMember(sender,config.CORE,3);
-     
+    // addFamDetail(response.data.first_name,1);
+    // addFamDetail(response.data.middle_name,2);
+    // addFamDetail(response.data.last_name,3);
+    // addFamDetail(null,6);
+    // var datesys = new SimpleDate
+    // addMember(sender,datesys.toString('dd/MM/yyyy'),1);
+    // addMember(sender,'ABSALAZAR',2);
+    // config.CORE.push(detalles);
+    // addMember(sender,config.CORE,3);
+
      //recorrer2();
     // recorrer3();
-    // getGrupo(config.FAM); 
-    getcot(24);
-    
+    console.log("mi nombre es: "+ response.data.first_name +" "+response.data.middle_name);
+  //  getcot(24);
+
     break;
     default:
 
@@ -751,99 +747,6 @@ function getAutoData(sender)
   return parameters;
 }
 
-function addMember(sender,atributo,tipoAtrib)
-{
-	if (sender in config.FAM)
-	{
-     switch(tipoAtrib)
-     {
-     	case 1:
-     		config.FAM[sender].requestDateField = atributo;
-     	break;
-     	case 2:
-     		config.FAM[sender].userSave = atributo;
-     	break;
-     	case 3:
-     		config.FAM[sender].coreDetaill = atributo;
-     	break;
-     }
-	}
-}
-
-
-
-function addFamDetail(atributo,tipoAtrib)
-{
-     switch(tipoAtrib)
-     {
-     	case 1:
-     		detalles.first_name = atributo;
-     	break;
-     	case 2:
-     		detalles.middleName = atributo;
-     	break;
-     	case 3:
-     		detalles.lastName = atributo;
-     	break;
-      case 4:
-     		detalles.birthDateField = atributo;
-     	break;
-      case 5:
-        detalles.gender = atributo;
-      break;
-      case 6:
-        detalles.marriedSurname = null;
-        detalles.relationship = "T";
-        detalles.extraPremium = 0.00;
-
-      break;
-     }
-}
-
-function recorrer2()
-{
-  for (var x in config.FAM)
-  {
-      console.log('Key: ' + x );
-      console.log('Values: ');
-	    var value = config.FAM[x]
-	    for (var y in value)
-	    {
-        if (y != 'coreDetaill')
-          {
-            console.log('—- ' + y + ':' + value[y]);
-          }
-          else {
-             var ss = value[y]
-             for(var m in ss)
-             {
-               //console.log('Key2.0: ' + m );
-                //var k = ss[m];
-                console.log('   —-> ' + m + ':' + ss[m]);
-              /*  for(var q in k)
-                {
-                  console.log('   —-> ' + q + ':' + k);
-                }*/
-             }
-          }
-	    }
-	    console.log('\n');
-	}
-}
-
-
-
-function recorrer3()
-{
-	for (var x in config.FAM)
-	{
-	    console.log('Key: ' + x );
-	    console.log('Values: ');
-	    var value = config.FAM[x];
-	    console.log(value);
-	}
-}
-
 const getGrupo = async (messageData) => {
 
   const url = "https://login.universales.com/cotizador-gm/api/api_cotizador/core" ;
@@ -851,27 +754,11 @@ const getGrupo = async (messageData) => {
       .then(function (response) {
         if (response.status == 200) {
           console.log("Grupo: "+ response.data.idGroup);
-          
-          
+
+
         }
       })
       .catch(function (error) {
         console.log(error.response.headers);
       });
   }
-
-function getcot(grupoId)
-{
-  var today = new SimpleDate();
-    var validity = new SimpleDate();
-        validity.addDays(30);
-    gmCoti.group = grupoId;
-    gmCoti.startOfValidity = validity.toString('dd/MM/yyyy');
-    gmCoti.endOfValidity = validity.toString('dd/MM/yyyy');
-    gmCoti.dateReception = today.toString('dd/MM/yyyy');
-
-    for (var x in gmCoti)
-    {
-      console.log(x +": "+ gmCoti[x]);
-    }
-}

@@ -6,9 +6,7 @@ var authData = {
     "registrationId": 1,
     "idPlatform": 1
   }
-  var myCarData = [];
-  var myDataAuto = {};
-  var familia = {};
+  var myData = {};
   var core = [];
 
 module.exports = {
@@ -18,8 +16,6 @@ module.exports = {
   DIAFLOW_TOKEN: "690e92dda208408297449188a728b168",
   PORT: "5000",
   AUTHSERVICE : authData,
-  CARARRAY: myCarData,
-  SEGUNI: myDataAuto,
-  FAM: familia,
+  SEGUNI: myData,
   CORE:core
 };
