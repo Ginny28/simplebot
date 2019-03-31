@@ -608,16 +608,15 @@ await axios.get(urlUser).then(function (response) {
         getCoti(sender);
       break;
     case 2:
+    var datesys = new SimpleDate();
     if (sessionIds.has(sender))
         {
           config.SEGUNI[sender].requestDateField = datesys.toString('dd/MM/yyyy');
           config.SEGUNI[sender].userSave = 'SEGUNIFB';
-          config.SEGUNI[sender].coreDetaill =[config.CORE[sender]];
+          //config.SEGUNI[sender].coreDetaill =[config.CORE[sender]];
         }
-
-        recorrer();
         console.log("mi nombre es: "+ response.data.first_name +" "+response.data.middle_name);
-  //  getcot(24);
+       //  getcot(24);
 
     break;
     default:
@@ -625,7 +624,7 @@ await axios.get(urlUser).then(function (response) {
   }
   })
    .catch(function (error) {
-      console.log('ErRo:'+ error.response.header);
+      console.log('ErRouser:'+ error.response.header);
     });
 }
 
