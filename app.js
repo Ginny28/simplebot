@@ -215,9 +215,16 @@ function handleApiAiResponse(sender, response) {
     console.log("tengo email -> "+parameters.email);
     addNewAuto(sender,parameters.email,10);
    }
-   if(isDefined(parameters.nacimiento))console.log("tengo fechanac -> "+parameters.nacimiento);
-   if(isDefined(parameters.genero)) console.log("tengo sexo -> "+parameters.genero);
-
+   if (isDefined(parameters.nacimiento))
+   {
+    console.log("tengo  nac -> "+parameters.nacimiento);
+    addNewPerson(sender,parameters.nacimiento,4);
+   }
+   if (isDefined(parameters.genero))
+   {
+    console.log("tengo  genero -> "+parameters.genero);
+    addNewPerson(sender,parameters.genero,5);
+   }
 
  if (responseText == "" && !isDefined(action)) {
     //api ai could not evaluate input.
@@ -609,14 +616,19 @@ await axios.get(urlUser).then(function (response) {
       break;
     case 2:
     var datesys = new SimpleDate();
+    addNewPerson(sender,response.data.first_name,1)
+    addNewPerson(sender,response.data.middle_name,2);
+    addNewPerson(sender,response.data.last_name,3);
     if (sessionIds.has(sender))
         {
           config.SEGUNI[sender].requestDateField = datesys.toString('dd/MM/yyyy');
           config.SEGUNI[sender].userSave = 'SEGUNIFB';
-          //config.SEGUNI[sender].coreDetaill =[config.CORE[sender]];
+          config.SEGUNI[sender].coreDetaill =[config.CORE[sender]];
         }
         console.log("mi nombre es: "+ response.data.first_name +" "+response.data.middle_name);
-       //  getcot(24);
+
+        getGrupo(config.SEGUNI[sender],sender);
+
        recorrer();
 
     break;
@@ -795,3 +807,54 @@ function deleteArray(sender)
           }
       }
   }
+
+  function getcot(grupoId,sender)
+  {
+    if (sender in config.SEGUNI)
+    {
+    var validity = new SimpleDate();
+        validity.addDays(30);
+      config.SEGUNI[sender].plan ="17";
+      config.SEGUNI[sender].wayPay= "L4" ;
+      config.SEGUNI[sender].group = grupoId;
+      config.SEGUNI[sender].typeContribution ="N";
+      config.SEGUNI[sender].startOfValidity= validity.toString('dd/MM/yyyy');;
+      config.SEGUNI[sender].endOfValidity= validity.toString('dd/MM/yyyy');;
+      config.SEGUNI[sender].discount= 0;
+      config.SEGUNI[sender].increase= 0;
+      config.SEGUNI[sender].discountwws= 0;
+      config.SEGUNI[sender].increasewws= 0;
+      config.SEGUNI[sender].baseCharge= 51;
+      config.SEGUNI[sender].deductible= 0;
+      config.SEGUNI[sender].typeLife= 1;
+      config.SEGUNI[sender].executive= "LCARDONA";
+      config.SEGUNI[sender].rate= 0;
+      config.SEGUNI[sender].dateReception= validity.toString('dd/MM/yyyy');;
+      config.SEGUNI[sender].agent= 1;
+      config.SEGUNI[sender].coin= "01";
+    }
+  }
+
+  const getGrupo = async (messageData,sender) => {
+
+    const url = "https://login.universales.com/cotizador-gm/api/api_cotizador/core" ;
+      await axios.post(url, messageData)
+        .then(function (response) {
+          if (response.status == 200) {
+            console.log("Grupo: "+ response.data.idGroup);
+            deleteArray(sender);
+
+            if(sessionIds.has(sender))
+            {
+            getcot(response.data.idGroup,sender);
+            console.log("\n");
+            callCotiGM(config.SEGUNI[sender],sender);
+            deleteArray(sender);
+            }
+
+          }
+        })
+        .catch(function (error) {
+          console.log(messageData);
+        });
+    }
