@@ -828,6 +828,7 @@ function deleteArray(sender)
             console.log("Grupo: "+ response.data.idGroup);
             if(sessionIds.has(sender))
             {
+            deleteArray(sender);
             getcot(response.data.idGroup,sender);
             recorrer();
             console.log("\n");
