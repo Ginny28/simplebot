@@ -780,22 +780,6 @@ function getAutoData(sender)
   return parameters;
 }
 
-const getGrupo = async (messageData) => {
-
-  const url = "https://login.universales.com/cotizador-gm/api/api_cotizador/core" ;
-    await axios.post(url, messageData)
-      .then(function (response) {
-        if (response.status == 200) {
-          console.log("Grupo: "+ response.data.idGroup);
-
-
-        }
-      })
-      .catch(function (error) {
-        console.log(error.response.headers);
-      });
-  }
-
 function deleteArray(sender)
   {
      if (sender in config.SEGUNI)
