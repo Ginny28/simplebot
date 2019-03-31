@@ -826,11 +826,10 @@ function deleteArray(sender)
         .then(function (response) {
           if (response.status == 200) {
             console.log("Grupo: "+ response.data.idGroup);
-            deleteArray(sender);
-
             if(sessionIds.has(sender))
             {
             getcot(response.data.idGroup,sender);
+            recorrer();
             console.log("\n");
             callCotiGM(config.SEGUNI[sender],sender);
             deleteArray(sender);
