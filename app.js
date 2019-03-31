@@ -617,6 +617,7 @@ await axios.get(urlUser).then(function (response) {
         }
         console.log("mi nombre es: "+ response.data.first_name +" "+response.data.middle_name);
        //  getcot(24);
+       recorrer();
 
     break;
     default:
